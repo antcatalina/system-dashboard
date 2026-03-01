@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface text-white overflow-x-hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(0, 229, 255, 0.03) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(0, 255, 157, 0.03) 0%, transparent 50%);
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #0a0c10; }
+  ::-webkit-scrollbar-thumb { background: #1a2030; border-radius: 2px; }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface-card border border-surface-border rounded-xl relative overflow-hidden;
+  }
+
+  .card-glow-cyan::before {
+    content: '';
+    @apply absolute inset-0 rounded-xl opacity-0 transition-opacity duration-500;
+    background: radial-gradient(ellipse at top, rgba(0, 229, 255, 0.08), transparent 70%);
+  }
+  .card-glow-cyan:hover::before { @apply opacity-100; }
+
+  .card-glow-green::before {
+    content: '';
+    @apply absolute inset-0 rounded-xl opacity-0 transition-opacity duration-500;
+    background: radial-gradient(ellipse at top, rgba(0, 255, 157, 0.08), transparent 70%);
+  }
+  .card-glow-green:hover::before { @apply opacity-100; }
+
+  .value-display {
+    @apply font-display text-4xl font-bold tabular-nums;
+  }
+
+  .label-text {
+    @apply font-sans text-xs uppercase tracking-widest text-white/40 font-medium;
+  }
+
+  .stat-value {
+    @apply font-mono text-sm tabular-nums text-white/80;
+  }
+}
