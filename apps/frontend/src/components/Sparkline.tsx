@@ -21,7 +21,7 @@ export function Sparkline({ data, color = '#00e5ff', height = 48 }: SparklinePro
         <Tooltip
           content={({ active, payload }) =>
             active && payload?.[0] ? (
-              <div className="bg-surface-card border border-surface-border rounded px-2 py-1 text-xs font-mono">
+              <div className="bg-surface-card border border-surface-border rounded px-2 py-1 text-lg font-mono">
                 {(payload[0].value as number).toFixed(1)}%
               </div>
             ) : null

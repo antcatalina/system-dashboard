@@ -12,6 +12,8 @@ export type MetricHistory = {
   ramUsed: number;
   gpuTemp: number;
   cpuTemp: number;
+  networkDownload: number;
+  networkUpload: number;
 };
 
 export function useMetrics() {
@@ -47,6 +49,8 @@ export function useMetrics() {
                 ramUsed: msg.data.ram.usedPercent,
                 gpuTemp: msg.data.gpu.temperature,
                 cpuTemp: msg.data.cpu.temperature,
+                networkDownload: msg.data.network.downloadSpeed,
+                networkUpload: msg.data.network.uploadSpeed,
               },
             ].slice(-HISTORY_LENGTH);
             return next;

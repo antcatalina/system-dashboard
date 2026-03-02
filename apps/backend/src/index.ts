@@ -10,6 +10,8 @@ import type {
   GPUMetrics,
   RAMMetrics,
   MonitorInfo,
+  NetworkMetrics,
+  NetworkAdapter,
   FPSMetrics,
   WSMessage,
 } from '@system-dashboard/shared';
@@ -80,15 +82,101 @@ function getNvidiaSmiData(): Partial<GPUMetrics> {
   }
 }
 
+// ─── Network polling ──────────────────────────────────────────────────────────
+// We diff two networkStats samples 1s apart to get accurate Mbps readings.
+let _prevNetStats: Awaited<ReturnType<typeof si.networkStats>> | null = null;
+let _prevNetTime = Date.now();
+
+async function getNetworkMetrics(): Promise<NetworkMetrics> {
+  const [stats, interfaces] = await Promise.all([
+    si.networkStats(),
+    si.networkInterfaces(),
+  ]);
+
+  const now = Date.now();
+  const elapsed = (now - _prevNetTime) / 1000; // seconds
+
+  // Find active adapters (has IP, not loopback)
+  const ifaceArr = Array.isArray(interfaces) ? interfaces : [interfaces];
+  const activeIfaces = ifaceArr.filter(
+    (i) => i.ip4 && i.ip4 !== '127.0.0.1' && !i.internal
+  );
+
+  const adapters: NetworkAdapter[] = activeIfaces.map((iface) => ({
+    name: iface.iface,
+    type: iface.type?.toLowerCase().includes('wireless') || iface.type?.toLowerCase().includes('wi-fi') || iface.type?.toLowerCase().includes('wifi')
+      ? 'wireless'
+      : iface.type?.toLowerCase().includes('ethernet') || iface.type?.toLowerCase().includes('wired')
+      ? 'wired'
+      : 'other',
+    ipv4: iface.ip4 ?? '',
+    mac: iface.mac ?? '',
+    speed: iface.speed ?? 0,
+  }));
+
+  // Sum across all active interfaces
+  const activeStats = stats.filter((s) =>
+    activeIfaces.some((i) => i.iface === s.iface)
+  );
+
+  const totalRxBytes = activeStats.reduce((a, s) => a + (s.rx_bytes ?? 0), 0);
+  const totalTxBytes = activeStats.reduce((a, s) => a + (s.tx_bytes ?? 0), 0);
+
+  let downloadSpeed = 0;
+  let uploadSpeed = 0;
+
+  if (_prevNetStats && elapsed > 0) {
+    const prevActiveStats = _prevNetStats.filter((s) =>
+      activeIfaces.some((i) => i.iface === s.iface)
+    );
+    const prevRx = prevActiveStats.reduce((a, s) => a + (s.rx_bytes ?? 0), 0);
+    const prevTx = prevActiveStats.reduce((a, s) => a + (s.tx_bytes ?? 0), 0);
+
+    downloadSpeed = Math.max(0, ((totalRxBytes - prevRx) * 8) / elapsed / 1_000_000);
+    uploadSpeed = Math.max(0, ((totalTxBytes - prevTx) * 8) / elapsed / 1_000_000);
+  }
+
+  _prevNetStats = stats;
+  _prevNetTime = now;
+
+  // Ping default gateway for latency
+  let latency = 0;
+  try {
+    const defaultNet = await si.networkGatewayDefault();
+    if (defaultNet) {
+      const pingResult = await si.inetLatency(defaultNet);
+      latency = pingResult ?? 0;
+    }
+  } catch { /* latency stays 0 */ }
+
+  const primaryAdapter = activeIfaces[0]?.iface ?? 'Unknown';
+
+  return {
+    downloadSpeed: Math.round(downloadSpeed * 100) / 100,
+    uploadSpeed: Math.round(uploadSpeed * 100) / 100,
+    downloadTotal: Math.round((totalRxBytes / 1024 ** 3) * 100) / 100,
+    uploadTotal: Math.round((totalTxBytes / 1024 ** 3) * 100) / 100,
+    latency,
+    adapters,
+    primaryAdapter,
+  };
+}
+
 // ─── Metric collection ────────────────────────────────────────────────────────
 async function collectMetrics(): Promise<DashboardPayload> {
-  const [cpuLoad, cpuTemp, cpuData, mem, displays] = await Promise.all([
+  const [cpuLoad, cpuData, mem, graphics, network] = await Promise.all([
     si.currentLoad(),
-    si.cpuTemperature(),
     si.cpu(),
     si.mem(),
-    si.displays(),
+    si.graphics(),
+    getNetworkMetrics(),
   ]);
+  const displays = graphics.displays ?? [];
+
+  // CPU temp — AMD iGPU sits on the same die; best available without a kernel driver
+  const cpuTemperature: number = graphics.controllers?.find(
+    (c) => c.vendor?.toLowerCase().includes('amd') || c.name?.toLowerCase().includes('radeon')
+  )?.temperatureGpu ?? 0;
 
   // CPU
   const cpu: CPUMetrics = {
@@ -96,7 +184,7 @@ async function collectMetrics(): Promise<DashboardPayload> {
     cores: cpuData.physicalCores,
     threads: cpuData.cores,
     load: Math.round(cpuLoad.currentLoad * 10) / 10,
-    temperature: cpuTemp.main ?? 0,
+    temperature: cpuTemperature,
     frequency: cpuData.speed * 1000,
     maxFrequency: cpuData.speedMax * 1000,
     perCore: cpuLoad.cpus.map((c, i) => ({
@@ -132,17 +220,25 @@ async function collectMetrics(): Promise<DashboardPayload> {
     swapUsed: Math.round((mem.swapused / 1024 ** 3) * 100) / 100,
   };
 
-  // Monitors
-  const monitors: MonitorInfo[] = displays.map((d, i) => ({
-    id: `monitor-${i}`,
-    name: d.model ?? `Display ${i + 1}`,
-    primary: i === 0,
-    width: d.currentResX ?? d.resolutionX ?? 0,
-    height: d.currentResY ?? d.resolutionY ?? 0,
-    refreshRate: d.currentRefreshRate ?? d.refreshRate ?? 0,
-    x: d.positionX ?? 0,
-    y: d.positionY ?? 0,
-  }));
+  // Monitors — sort primary first, use d.main for correct detection,
+  // fall back to connection type + resolution when model name is empty
+  const monitors: MonitorInfo[] = displays
+    .slice()
+    .sort((a, b) => (b.main ? 1 : 0) - (a.main ? 1 : 0))
+    .map((d, i) => {
+      const fallbackName = [d.connection, `${d.currentResX ?? d.resolutionX}×${d.currentResY ?? d.resolutionY}`]
+        .filter(Boolean).join(' ') || `Display ${i + 1}`;
+      return {
+        id: `monitor-${i}`,
+        name: d.model?.trim() ? d.model.trim() : fallbackName,
+        primary: d.main ?? false,
+        width: d.currentResX ?? d.resolutionX ?? 0,
+        height: d.currentResY ?? d.resolutionY ?? 0,
+        refreshRate: d.currentRefreshRate ?? 0,
+        x: d.positionX ?? 0,
+        y: d.positionY ?? 0,
+      };
+    });
 
   // FPS - placeholder; hook PresentMon CLI output here
   const fps: FPSMetrics | null = null;
@@ -153,6 +249,7 @@ async function collectMetrics(): Promise<DashboardPayload> {
     gpu,
     ram,
     monitors,
+    network,
     fps,
   };
 }

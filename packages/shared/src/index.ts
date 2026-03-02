@@ -56,12 +56,31 @@ export interface FPSMetrics {
   processName: string;
 }
 
+export interface NetworkAdapter {
+  name: string;
+  type: string;          // 'wired' | 'wireless' | 'other'
+  ipv4: string;
+  mac: string;
+  speed: number;         // Mbps (link speed)
+}
+
+export interface NetworkMetrics {
+  downloadSpeed: number;   // Mbps current
+  uploadSpeed: number;     // Mbps current
+  downloadTotal: number;   // GB since boot
+  uploadTotal: number;     // GB since boot
+  latency: number;         // ms ping to gateway
+  adapters: NetworkAdapter[];
+  primaryAdapter: string;
+}
+
 export interface DashboardPayload {
   timestamp: number;
   cpu: CPUMetrics;
   gpu: GPUMetrics;
   ram: RAMMetrics;
   monitors: MonitorInfo[];
+  network: NetworkMetrics;
   fps: FPSMetrics | null;
 }
 
