@@ -1,9 +1,9 @@
-import express from 'express';
-import { createServer } from 'http';
-import { WebSocketServer, WebSocket } from 'ws';
-import cors from 'cors';
-import si from 'systeminformation';
-import { execSync } from 'child_process';
+import express from "express";
+import { createServer } from "http";
+import { WebSocketServer, WebSocket } from "ws";
+import cors from "cors";
+import si from "systeminformation";
+import { execSync } from "child_process";
 import type {
   DashboardPayload,
   CPUMetrics,
@@ -14,7 +14,8 @@ import type {
   NetworkAdapter,
   FPSMetrics,
   WSMessage,
-} from '@system-dashboard/shared';
+} from "@system-dashboard/shared";
+import { join } from "path";
 
 const app = express();
 app.use(cors());
@@ -30,22 +31,22 @@ const POLL_INTERVAL_MS = 1000;
 function getNvidiaSmiData(): Partial<GPUMetrics> {
   try {
     const fields = [
-      'name',
-      'utilization.gpu',
-      'memory.used',
-      'memory.total',
-      'temperature.gpu',
-      'fan.speed',
-      'power.draw',
-      'power.limit',
-      'clocks.current.graphics',
-      'clocks.current.memory',
-      'driver_version',
-    ].join(',');
+      "name",
+      "utilization.gpu",
+      "memory.used",
+      "memory.total",
+      "temperature.gpu",
+      "fan.speed",
+      "power.draw",
+      "power.limit",
+      "clocks.current.graphics",
+      "clocks.current.memory",
+      "driver_version",
+    ].join(",");
 
     const raw = execSync(
       `nvidia-smi --query-gpu=${fields} --format=csv,noheader,nounits`,
-      { timeout: 3000 }
+      { timeout: 3000 },
     )
       .toString()
       .trim();
@@ -62,7 +63,7 @@ function getNvidiaSmiData(): Partial<GPUMetrics> {
       coreClock,
       memClock,
       driver,
-    ] = raw.split(', ').map((v) => v.trim());
+    ] = raw.split(", ").map((v) => v.trim());
 
     return {
       model,
@@ -75,7 +76,7 @@ function getNvidiaSmiData(): Partial<GPUMetrics> {
       powerLimit: parseFloat(powerLimit) || 0,
       coreClock: parseFloat(coreClock) || 0,
       memoryClock: parseFloat(memClock) || 0,
-      driverVersion: driver || 'N/A',
+      driverVersion: driver || "N/A",
     };
   } catch {
     return {};
@@ -99,24 +100,28 @@ async function getNetworkMetrics(): Promise<NetworkMetrics> {
   // Find active adapters (has IP, not loopback)
   const ifaceArr = Array.isArray(interfaces) ? interfaces : [interfaces];
   const activeIfaces = ifaceArr.filter(
-    (i) => i.ip4 && i.ip4 !== '127.0.0.1' && !i.internal
+    (i) => i.ip4 && i.ip4 !== "127.0.0.1" && !i.internal,
   );
 
   const adapters: NetworkAdapter[] = activeIfaces.map((iface) => ({
     name: iface.iface,
-    type: iface.type?.toLowerCase().includes('wireless') || iface.type?.toLowerCase().includes('wi-fi') || iface.type?.toLowerCase().includes('wifi')
-      ? 'wireless'
-      : iface.type?.toLowerCase().includes('ethernet') || iface.type?.toLowerCase().includes('wired')
-      ? 'wired'
-      : 'other',
-    ipv4: iface.ip4 ?? '',
-    mac: iface.mac ?? '',
+    type:
+      iface.type?.toLowerCase().includes("wireless") ||
+      iface.type?.toLowerCase().includes("wi-fi") ||
+      iface.type?.toLowerCase().includes("wifi")
+        ? "wireless"
+        : iface.type?.toLowerCase().includes("ethernet") ||
+            iface.type?.toLowerCase().includes("wired")
+          ? "wired"
+          : "other",
+    ipv4: iface.ip4 ?? "",
+    mac: iface.mac ?? "",
     speed: iface.speed ?? 0,
   }));
 
   // Sum across all active interfaces
   const activeStats = stats.filter((s) =>
-    activeIfaces.some((i) => i.iface === s.iface)
+    activeIfaces.some((i) => i.iface === s.iface),
   );
 
   const totalRxBytes = activeStats.reduce((a, s) => a + (s.rx_bytes ?? 0), 0);
@@ -127,13 +132,19 @@ async function getNetworkMetrics(): Promise<NetworkMetrics> {
 
   if (_prevNetStats && elapsed > 0) {
     const prevActiveStats = _prevNetStats.filter((s) =>
-      activeIfaces.some((i) => i.iface === s.iface)
+      activeIfaces.some((i) => i.iface === s.iface),
     );
     const prevRx = prevActiveStats.reduce((a, s) => a + (s.rx_bytes ?? 0), 0);
     const prevTx = prevActiveStats.reduce((a, s) => a + (s.tx_bytes ?? 0), 0);
 
-    downloadSpeed = Math.max(0, ((totalRxBytes - prevRx) * 8) / elapsed / 1_000_000);
-    uploadSpeed = Math.max(0, ((totalTxBytes - prevTx) * 8) / elapsed / 1_000_000);
+    downloadSpeed = Math.max(
+      0,
+      ((totalRxBytes - prevRx) * 8) / elapsed / 1_000_000,
+    );
+    uploadSpeed = Math.max(
+      0,
+      ((totalTxBytes - prevTx) * 8) / elapsed / 1_000_000,
+    );
   }
 
   _prevNetStats = stats;
@@ -147,9 +158,11 @@ async function getNetworkMetrics(): Promise<NetworkMetrics> {
       const pingResult = await si.inetLatency(defaultNet);
       latency = pingResult ?? 0;
     }
-  } catch { /* latency stays 0 */ }
+  } catch {
+    /* latency stays 0 */
+  }
 
-  const primaryAdapter = activeIfaces[0]?.iface ?? 'Unknown';
+  const primaryAdapter = activeIfaces[0]?.iface ?? "Unknown";
 
   return {
     downloadSpeed: Math.round(downloadSpeed * 100) / 100,
@@ -162,21 +175,153 @@ async function getNetworkMetrics(): Promise<NetworkMetrics> {
   };
 }
 
+// ─── PresentMon FPS polling ───────────────────────────────────────────────────
+import { spawn, ChildProcess } from "child_process";
+
+interface FPSState {
+  fps: number;
+  avg1Percent: number;
+  avg01Percent: number;
+  processName: string;
+}
+
+let _fpsState: FPSState | null = null;
+let _presentMonProc: ChildProcess | null = null;
+const _frameTimingsMap: Map<string, number[]> = new Map();
+const FRAME_WINDOW = 300; // keep last 300 frames (~5s at 60fps)
+
+function startPresentMon() {
+  // Kill any existing instance
+  try {
+    _presentMonProc?.kill();
+  } catch {}
+
+  const presentMonPath = join(process.cwd(), "PresentMon.exe");
+
+  // PresentMon must be run as admin — place PresentMon.exe in your project root or PATH
+  _presentMonProc = spawn(presentMonPath, [
+    "-output_stdout",
+    "-stop_existing_session",
+  ]);
+
+  _presentMonProc.on("error", (err) => {
+    console.error("[PresentMon] Failed to start:", err.message);
+    console.error("[PresentMon] Place PresentMon.exe in:", process.cwd());
+  });
+
+  let buffer = "";
+  let headers: string[] = [];
+
+  _presentMonProc.stdout?.on("data", (chunk: Buffer) => {
+    buffer += chunk.toString();
+    const lines = buffer.split("\n");
+    buffer = lines.pop() ?? ""; // keep incomplete last line
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+
+      // First line is the CSV header
+      if (headers.length === 0) {
+        headers = trimmed.split(",").map((h) => h.trim());
+        console.log("[PresentMon HEADERS]", headers);
+        continue;
+      }
+
+      const values = trimmed.split(",");
+      const row: Record<string, string> = {};
+      headers.forEach((h, i) => {
+        row[h] = values[i]?.trim() ?? "";
+      });
+      const processName = row["Application"] ?? "Unknown";
+      const skipList = [
+        "dwm.exe",
+        "opera.exe",
+        "chrome.exe",
+        "firefox.exe",
+        "msedge.exe",
+        "tabby.exe",
+        "code.exe",
+        "discord.exe",
+        "galaxyclient.exe",
+        "galaxyclient helper.exe",
+        "steamwebhelper.exe",
+      ];
+      if (skipList.some((p) => processName.toLowerCase() === p.toLowerCase()))
+        continue;
+      if (processName === "Unknown") continue;
+
+      const msBetweenPresents = parseFloat(row["MsBetweenPresents"] ?? "0");
+      if (!isNaN(msBetweenPresents) && msBetweenPresents > 0) {
+        if (!_frameTimingsMap.has(processName)) {
+          _frameTimingsMap.set(processName, []);
+        }
+        const timings = _frameTimingsMap.get(processName)!;
+        timings.push(msBetweenPresents);
+        if (timings.length > FRAME_WINDOW) timings.shift();
+
+        if (timings.length > 10) {
+          const sorted = [...timings].sort((a, b) => b > a ? 1 : 0);
+          const fps =
+            1000 / (sorted.reduce((a, b) => a + b, 0) / sorted.length);
+          const pct1Count = Math.max(1, Math.floor(sorted.length * 0.01));
+          const avg1Percent =
+            1000 /
+            (sorted.slice(0, pct1Count).reduce((a, b) => a + b, 0) / pct1Count);
+          const pct01Count = Math.max(1, Math.floor(sorted.length * 0.001));
+          const avg01Percent =
+            1000 /
+            (sorted.slice(0, pct01Count).reduce((a, b) => a + b, 0) /
+              pct01Count);
+
+          // Only update _fpsState if this process has the most recent frame activity
+          // (i.e. it's the last thing that presented — which is what we just received)
+          _fpsState = {
+            fps: avg1Percent,
+            avg1Percent: Math.round(avg1Percent * 10) / 10,
+            avg01Percent: Math.round(avg01Percent * 10) / 10,
+            processName,
+          };
+        }
+      }
+    }
+  });
+
+  _presentMonProc.stderr?.on("data", (d: Buffer) => {
+    console.warn("[PresentMon]", d.toString().trim());
+  });
+
+  _presentMonProc.on("exit", (code) => {
+    console.warn(`[PresentMon] exited with code ${code}, restarting in 5s...`);
+    _fpsState = null;
+    setTimeout(startPresentMon, 5000);
+  });
+}
+
+// Start on server init
+startPresentMon();
+
 // ─── Metric collection ────────────────────────────────────────────────────────
 async function collectMetrics(): Promise<DashboardPayload> {
-  const [cpuLoad, cpuData, mem, graphics, network] = await Promise.all([
+const graphics = await si.graphics();
+  const [cpuLoad, cpuData, mem, network] = await Promise.all([
     si.currentLoad(),
     si.cpu(),
     si.mem(),
-    si.graphics(),
     getNetworkMetrics(),
   ]);
   const displays = graphics.displays ?? [];
 
   // CPU temp — AMD iGPU sits on the same die; best available without a kernel driver
-  const cpuTemperature: number = graphics.controllers?.find(
-    (c) => c.vendor?.toLowerCase().includes('amd') || c.name?.toLowerCase().includes('radeon')
-  )?.temperatureGpu ?? 0;
+  const cpuTemperature: number =
+    graphics.controllers?.find(
+      (c) =>
+        c.vendor?.toLowerCase().includes("amd") ||
+        c.name?.toLowerCase().includes("radeon"),
+    )?.temperatureGpu ?? 0;
+
+  // GPU via nvidia-smi
+  const nvidiaData = getNvidiaSmiData();
 
   // CPU
   const cpu: CPUMetrics = {
@@ -194,10 +339,8 @@ async function collectMetrics(): Promise<DashboardPayload> {
     })),
   };
 
-  // GPU via nvidia-smi
-  const nvidiaData = getNvidiaSmiData();
   const gpu: GPUMetrics = {
-    model: nvidiaData.model ?? 'Unknown GPU',
+    model: nvidiaData.model ?? "Unknown GPU",
     utilization: nvidiaData.utilization ?? 0,
     memoryUsed: nvidiaData.memoryUsed ?? 0,
     memoryTotal: nvidiaData.memoryTotal ?? 0,
@@ -207,7 +350,7 @@ async function collectMetrics(): Promise<DashboardPayload> {
     powerLimit: nvidiaData.powerLimit ?? 0,
     coreClock: nvidiaData.coreClock ?? 0,
     memoryClock: nvidiaData.memoryClock ?? 0,
-    driverVersion: nvidiaData.driverVersion ?? 'N/A',
+    driverVersion: nvidiaData.driverVersion ?? "N/A",
   };
 
   // RAM
@@ -226,8 +369,13 @@ async function collectMetrics(): Promise<DashboardPayload> {
     .slice()
     .sort((a, b) => (b.main ? 1 : 0) - (a.main ? 1 : 0))
     .map((d, i) => {
-      const fallbackName = [d.connection, `${d.currentResX ?? d.resolutionX}×${d.currentResY ?? d.resolutionY}`]
-        .filter(Boolean).join(' ') || `Display ${i + 1}`;
+      const fallbackName =
+        [
+          d.connection,
+          `${d.currentResX ?? d.resolutionX}×${d.currentResY ?? d.resolutionY}`,
+        ]
+          .filter(Boolean)
+          .join(" ") || `Display ${i + 1}`;
       return {
         id: `monitor-${i}`,
         name: d.model?.trim() ? d.model.trim() : fallbackName,
@@ -240,8 +388,7 @@ async function collectMetrics(): Promise<DashboardPayload> {
       };
     });
 
-  // FPS - placeholder; hook PresentMon CLI output here
-  const fps: FPSMetrics | null = null;
+  const fps: FPSMetrics | null = _fpsState;
 
   return {
     timestamp: Date.now(),
@@ -264,29 +411,29 @@ function broadcast(msg: WSMessage) {
   });
 }
 
-wss.on('connection', (ws) => {
-  console.log('[WS] Client connected');
-  ws.on('message', (data) => {
+wss.on("connection", (ws) => {
+  console.log("[WS] Client connected");
+  ws.on("message", (data) => {
     try {
       const msg: WSMessage = JSON.parse(data.toString());
-      if (msg.type === 'ping') ws.send(JSON.stringify({ type: 'pong' }));
+      if (msg.type === "ping") ws.send(JSON.stringify({ type: "pong" }));
     } catch {}
   });
-  ws.on('close', () => console.log('[WS] Client disconnected'));
+  ws.on("close", () => console.log("[WS] Client disconnected"));
 });
 
 // ─── Poll loop ────────────────────────────────────────────────────────────────
 setInterval(async () => {
   try {
     const data = await collectMetrics();
-    broadcast({ type: 'metrics', data });
+    broadcast({ type: "metrics", data });
   } catch (err) {
-    console.error('[Poll] Error:', err);
+    console.error("[Poll] Error:", err);
   }
 }, POLL_INTERVAL_MS);
 
 // ─── REST endpoint (optional one-shot fetch) ─────────────────────────────────
-app.get('/api/metrics', async (_req, res) => {
+app.get("/api/metrics", async (_req, res) => {
   try {
     const data = await collectMetrics();
     res.json(data);
@@ -295,7 +442,7 @@ app.get('/api/metrics', async (_req, res) => {
   }
 });
 
-app.get('/health', (_req, res) => res.json({ status: 'ok' }));
+app.get("/health", (_req, res) => res.json({ status: "ok" }));
 
 server.listen(PORT, () => {
   console.log(`[Server] Running on http://localhost:${PORT}`);

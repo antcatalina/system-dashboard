@@ -42,9 +42,9 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
       {/* ── Gauges ── */}
       <div className="flex justify-around items-center px-4 py-5"
         style={{ borderBottom: '1px solid rgba(0,229,255,0.08)' }}>
-        <RadialGauge value={gpu.utilization} color="#00e5ff" label="UTILIZATION" size={224} />
-        <RadialGauge value={gpu.temperature} max={110} color={tc} label="TEMP" unit="°C" size={224} />
-        <RadialGauge value={gpu.fanSpeed} color="#b388ff" label="FAN SPEED" size={224} />
+        <RadialGauge value={gpu.utilization} color="#00e5ff" label="UTILIZATION" size={250} />
+        <RadialGauge value={gpu.temperature} max={110} color={tc} label="TEMP" unit="°C" size={250} />
+        <RadialGauge value={gpu.fanSpeed} color="#b388ff" label="FAN SPEED" size={250} />
       </div>
 
       {/* ── VRAM + Power bars ── */}
@@ -71,14 +71,14 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
       <div className="grid grid-cols-2" style={{ borderBottom: '1px solid rgba(0,229,255,0.08)' }}>
         <div className="px-5 py-4" style={{ borderRight: '1px solid rgba(0,229,255,0.08)', background: 'rgba(0,229,255,0.03)' }}>
           <span className="label-text block mb-2">CORE CLOCK</span>
-          <span className="font-display text-4xl font-bold text-accent-cyan glow-cyan">
-            {gpu.coreClock}<span className="font-mono text-sm ml-1.5 opacity-60">MHz</span>
+          <span className="font-display text-5xl font-bold text-accent-cyan glow-cyan">
+            {gpu.coreClock}<span className="font-mono text-xl ml-1.5 opacity-60">MHz</span>
           </span>
         </div>
         <div className="px-5 py-4" style={{ background: 'rgba(179,136,255,0.03)' }}>
           <span className="label-text block mb-2">MEM CLOCK</span>
-          <span className="font-display text-4xl font-bold text-accent-purple glow-purple">
-            {gpu.memoryClock}<span className="font-mono text-sm ml-1.5 opacity-60">MHz</span>
+          <span className="font-display text-5xl font-bold text-accent-purple glow-purple">
+            {gpu.memoryClock}<span className="font-mono text-xl ml-1.5 opacity-60">MHz</span>
           </span>
         </div>
       </div>
@@ -89,8 +89,8 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
           <span className="label-text">UTILIZATION HISTORY</span>
           <span className="font-mono text-2xl text-accent-cyan">{gpu.utilization.toFixed(0)}%</span>
         </div>
-        <div className="flex-1" style={{ minHeight: 60 }}>
-          <Sparkline data={gpuHistory} color="#00e5ff" height={60} />
+        <div className="flex-1" style={{ minHeight: 84 }}>
+          <Sparkline data={gpuHistory} color="#00e5ff" height={84} />
         </div>
       </div>
     </motion.div>

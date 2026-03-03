@@ -51,7 +51,7 @@ export default function App() {
             </div>
             {data.monitors.length > 0 && (
               <div>
-                <MonitorCard monitors={data.monitors} />
+                <MonitorCard monitors={data.monitors} fps={data.fps} />
               </div>
             )}
           </div>

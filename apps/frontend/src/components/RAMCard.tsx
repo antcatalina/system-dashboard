@@ -26,7 +26,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
         </div>
         <div className="flex items-center gap-3">
           <span className="label-text">PRESSURE</span>
-          <span className={`font-display text-3xl font-bold tabular-nums ${glowClass}`} style={{ color }}>
+          <span className={`font-display text-5xl font-bold tabular-nums ${glowClass}`} style={{ color }}>
             {ram.usedPercent.toFixed(1)}<span className="font-mono text-base ml-1 opacity-60">%</span>
           </span>
         </div>
@@ -41,7 +41,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
             const sc = threshold > 85 ? '#ff3d57' : threshold > 65 ? '#ffb300' : '#b388ff';
             return (
               <motion.div key={i} className="flex-1"
-                style={{ height: 20, backgroundColor: active ? sc : 'rgba(255,255,255,0.04)',
+                style={{ height: 48, backgroundColor: active ? sc : 'rgba(255,255,255,0.04)',
                   boxShadow: active ? `0 0 4px ${sc}50` : 'none' }}
                 animate={{ opacity: active ? 1 : 0.3 }}
                 transition={{ duration: 0.3, delay: i * 0.01 }}
@@ -50,9 +50,9 @@ export function RAMCard({ ram, history }: RAMCardProps) {
           })}
         </div>
         <div className="flex justify-between">
-          <span className="label-text" style={{ fontSize: 10 }}>0</span>
-          <span className="label-text" style={{ fontSize: 10 }}>{(ram.total / 2).toFixed(0)} GB</span>
-          <span className="label-text" style={{ fontSize: 10 }}>{ram.total.toFixed(0)} GB</span>
+          <span className="label-text" style={{ fontSize: 16 }}>0</span>
+          <span className="label-text" style={{ fontSize: 16 }}>{(ram.total / 2).toFixed(0)} GB</span>
+          <span className="label-text" style={{ fontSize: 16 }}>{ram.total.toFixed(0)} GB</span>
         </div>
       </div>
 
@@ -60,14 +60,14 @@ export function RAMCard({ ram, history }: RAMCardProps) {
       <div className="grid grid-cols-2" style={{ borderBottom: '1px solid rgba(179,136,255,0.08)' }}>
         <div className="px-5 py-4" style={{ borderRight: '1px solid rgba(179,136,255,0.08)', background: `${color}08` }}>
           <span className="label-text block mb-1">USED</span>
-          <span className="font-display text-2xl font-bold" style={{ color }}>
-            {ram.used.toFixed(1)}<span className="font-mono text-sm ml-1 opacity-60">GB</span>
+          <span className="font-display text-5xl font-bold" style={{ color }}>
+            {ram.used.toFixed(1)}<span className="font-mono text-xl ml-1 opacity-60">GB</span>
           </span>
         </div>
         <div className="px-5 py-4">
           <span className="label-text block mb-1">FREE</span>
-          <span className="font-display text-2xl font-bold text-white/40">
-            {ram.free.toFixed(1)}<span className="font-mono text-sm ml-1 opacity-30">GB</span>
+          <span className="font-display text-5xl font-bold text-white/40">
+            {ram.free.toFixed(1)}<span className="font-mono text-xl ml-1 opacity-30">GB</span>
           </span>
         </div>
       </div>
@@ -94,8 +94,8 @@ export function RAMCard({ ram, history }: RAMCardProps) {
           <span className="label-text">USAGE HISTORY</span>
           <span className="font-mono text-2xl" style={{ color }}>{ram.usedPercent.toFixed(1)}%</span>
         </div>
-        <div className="flex-1" style={{ minHeight: 50 }}>
-          <Sparkline data={ramHistory} color={color} height={50} />
+        <div className="flex-1" style={{ minHeight: 84 }}>
+          <Sparkline data={ramHistory} color={color} height={84} />
         </div>
       </div>
     </motion.div>
