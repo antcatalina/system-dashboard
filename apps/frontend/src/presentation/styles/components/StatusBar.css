@@ -1,0 +1,183 @@
+/* StatusBar component styles */
+
+.status-bar {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(var(--color-cyan-rgb), var(--border-opacity-med));
+  background: linear-gradient(
+    180deg,
+    rgba(var(--color-cyan-rgb), var(--bg-opacity-max)) 0%,
+    rgba(var(--color-cyan-rgb), var(--bg-opacity-min)) 100%
+  );
+  min-height: 64px;
+  position: relative;
+  overflow: visible;
+}
+
+/*
+ * Scan line: pure CSS animation — no Framer Motion, no will-change, no transform.
+ * Framer Motion's motion.div sets will-change:transform which creates a stacking
+ * context and was trapping the ThemeSelector dropdown inside it.
+ */
+.status-bar__scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, var(--color-cyan) 50%, transparent 100%);
+  animation: scan-pulse 3s ease-in-out infinite;
+}
+
+@keyframes scan-pulse {
+  0%, 100% { opacity: 0.2; }
+  50%       { opacity: 0.8; }
+}
+
+/* ── All flex children: no position/z-index — avoids stacking context traps ── */
+
+.status-bar__logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px;
+  border-right: 1px solid;
+  border-right-color: rgba(var(--color-cyan-rgb), 0.15);
+  background: rgba(var(--color-cyan-rgb), 0.03);
+}
+
+.status-bar__icon {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.status-bar__icon-dot {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-cyan);
+  box-shadow: 0 0 10px var(--color-cyan);
+}
+
+.status-bar__title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.status-bar__title-highlight {
+  color: var(--color-cyan);
+  text-shadow: 0 0 20px rgba(var(--color-cyan-rgb), 0.8),
+               0 0 40px rgba(var(--color-cyan-rgb), 0.4);
+}
+
+.status-bar__subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 2px;
+}
+
+.status-bar__status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px;
+  border-right: 1px solid;
+  border-right-color: rgba(var(--color-cyan-rgb), 0.1);
+}
+
+.status-bar__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-bar__dot--live    { background-color: var(--color-green); }
+.status-bar__dot--offline { background-color: var(--color-red); }
+
+.status-bar__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+}
+
+.status-bar__label--live    { color: var(--color-green); }
+.status-bar__label--offline { color: var(--color-red); }
+
+.status-bar__refresh {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.status-bar__center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+}
+
+.status-bar__ruler {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.status-bar__tick {
+  width: 1.5px;
+  border-radius: 1px;
+}
+
+.status-bar__clock {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  border-left: 1px solid;
+  border-left-color: rgba(var(--color-cyan-rgb), 0.1);
+  background: rgba(var(--color-cyan-rgb), 0.02);
+}
+
+.status-bar__time {
+  display: flex;
+  flex-direction: column;
+}
+
+.status-bar__date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.status-bar__timevalue {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.75);
+  font-variant-numeric: tabular-nums;
+}
+
+.status-bar__theme-selector {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  border-left: 1px solid;
+  border-left-color: rgba(var(--color-cyan-rgb), 0.1);
+}

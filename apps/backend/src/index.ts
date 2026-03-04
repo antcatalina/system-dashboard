@@ -198,104 +198,117 @@ function startPresentMon() {
 
   const presentMonPath = join(process.cwd(), "PresentMon.exe");
 
-  // PresentMon must be run as admin — place PresentMon.exe in your project root or PATH
-  _presentMonProc = spawn(presentMonPath, [
-    "-output_stdout",
-    "-stop_existing_session",
-  ]);
+  try {
+    // PresentMon must be run as admin — place PresentMon.exe in your project root or PATH
+    _presentMonProc = spawn(presentMonPath, [
+      "-output_stdout",
+      "-stop_existing_session",
+    ]);
 
-  _presentMonProc.on("error", (err) => {
-    console.error("[PresentMon] Failed to start:", err.message);
-    console.error("[PresentMon] Place PresentMon.exe in:", process.cwd());
-  });
+    _presentMonProc.on("error", (err) => {
+      console.warn("[PresentMon] Failed to start (FPS metrics will be unavailable):", err.message);
+      console.warn("[PresentMon] Note: PresentMon requires admin privileges or Performance Log Users group");
+      console.warn("[PresentMon] Place PresentMon.exe in:", process.cwd());
+    });
 
-  let buffer = "";
-  let headers: string[] = [];
+    let buffer = "";
+    let headers: string[] = [];
 
-  _presentMonProc.stdout?.on("data", (chunk: Buffer) => {
-    buffer += chunk.toString();
-    const lines = buffer.split("\n");
-    buffer = lines.pop() ?? ""; // keep incomplete last line
+    _presentMonProc.stdout?.on("data", (chunk: Buffer) => {
+      buffer += chunk.toString();
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? ""; // keep incomplete last line
 
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed) continue;
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
 
-      // First line is the CSV header
-      if (headers.length === 0) {
-        headers = trimmed.split(",").map((h) => h.trim());
-        console.log("[PresentMon HEADERS]", headers);
-        continue;
-      }
-
-      const values = trimmed.split(",");
-      const row: Record<string, string> = {};
-      headers.forEach((h, i) => {
-        row[h] = values[i]?.trim() ?? "";
-      });
-      const processName = row["Application"] ?? "Unknown";
-      const skipList = [
-        "dwm.exe",
-        "opera.exe",
-        "chrome.exe",
-        "firefox.exe",
-        "msedge.exe",
-        "tabby.exe",
-        "code.exe",
-        "discord.exe",
-        "galaxyclient.exe",
-        "galaxyclient helper.exe",
-        "steamwebhelper.exe",
-      ];
-      if (skipList.some((p) => processName.toLowerCase() === p.toLowerCase()))
-        continue;
-      if (processName === "Unknown") continue;
-
-      const msBetweenPresents = parseFloat(row["MsBetweenPresents"] ?? "0");
-      if (!isNaN(msBetweenPresents) && msBetweenPresents > 0) {
-        if (!_frameTimingsMap.has(processName)) {
-          _frameTimingsMap.set(processName, []);
+        // First line is the CSV header
+        if (headers.length === 0) {
+          headers = trimmed.split(",").map((h) => h.trim());
+          console.log("[PresentMon HEADERS]", headers);
+          continue;
         }
-        const timings = _frameTimingsMap.get(processName)!;
-        timings.push(msBetweenPresents);
-        if (timings.length > FRAME_WINDOW) timings.shift();
 
-        if (timings.length > 10) {
-          const sorted = [...timings].sort((a, b) => b > a ? 1 : 0);
-          const fps =
-            1000 / (sorted.reduce((a, b) => a + b, 0) / sorted.length);
-          const pct1Count = Math.max(1, Math.floor(sorted.length * 0.01));
-          const avg1Percent =
-            1000 /
-            (sorted.slice(0, pct1Count).reduce((a, b) => a + b, 0) / pct1Count);
-          const pct01Count = Math.max(1, Math.floor(sorted.length * 0.001));
-          const avg01Percent =
-            1000 /
-            (sorted.slice(0, pct01Count).reduce((a, b) => a + b, 0) /
-              pct01Count);
+        const values = trimmed.split(",");
+        const row: Record<string, string> = {};
+        headers.forEach((h, i) => {
+          row[h] = values[i]?.trim() ?? "";
+        });
+        const processName = row["Application"] ?? "Unknown";
+        const skipList = [
+          "dwm.exe",
+          "opera.exe",
+          "chrome.exe",
+          "firefox.exe",
+          "msedge.exe",
+          "tabby.exe",
+          "code.exe",
+          "discord.exe",
+          "galaxyclient.exe",
+          "galaxyclient helper.exe",
+          "steamwebhelper.exe",
+          "msedgewebview2.exe",
+        ];
+        if (skipList.some((p) => processName.toLowerCase() === p.toLowerCase()))
+          continue;
+        if (processName === "Unknown") continue;
 
-          // Only update _fpsState if this process has the most recent frame activity
-          // (i.e. it's the last thing that presented — which is what we just received)
-          _fpsState = {
-            fps: avg1Percent,
-            avg1Percent: Math.round(avg1Percent * 10) / 10,
-            avg01Percent: Math.round(avg01Percent * 10) / 10,
-            processName,
-          };
+        const msBetweenPresents = parseFloat(row["MsBetweenPresents"] ?? "0");
+        if (!isNaN(msBetweenPresents) && msBetweenPresents > 0) {
+          if (!_frameTimingsMap.has(processName)) {
+            _frameTimingsMap.set(processName, []);
+          }
+          const timings = _frameTimingsMap.get(processName)!;
+          timings.push(msBetweenPresents);
+          if (timings.length > FRAME_WINDOW) timings.shift();
+
+          if (timings.length > 10) {
+            const sorted = [...timings].sort((a, b) => b > a ? 1 : 0);
+            const fps =
+              1000 / (sorted.reduce((a, b) => a + b, 0) / sorted.length);
+            const pct1Count = Math.max(1, Math.floor(sorted.length * 0.01));
+            const avg1Percent =
+              1000 /
+              (sorted.slice(0, pct1Count).reduce((a, b) => a + b, 0) / pct1Count);
+            const pct01Count = Math.max(1, Math.floor(sorted.length * 0.001));
+            const avg01Percent =
+              1000 /
+              (sorted.slice(0, pct01Count).reduce((a, b) => a + b, 0) /
+                pct01Count);
+
+            // Only update _fpsState if this process has the most recent frame activity
+            // (i.e. it's the last thing that presented — which is what we just received)
+            _fpsState = {
+              fps: avg1Percent,
+              avg1Percent: Math.round(avg1Percent * 10) / 10,
+              avg01Percent: Math.round(avg01Percent * 10) / 10,
+              processName,
+            };
+          }
         }
       }
-    }
-  });
+    });
 
-  _presentMonProc.stderr?.on("data", (d: Buffer) => {
-    console.warn("[PresentMon]", d.toString().trim());
-  });
+    _presentMonProc.stderr?.on("data", (d: Buffer) => {
+      const msg = d.toString().trim();
+      // Suppress repeated admin privilege warnings
+      if (!msg.includes("access denied") && !msg.includes("elevated privilege")) {
+        console.warn("[PresentMon]", msg);
+      }
+    });
 
-  _presentMonProc.on("exit", (code) => {
-    console.warn(`[PresentMon] exited with code ${code}, restarting in 5s...`);
-    _fpsState = null;
-    setTimeout(startPresentMon, 5000);
-  });
+    _presentMonProc.on("exit", (code) => {
+      if (code !== 0) {
+        console.warn(`[PresentMon] exited with code ${code}, will retry in 10s...`);
+        _fpsState = null;
+        setTimeout(startPresentMon, 10000);
+      }
+    });
+  } catch (err) {
+    console.warn("[PresentMon] Failed to spawn process:", String(err));
+    console.warn("[PresentMon] Continuing without FPS metrics...");
+  }
 }
 
 // Start on server init

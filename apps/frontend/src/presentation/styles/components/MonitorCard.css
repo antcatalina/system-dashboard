@@ -1,0 +1,142 @@
+/* Monitor Card component styles */
+
+.monitor-card {
+  color: var(--color-amber);
+}
+
+.monitor-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid rgba(var(--color-amber-rgb), var(--border-opacity-med));
+  background: rgba(var(--color-amber-rgb), var(--bg-opacity-med));
+}
+
+.monitor-card__header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.monitor-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-color: var(--color-amber);
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+.monitor-card__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--label-text-color);
+}
+
+.monitor-card__badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-amber);
+  border: 1px solid rgba(var(--color-amber-rgb), 0.3);
+  padding: 4px 8px;
+  opacity: 0.85;
+}
+
+.monitor-card__monitor {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(var(--color-amber-rgb), var(--border-opacity-min));
+}
+
+.monitor-card__monitor:last-child { border-bottom: none; }
+
+.monitor-card__monitor--primary {
+  background: rgba(var(--color-amber-rgb), 0.04);
+}
+
+body.theme-light .monitor-card__monitor--primary {
+  background: rgba(var(--color-amber-rgb), 0.06);
+}
+
+.monitor-card__monitor-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(var(--color-amber-rgb), var(--border-opacity-min));
+}
+
+.monitor-card__monitor-icon {
+  width: 36px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.monitor-card__monitor-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.monitor-card__monitor-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--stat-value-color);
+  font-weight: 600;
+}
+
+.monitor-card__monitor-res {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--label-text-color);
+  margin-top: 2px;
+}
+
+.monitor-card__monitor-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-amber);
+  border: 1px solid rgba(var(--color-amber-rgb), 0.3);
+  padding: 2px 6px;
+  opacity: 0.85;
+}
+
+.monitor-card__fps {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 20px;
+}
+
+.monitor-card__fps-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--label-text-color);
+  margin-bottom: 4px;
+}
+
+.monitor-card__fps-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.monitor-card__fps-chart {
+  min-height: 56px;
+  margin-top: 8px;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}

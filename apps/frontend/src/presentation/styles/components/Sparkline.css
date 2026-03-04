@@ -1,0 +1,20 @@
+/* Sparkline component styles */
+
+.sparkline {
+  width: 100%;
+}
+
+.sparkline__tooltip {
+  background-color: var(--surface-card, rgba(15, 20, 30, 0.8));
+  border: 1px solid var(--surface-border, rgba(255, 255, 255, 0.1));
+  border-radius: 0;
+  padding: 8px;
+  opacity: 0.95;
+}
+
+.sparkline__tooltip-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.9);
+}

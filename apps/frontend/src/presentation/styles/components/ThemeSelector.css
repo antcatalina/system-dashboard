@@ -1,0 +1,229 @@
+/* ── ThemeSelector ── */
+
+.theme-selector {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* ── Trigger ── */
+.theme-selector__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: transparent;
+  border: 1px solid;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.theme-selector__trigger:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.theme-selector__trigger-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.theme-selector__trigger-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.theme-selector__trigger-indicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Backdrop ── */
+.theme-selector__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  cursor: default;
+  background: transparent;
+}
+
+/* ── Menu ── */
+.theme-selector__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 100;
+  min-width: 220px;
+  /* Fully opaque — no transparency issues */
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.8),
+    0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+body.theme-light .theme-selector__menu {
+  background: #f8f8fa;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+body.theme-neon .theme-selector__menu {
+  background: #0c0018;
+  border-color: rgba(255, 0, 110, 0.4);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(255, 0, 110, 0.2);
+}
+
+/* ── Options list ── */
+.theme-selector__options {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  gap: 2px;
+}
+
+/* ── Option button — plain <button>, no motion wrapper ── */
+.theme-selector__option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  color: var(--option-color);
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.theme-selector__option:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.theme-light .theme-selector__option:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.theme-neon .theme-selector__option:hover {
+  background: rgba(255, 0, 110, 0.12);
+  border-color: rgba(255, 0, 110, 0.2);
+}
+
+.theme-selector__option--active {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-light .theme-selector__option--active {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.theme-neon .theme-selector__option--active {
+  background: rgba(255, 0, 110, 0.08);
+  border-color: rgba(255, 0, 110, 0.25);
+}
+
+/* ── Option internals ── */
+.theme-selector__option-icon {
+  font-size: 15px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.theme-selector__option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.theme-selector__option-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  /* inherit color from parent button's --option-color */
+  color: inherit;
+}
+
+/* Neon: glow the title text */
+body.theme-neon .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+
+.theme-selector__option-description {
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+  /* Always use a neutral color so it's readable regardless of accent */
+  color: rgba(255, 255, 255, 0.45);
+}
+
+body.theme-light .theme-selector__option-description {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+body.theme-neon .theme-selector__option-description {
+  color: rgba(255, 192, 255, 0.55);
+}
+
+.theme-selector__option-check {
+  font-size: 12px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ── Footer ── */
+.theme-selector__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.theme-light .theme-selector__footer {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+body.theme-neon .theme-selector__footer {
+  border-top-color: rgba(255, 0, 110, 0.2);
+}
+
+.theme-selector__footer-text {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 600;
+}
+
+body.theme-light .theme-selector__footer-text {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.theme-selector__footer-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}

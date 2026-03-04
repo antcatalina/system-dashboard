@@ -10,17 +10,17 @@ export default {
       },
       colors: {
         surface: {
-          DEFAULT: '#0a0c10',
-          card: '#0f1218',
-          border: '#1a2030',
-          hover: '#151b26',
+          DEFAULT: 'rgba(10, 12, 16, 1)',
+          card: 'rgba(15, 18, 24, 1)',
+          border: 'rgba(26, 32, 48, 1)',
+          hover: 'rgba(21, 27, 38, 1)',
         },
         accent: {
-          cyan: '#00e5ff',
-          green: '#00ff9d',
-          amber: '#ffb300',
-          red: '#ff3d57',
-          purple: '#b388ff',
+          cyan: 'var(--color-cyan)',
+          green: 'var(--color-green)',
+          amber: 'var(--color-amber)',
+          red: 'var(--color-red)',
+          purple: 'var(--color-purple)',
         },
       },
       animation: {
@@ -29,8 +29,8 @@ export default {
       },
       keyframes: {
         glow: {
-          '0%': { boxShadow: '0 0 5px rgba(0, 229, 255, 0.2)' },
-          '100%': { boxShadow: '0 0 20px rgba(0, 229, 255, 0.5)' },
+          '0%': { boxShadow: '0 0 5px rgba(var(--color-cyan-rgb), 0.2)' },
+          '100%': { boxShadow: '0 0 20px rgba(var(--color-cyan-rgb), 0.5)' },
         },
       },
     },

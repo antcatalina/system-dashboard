@@ -1,0 +1,217 @@
+/* GPU Card component styles */
+
+.gpu-card {
+  color: var(--color-cyan);
+}
+
+.gpu-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(var(--color-cyan-rgb), var(--border-opacity-med));
+  background: rgba(var(--color-cyan-rgb), var(--bg-opacity-med));
+}
+
+.gpu-card__header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.gpu-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-color: var(--color-cyan);
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+.gpu-card__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.gpu-card__badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-cyan);
+  border: 1px solid;
+  border-color: rgba(var(--color-cyan-rgb), 0.3);
+  padding: 4px 8px;
+  opacity: 0.7;
+}
+
+.gpu-card__model {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 4px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gpu-card__header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.gpu-card__value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--color-cyan);
+  text-shadow: 0 0 20px rgba(var(--color-cyan-rgb), 0.8), 
+               0 0 40px rgba(var(--color-cyan-rgb), 0.4);
+}
+
+.gpu-card__gauges {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 16px;
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(var(--color-cyan-rgb), var(--border-opacity-min));
+}
+
+.gpu-card__stats {
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(var(--color-cyan-rgb), var(--border-opacity-min));
+}
+
+.gpu-card__stat-row {
+  padding: 12px 20px;
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(255, 255, 255, 0.04);
+}
+
+.gpu-card__stat-row:first-child {
+  border-top: none;
+}
+
+.gpu-card__stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.35);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.gpu-card__stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  font-variant-numeric: tabular-nums;
+}
+
+.gpu-card__bar {
+  height: 8px;
+  border-radius: 0;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.gpu-card__bar-fill {
+  height: 100%;
+}
+
+.gpu-card__clocks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(var(--color-cyan-rgb), var(--border-opacity-min));
+}
+
+.gpu-card__clock {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gpu-card__clock--left {
+  border-right: 1px solid;
+  border-right-color: rgba(var(--color-cyan-rgb), var(--border-opacity-min));
+  background: rgba(var(--color-cyan-rgb), 0.03);
+}
+
+.gpu-card__clock--right {
+  background: rgba(179, 136, 255, 0.03);
+}
+
+.gpu-card__clock-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.gpu-card__clock-value--cyan {
+  color: var(--color-cyan);
+  text-shadow: 0 0 20px rgba(var(--color-cyan-rgb), 0.8), 
+               0 0 40px rgba(var(--color-cyan-rgb), 0.4);
+}
+
+.gpu-card__clock-value--purple {
+  color: var(--color-purple);
+  text-shadow: 0 0 20px rgba(var(--color-purple-rgb), 0.8), 
+               0 0 40px rgba(var(--color-purple-rgb), 0.4);
+}
+
+.gpu-card__clock-unit {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  margin-left: 6px;
+  opacity: 0.6;
+}
+
+.gpu-card__sparkline {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.gpu-card__sparkline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.gpu-card__sparkline-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: var(--color-cyan);
+  font-variant-numeric: tabular-nums;
+}
+
+.gpu-card__sparkline-chart {
+  flex: 1;
+  min-height: 84px;
+}
+
+@keyframes livePulse {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.5; 
+    transform: scale(0.8);
+  }
+}

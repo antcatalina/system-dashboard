@@ -1,0 +1,199 @@
+.ram-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(var(--color-purple-rgb), var(--border-opacity-med));
+  background: rgba(var(--color-purple-rgb), var(--bg-opacity-med));
+}
+
+.ram-card__header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ram-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+.ram-card__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.ram-card__badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-purple);
+  border: 1px solid;
+  border-color: rgba(var(--color-purple-rgb), 0.3);
+  padding: 4px 8px;
+  opacity: 0.7;
+}
+
+.ram-card__header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ram-card__pressure {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ram-card__pressure-unit {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  margin-left: 4px;
+  opacity: 0.6;
+}
+
+.ram-card__bar-section {
+  padding: 20px;
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(var(--color-purple-rgb), var(--border-opacity-min));
+}
+
+.ram-card__segments {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+
+.ram-card__segment {
+  flex: 1;
+  height: 48px;
+}
+
+.ram-card__scale {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ram-card__scale-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.ram-card__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(var(--color-purple-rgb), var(--border-opacity-min));
+}
+
+.ram-card__stat {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ram-card__stat--used {
+  border-right: 1px solid;
+  border-right-color: rgba(var(--color-purple-rgb), var(--border-opacity-min));
+}
+
+.ram-card__stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.35);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.ram-card__stat-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ram-card__stat-unit {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  margin-left: 4px;
+  opacity: 0.6;
+}
+
+.ram-card__swap {
+  padding: 12px 20px;
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(var(--color-purple-rgb), var(--border-opacity-min));
+}
+
+.ram-card__swap-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.35);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ram-card__swap-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: var(--color-purple);
+  font-variant-numeric: tabular-nums;
+}
+
+.ram-card__swap-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ram-card__sparkline {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.ram-card__sparkline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ram-card__sparkline-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ram-card__sparkline-chart {
+  flex: 1;
+  min-height: 84px;
+}
+
+@keyframes livePulse {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.5; 
+    transform: scale(0.8);
+  }
+}
