@@ -3,22 +3,16 @@ import { useRef, useEffect, useState } from "react";
 import type { Monitor, FPS } from "../../domain";
 import { getFpsColor } from "../../shared/utils/colors";
 import { useTheme } from "../context/ThemeContext";
+import { getThemeColors } from "../../shared/utils/themeColors";
 
 interface MonitorCardProps {
   monitors: Monitor[];
   fps: FPS | null;
 }
 
-const SPARKLINE_WIDTH = 380;
-const SPARKLINE_HEIGHT = 56;
+const SPARKLINE_WIDTH = 300;
+const SPARKLINE_HEIGHT = 48;
 const MAX_HISTORY = 60;
-
-// Theme-aware amber/accent colors
-const THEME_COLORS = {
-  default: { primary: '#ffb300', border: 'rgba(255,179,0,0.12)', borderFaint: 'rgba(255,179,0,0.08)', bg: 'rgba(255,179,0,0.04)', svgStroke: 'rgba(255,255,255,0.15)', svgFill: 'rgba(255,255,255,0.02)' },
-  light:   { primary: '#b45309', border: 'rgba(180,83,9,0.2)',   borderFaint: 'rgba(180,83,9,0.1)',   bg: 'rgba(180,83,9,0.05)',  svgStroke: 'rgba(0,0,0,0.15)',       svgFill: 'rgba(0,0,0,0.02)'       },
-  neon:    { primary: '#ff006e', border: 'rgba(255,0,110,0.25)', borderFaint: 'rgba(255,0,110,0.12)', bg: 'rgba(255,0,110,0.06)', svgStroke: 'rgba(255,0,110,0.2)',    svgFill: 'rgba(255,0,110,0.03)'   },
-};
 
 function FpsSparkline({ history }: { history: number[] }) {
   if (history.length < 2) return null;
@@ -56,7 +50,7 @@ function FpsSparkline({ history }: { history: number[] }) {
 
 export function MonitorCard({ monitors, fps }: MonitorCardProps) {
   const { theme } = useTheme();
-  const tc = THEME_COLORS[theme];
+    const tc = getThemeColors(theme);
   const [fpsHistory, setFpsHistory] = useState<number[]>([]);
   const prevFps = useRef<number | null>(null);
 
@@ -71,7 +65,7 @@ export function MonitorCard({ monitors, fps }: MonitorCardProps) {
   }, [fps]);
 
   const currentFps = fps?.fps ?? null;
-  const fpsColor = getFpsColor(currentFps ?? 0);
+  const fpsColor = getFpsColor(currentFps);
 
   return (
     <motion.div className="card-amber flex flex-col"
@@ -146,8 +140,8 @@ export function MonitorCard({ monitors, fps }: MonitorCardProps) {
                   <div className="w-full h-1.5" style={{ background: 'rgba(128,128,128,0.12)' }}>
                     <div className="h-full" style={{
                       width: `${Math.min((m.refreshRate / 60) * 100, 100)}%`,
-                      backgroundColor: m.refreshRate >= 30 ? "#00ff9d" : tc.primary,
-                      boxShadow: `0 0 6px ${m.refreshRate >= 30 ? "#00ff9d" : tc.primary}60`,
+                      backgroundColor: m.refreshRate >= 30 ? "var(--color-green)" : tc.primary,
+                      boxShadow: `0 0 6px ${m.refreshRate >= 30 ? "var(--color-green)" : tc.primary}60`,
                     }} />
                   </div>
                   <span className="font-mono text-xl" style={{ color: 'var(--label-text-color)' }}>

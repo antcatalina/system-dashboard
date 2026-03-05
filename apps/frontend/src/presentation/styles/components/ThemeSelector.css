@@ -79,7 +79,39 @@ body.theme-light .theme-selector__menu {
     0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-body.theme-neon .theme-selector__menu {
+body.theme-pink .theme-selector__menu {
+  background: #0c0018;
+  border-color: rgba(255, 0, 110, 0.4);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(255, 0, 110, 0.2);
+}
+
+body.theme-red .theme-selector__menu {
+  background: #140303;
+  border-color: rgba(255, 61, 61, 0.4);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(255, 61, 61, 0.2);
+}
+
+body.theme-green .theme-selector__menu {
+  background: #001404;
+  border-color: rgba(0, 255, 157, 0.4);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(0, 255, 157, 0.2);
+}
+
+body.theme-yellow .theme-selector__menu {
+  background: #141400;
+  border-color: rgba(255, 255, 0, 0.4);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(255, 255, 0, 0.2);
+}
+
+body.theme-rainbow .theme-selector__menu {
   background: #0c0018;
   border-color: rgba(255, 0, 110, 0.4);
   box-shadow:
@@ -122,9 +154,24 @@ body.theme-light .theme-selector__option:hover {
   border-color: rgba(0, 0, 0, 0.08);
 }
 
-body.theme-neon .theme-selector__option:hover {
+body.theme-pink .theme-selector__option:hover {
   background: rgba(255, 0, 110, 0.12);
   border-color: rgba(255, 0, 110, 0.2);
+}
+
+body.theme-red .theme-selector__option:hover {
+  background: rgba(255, 61, 61, 0.12);
+  border-color: rgba(255, 61, 61, 0.2);
+}
+
+body.theme-matrix .theme-selector__option:hover {
+  background: rgba(0, 255, 157, 0.12);
+  border-color: rgba(0, 255, 157, 0.2);
+}
+
+body.theme-yellow .theme-selector__option:hover {
+  background: rgba(255, 255, 0, 0.12);
+  border-color: rgba(255, 255, 0, 0.2);
 }
 
 .theme-selector__option--active {
@@ -137,7 +184,27 @@ body.theme-light .theme-selector__option--active {
   border-color: rgba(0, 0, 0, 0.1);
 }
 
-body.theme-neon .theme-selector__option--active {
+body.theme-pink .theme-selector__option--active {
+  background: rgba(255, 0, 110, 0.08);
+  border-color: rgba(255, 0, 110, 0.25);
+}
+
+body.theme-red .theme-selector__option--active {
+  background: rgba(255, 61, 61, 0.08);
+  border-color: rgba(255, 61, 61, 0.25);
+}
+
+body.theme-green .theme-selector__option--active {
+  background: rgba(0, 255, 157, 0.08);
+  border-color: rgba(0, 255, 157, 0.25);
+}
+
+body.theme-yellow .theme-selector__option--active {
+  background: rgba(255, 255, 0, 0.08);
+  border-color: rgba(255, 255, 0, 0.25);
+}
+
+body.theme-rainbow .theme-selector__option--active {
   background: rgba(255, 0, 110, 0.08);
   border-color: rgba(255, 0, 110, 0.25);
 }
@@ -164,8 +231,12 @@ body.theme-neon .theme-selector__option--active {
   color: inherit;
 }
 
-/* Neon: glow the title text */
-body.theme-neon .theme-selector__option-title {
+/* Vibrant themes: glow the title text */
+body.theme-pink .theme-selector__option-title,
+body.theme-red .theme-selector__option-title,
+body.theme-green .theme-selector__option-title,
+body.theme-yellow .theme-selector__option-title,
+body.theme-rainbow .theme-selector__option-title {
   text-shadow:
     0 0 8px var(--option-color),
     0 0 20px var(--option-color);
@@ -183,7 +254,23 @@ body.theme-light .theme-selector__option-description {
   color: rgba(0, 0, 0, 0.45);
 }
 
-body.theme-neon .theme-selector__option-description {
+body.theme-pink .theme-selector__option-description {
+  color: rgba(255, 192, 255, 0.55);
+}
+
+body.theme-red .theme-selector__option-description {
+  color: rgba(255, 179, 179, 0.55);
+}
+
+body.theme-green .theme-selector__option-description {
+  color: rgba(95, 255, 201, 0.55);
+}
+
+body.theme-yellow .theme-selector__option-description {
+  color: rgba(255, 255, 153, 0.55);
+}
+
+body.theme-rainbow .theme-selector__option-description {
   color: rgba(255, 192, 255, 0.55);
 }
 
@@ -206,7 +293,23 @@ body.theme-light .theme-selector__footer {
   border-top-color: rgba(0, 0, 0, 0.08);
 }
 
-body.theme-neon .theme-selector__footer {
+body.theme-pink .theme-selector__footer {
+  border-top-color: rgba(255, 0, 110, 0.2);
+}
+
+body.theme-red .theme-selector__footer {
+  border-top-color: rgba(255, 61, 61, 0.2);
+}
+
+body.theme-green .theme-selector__footer {
+  border-top-color: rgba(0, 255, 157, 0.2);
+}
+
+body.theme-yellow .theme-selector__footer {
+  border-top-color: rgba(255, 255, 0, 0.2);
+}
+
+body.theme-rainbow .theme-selector__footer {
   border-top-color: rgba(255, 0, 110, 0.2);
 }
 

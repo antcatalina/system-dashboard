@@ -5,18 +5,12 @@ import { Sparkline } from './Sparkline';
 import { formatSpeed, formatBytes } from '../../shared/utils/formatters';
 import { getLatencyColor } from '../../shared/utils/colors';
 import { useTheme } from '../context/ThemeContext';
+import { getThemeColors } from '../../shared/utils/themeColors';
 
 interface NetworkCardProps {
   network: Network;
   history: MetricHistory[];
 }
-
-// Theme-aware color palettes
-const THEME_COLORS = {
-  default: { primary: '#00e5ff', secondary: '#00ff9d', border: 'rgba(0,229,255,0.12)', borderFaint: 'rgba(0,229,255,0.08)', bg: 'rgba(0,229,255,0.04)' },
-  light:   { primary: '#5b21b6', secondary: '#7c3aed', border: 'rgba(91,33,182,0.18)',  borderFaint: 'rgba(91,33,182,0.1)',  bg: 'rgba(91,33,182,0.04)' },
-  neon:    { primary: '#ff006e', secondary: '#ff10a8', border: 'rgba(255,0,110,0.35)',  borderFaint: 'rgba(255,0,110,0.15)', bg: 'rgba(255,0,110,0.06)' },
-};
 
 function latencyLabel(ms: number) {
   if (ms === 0) return '—';
@@ -60,7 +54,7 @@ function SpeedBlock({ label, speed, color, secondaryColor, arrow, borderColor }:
 
 export function NetworkCard({ network, history }: NetworkCardProps) {
   const { theme } = useTheme();
-  const tc = THEME_COLORS[theme];
+    const tc = getThemeColors(theme);
   const dlHistory = history.map((h) => h.networkDownload);
   const ulHistory = history.map((h) => h.networkUpload);
   const lc = getLatencyColor(network.latency);
@@ -85,7 +79,7 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
               {formatSpeed(network.downloadSpeed).value} {formatSpeed(network.downloadSpeed).unit}
             </span>
           </div>
-          <Sparkline data={dlHistory} color={tc.primary} height={56} />
+          <Sparkline data={dlHistory} color={tc.primary} height={86} />
         </div>
         <div className="flex-1 px-5 py-3">
           <div className="flex justify-between items-center mb-2">
@@ -94,7 +88,7 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
               {formatSpeed(network.uploadSpeed).value} {formatSpeed(network.uploadSpeed).unit}
             </span>
           </div>
-          <Sparkline data={ulHistory} color={tc.secondary} height={56} />
+          <Sparkline data={ulHistory} color={tc.secondary} height={86} />
         </div>
       </div>
 

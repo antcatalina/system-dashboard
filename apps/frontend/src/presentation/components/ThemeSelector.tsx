@@ -1,14 +1,93 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme, type Theme } from "../context/ThemeContext";
 import "../styles/components/ThemeSelector.css";
 
-type ThemeType = "default" | "neon";
-
 const THEMES = [
-  { id: "default" as ThemeType, label: "DARK",  icon: "◐", color: "#00e5ff", description: "Balanced dark mode" },
-  // { id: "light"   as ThemeType, label: "LIGHT", icon: "◯", color: "#663399", description: "Professional light mode" },
-  { id: "neon"    as ThemeType, label: "NEON",  icon: "◆", color: "#ff006e", description: "High-contrast neon" },
+  {
+    id: "default" as Theme,
+    label: "DARK",
+    icon: "◐",
+    color: "#00e5ff",
+    description: "Balanced dark mode",
+  },
+  {
+    id: "light" as Theme,
+    label: "LIGHT",
+    icon: "◯",
+    color: "#663399",
+    description: "Professional light",
+  },
+  {
+    id: "pink" as Theme,
+    label: "PINK",
+    icon: "◆",
+    color: "#ff006e",
+    description: "Vibrant pink glow",
+  },
+  {
+    id: "red" as Theme,
+    label: "RED",
+    icon: "◆",
+    color: "#ff3d3d",
+    description: "Bold red energy",
+  },
+  {
+    id: "yellow" as Theme,
+    label: "YELLOW",
+    icon: "◆",
+    color: "#ffff00",
+    description: "Neon yellow shine",
+  },
+  {
+    id: "obsidian" as Theme,
+    label: "OBSIDIAN",
+    icon: "◈",
+    color: "#c084fc",
+    description: "Purple, black & cream",
+  },
+  {
+    id: "midnight" as Theme,
+    label: "MIDNIGHT",
+    icon: "◈",
+    color: "#4d9fff",
+    description: "Deep navy & violet",
+  },
+  {
+    id: "forest" as Theme,
+    label: "FOREST",
+    icon: "◈",
+    color: "#4ade80",
+    description: "Dark green & warm wood",
+  },
+  {
+    id: "aurora" as Theme,
+    label: "AURORA",
+    icon: "◈",
+    color: "#00e5cc",
+    description: "Teal & violet drift",
+  },
+  {
+    id: "ocean" as Theme,
+    label: "OCEAN",
+    icon: "◈",
+    color: "#0096ff",
+    description: "Deep blue & cyan",
+  },
+  {
+    id: "matrix" as Theme,
+    label: "MATRIX",
+    icon: "◈",
+    color: "#00ff9d",
+    description: "Phosphor green",
+  },
+  {
+    id: "neon" as Theme,
+    label: "NEON",
+    icon: "◈",
+    color: "#bf5af2",
+    description: "Purple & electric yellow",
+  },
 ];
 
 export function ThemeSelector() {
@@ -16,7 +95,7 @@ export function ThemeSelector() {
   const [isOpen, setIsOpen] = useState(false);
   const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const current = THEMES.find((t) => t.id === theme)!;
+  const current = THEMES.find((t) => t.id === theme) ?? THEMES[0];
 
   useEffect(() => {
     if (isOpen && triggerRef.current) {
@@ -49,52 +128,74 @@ export function ThemeSelector() {
       >
         <span className="theme-selector__trigger-icon">{current.icon}</span>
         <span className="theme-selector__trigger-label">{current.label}</span>
-        <span className="theme-selector__trigger-indicator" style={{ backgroundColor: current.color }} />
+        <span
+          className="theme-selector__trigger-indicator"
+          style={{ backgroundColor: current.color }}
+        />
       </button>
 
-      {isOpen && createPortal(
-        <>
-          <div
-            style={{ position: "fixed", inset: 0, zIndex: 9998 }}
-            onClick={() => setIsOpen(false)}
-          />
-          <div
-            className="theme-selector__menu"
-            style={{
-              position: "fixed",
-              top: menuPos.top,
-              right: menuPos.right,
-              zIndex: 9999,
-            }}
-          >
-            <div className="theme-selector__options">
-              {THEMES.map((option) => (
-                <button
-                  key={option.id}
-                  className={`theme-selector__option${theme === option.id ? " theme-selector__option--active" : ""}`}
-                  onClick={() => { setTheme(option.id); setIsOpen(false); }}
-                  style={{ "--option-color": option.color } as React.CSSProperties}
-                >
-                  <span className="theme-selector__option-icon">{option.icon}</span>
-                  <span className="theme-selector__option-text">
-                    <span className="theme-selector__option-title">{option.label}</span>
-                    <span className="theme-selector__option-description">{option.description}</span>
-                  </span>
-                  {theme === option.id && <span className="theme-selector__option-check">✓</span>}
-                </button>
-              ))}
+      {isOpen &&
+        createPortal(
+          <>
+            <div
+              style={{ position: "fixed", inset: 0, zIndex: 9998 }}
+              onClick={() => setIsOpen(false)}
+            />
+            <div
+              className="theme-selector__menu"
+              style={{
+                position: "fixed",
+                top: menuPos.top,
+                right: menuPos.right,
+                zIndex: 9999,
+              }}
+            >
+              <div className="theme-selector__options">
+                {THEMES.map((option) => (
+                  <button
+                    key={option.id}
+                    className={`theme-selector__option${theme === option.id ? " theme-selector__option--active" : ""}`}
+                    onClick={() => {
+                      setTheme(option.id);
+                      setIsOpen(false);
+                    }}
+                    style={
+                      { "--option-color": option.color } as React.CSSProperties
+                    }
+                  >
+                    <span className="theme-selector__option-icon">
+                      {option.icon}
+                    </span>
+                    <span className="theme-selector__option-text">
+                      <span className="theme-selector__option-title">
+                        {option.label}
+                      </span>
+                      <span className="theme-selector__option-description">
+                        {option.description}
+                      </span>
+                    </span>
+                    {theme === option.id && (
+                      <span className="theme-selector__option-check">✓</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+              <div className="theme-selector__footer">
+                <span className="theme-selector__footer-text">
+                  THEME CUSTOMIZATION
+                </span>
+                <span
+                  className="theme-selector__footer-dot"
+                  style={{
+                    backgroundColor: current.color,
+                    boxShadow: `0 0 6px ${current.color}`,
+                  }}
+                />
+              </div>
             </div>
-            <div className="theme-selector__footer">
-              <span className="theme-selector__footer-text">THEME CUSTOMIZATION</span>
-              <span
-                className="theme-selector__footer-dot"
-                style={{ backgroundColor: current.color, boxShadow: `0 0 6px ${current.color}` }}
-              />
-            </div>
-          </div>
-        </>,
-        document.body
-      )}
+          </>,
+          document.body,
+        )}
     </div>
   );
 }

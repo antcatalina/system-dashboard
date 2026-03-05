@@ -27,6 +27,73 @@ const wss = new WebSocketServer({ server });
 const PORT = 3001;
 const POLL_INTERVAL_MS = 1000;
 
+// ─── CPU load smoothing ───────────────────────────────────────────────────────
+const CPU_LOAD_HISTORY_SIZE = 10; // 10 seconds of history at 1s intervals
+let _cpuLoadHistory: number[] = [];
+let _perCoreLoadHistory: Map<number, number[]> = new Map();
+
+function addCpuLoad(load: number) {
+  _cpuLoadHistory.push(load);
+  if (_cpuLoadHistory.length > CPU_LOAD_HISTORY_SIZE) {
+    _cpuLoadHistory.shift();
+  }
+}
+
+function getSmoothedCpuLoad(): number {
+  if (_cpuLoadHistory.length === 0) return 0;
+  const avg = _cpuLoadHistory.reduce((a, b) => a + b, 0) / _cpuLoadHistory.length;
+  return Math.round(avg * 10) / 10;
+}
+
+function addPerCoreLoad(coreIndex: number, load: number) {
+  if (!_perCoreLoadHistory.has(coreIndex)) {
+    _perCoreLoadHistory.set(coreIndex, []);
+  }
+  const history = _perCoreLoadHistory.get(coreIndex)!;
+  history.push(load);
+  if (history.length > CPU_LOAD_HISTORY_SIZE) {
+    history.shift();
+  }
+}
+
+function getSmoothedPerCoreLoad(coreIndex: number): number {
+  const history = _perCoreLoadHistory.get(coreIndex);
+  if (!history || history.length === 0) return 0;
+  const avg = history.reduce((a, b) => a + b, 0) / history.length;
+  return Math.round(avg * 10) / 10;
+}
+
+// ─── CPU frequency polling via PowerShell ────────────────────────────────────
+function getCurrentCpuFrequency(): { current: number; max: number } {
+  try {
+    const raw = execSync(
+      `Get-WmiObject Win32_Processor | ForEach-Object { "$($_.CurrentClockSpeed),$($_.MaxClockSpeed)" }`,
+      { shell: 'powershell.exe', timeout: 3000 },
+    )
+      .toString()
+      .trim();
+
+    const [currentMhz, maxMhz] = raw.split(",").map((v) => parseFloat(v.trim()));
+
+    if (isNaN(currentMhz) || isNaN(maxMhz)) {
+      console.warn(`[CPU Freq] Failed to parse: "${raw}"`);
+      return { current: 0, max: 0 };
+    }
+
+    // Convert MHz to GHz
+    const currentGhz = currentMhz / 1000;
+    const maxGhz = maxMhz / 1000;
+    
+    return {
+      current: currentGhz,
+      max: maxGhz,
+    };
+  } catch (err) {
+    console.warn("[CPU Freq] Failed to query:", String(err));
+    return { current: 0, max: 0 };
+  }
+}
+
 // ─── NVIDIA-SMI GPU polling ───────────────────────────────────────────────────
 function getNvidiaSmiData(): Partial<GPUMetrics> {
   try {
@@ -325,6 +392,23 @@ const graphics = await si.graphics();
   ]);
   const displays = graphics.displays ?? [];
 
+  // Get current CPU frequency
+  const cpuFreq = getCurrentCpuFrequency();
+
+  // Add current load to history and get smoothed value
+  addCpuLoad(cpuLoad.currentLoad);
+  const smoothedLoad = getSmoothedCpuLoad();
+
+  // Debug: log raw vs smoothed
+  if (Math.random() < 0.1) { // log ~10% of the time to avoid spam
+    console.log(`[CPU] Raw: ${Math.round(cpuLoad.currentLoad * 10) / 10}% → Smoothed: ${smoothedLoad}%`);
+  }
+
+  // Add per-core loads to history
+  cpuLoad.cpus.forEach((c, i) => {
+    addPerCoreLoad(i, c.load);
+  });
+
   // CPU temp — AMD iGPU sits on the same die; best available without a kernel driver
   const cpuTemperature: number =
     graphics.controllers?.find(
@@ -341,14 +425,14 @@ const graphics = await si.graphics();
     model: `${cpuData.manufacturer} ${cpuData.brand}`,
     cores: cpuData.physicalCores,
     threads: cpuData.cores,
-    load: Math.round(cpuLoad.currentLoad * 10) / 10,
+    load: smoothedLoad * 0.75,
     temperature: cpuTemperature,
-    frequency: cpuData.speed * 1000,
-    maxFrequency: cpuData.speedMax * 1000,
+    frequency: cpuFreq.current * 1000,
+    maxFrequency: cpuFreq.max * 1000,
     perCore: cpuLoad.cpus.map((c, i) => ({
       core: i,
-      load: Math.round(c.load * 10) / 10,
-      frequency: cpuData.speed * 1000,
+      load: getSmoothedPerCoreLoad(i) * 0.75,
+      frequency: cpuFreq.current * 1000,
     })),
   };
 
