@@ -1,16 +1,16 @@
 import { motion } from "framer-motion";
-import type { CPU } from "../../domain";
-import type { MetricHistory } from "../hooks/useMetrics";
+import type { MetricHistory } from "../../hooks/useMetrics";
 import { RadialGauge } from "./RadialGauge";
 import { Sparkline } from "./Sparkline";
 import { getLoadColor } from "../../shared/utils/colors";
 import { useTheme } from "../context/ThemeContext";
 import "../styles/components/CPUCard.css";
 import { getThemeColors } from "../../shared/utils/themeColors";
+import { CPUMetrics } from "@system-dashboard/shared";
 
 interface CPUCardProps {
-  cpu: CPU;
-  history: MetricHistory[];
+  cpu: CPUMetrics;
+  history: Array<MetricHistory>;
 }
 
 export function CPUCard({ cpu, history }: CPUCardProps) {
@@ -20,7 +20,7 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
   const cpuHistory = history.map((h) => h.cpuLoad);
   const freqPct =
     cpu.maxFrequency > 0 ? (cpu.frequency / cpu.maxFrequency) * 100 : 0;
-  const ghz = cpu.getFrequencyGHz().toFixed(2);
+  const ghz = (cpu.frequency / 1000).toFixed(2);
 
   return (
     <motion.div
@@ -108,7 +108,10 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
       <div className="cpu-card__frequency">
         <div className="cpu-card__frequency-label">
           <span className="cpu-card__label">FREQUENCY</span>
-          <span className="cpu-card__frequency-value" style={{ color: tc.primary }}>
+          <span
+            className="cpu-card__frequency-value"
+            style={{ color: tc.primary }}
+          >
             {ghz} / {(cpu.maxFrequency / 1000).toFixed(1)} GHz
           </span>
         </div>

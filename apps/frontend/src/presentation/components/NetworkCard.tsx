@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import type { Network } from '../../domain';
-import type { MetricHistory } from '../hooks/useMetrics';
+import type { MetricHistory } from '../../hooks/useMetrics';
 import { Sparkline } from './Sparkline';
 import { formatSpeed, formatBytes } from '../../shared/utils/formatters';
 import { getLatencyColor } from '../../shared/utils/colors';
@@ -102,9 +102,9 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
               style={{ color: lc, textShadow: `0 0 20px ${lc}60` }}>
               {network.latency > 0 ? network.latency : '—'}
             </span>
-            {network.latency > 0 && <span className="font-mono text-xl" style={{ color: `${lc}80` }}>ms</span>}
+            {network.latency > 0 && <span className="font-mono text-xl" style={{ color: lc }}>ms</span>}
           </div>
-          <span className="font-mono text-xl mt-1" style={{ color: lc }}>{latencyLabel(network.latency)}</span>
+          <span className="font-mono text-2xl mt-1" style={{ color: lc }}>{latencyLabel(network.latency)}</span>
         </div>
         <div className="px-5 py-3" style={{ borderBottom: `1px solid ${tc.borderFaint}` }}>
           <span className="label-text block mb-1">↓ SESSION</span>

@@ -26,7 +26,7 @@ function FpsSparkline({ history }: { history: number[] }) {
   });
   const areaPoints = [`0,${SPARKLINE_HEIGHT}`, ...points, `${SPARKLINE_WIDTH},${SPARKLINE_HEIGHT}`].join(" ");
   const lastVal = history[history.length - 1];
-  const color = lastVal >= 120 ? "#00ff9d" : lastVal >= 60 ? "#ffb300" : "#ff4d4d";
+  const color = lastVal >= 120 ? "var(--color-green)" : lastVal >= 60 ? "var(--color-amber)" : "var(--color-red)";
   return (
     <svg width={SPARKLINE_WIDTH} height={SPARKLINE_HEIGHT}
       viewBox={`0 0 ${SPARKLINE_WIDTH} ${SPARKLINE_HEIGHT}`} className="flex-shrink-0">

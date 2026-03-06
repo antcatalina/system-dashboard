@@ -1,23 +1,25 @@
 import { motion } from "framer-motion";
-import type { GPU } from "../../domain";
-import type { MetricHistory } from "../hooks/useMetrics";
+import type { MetricHistory } from "../../hooks/useMetrics";
 import { RadialGauge } from "./RadialGauge";
 import { Sparkline } from "./Sparkline";
 import { getTemperatureColor } from "../../shared/utils/colors";
 import { useTheme } from "../context/ThemeContext";
 import "../styles/components/GPUCard.css";
 import { getThemeColors } from "../../shared/utils/themeColors";
+import { GPUMetrics } from "@system-dashboard/shared";
 
 interface GPUCardProps {
-  gpu: GPU;
-  history: MetricHistory[];
+  gpu: GPUMetrics;
+  history: Array<MetricHistory>;
 }
 
 export function GPUCard({ gpu, history }: GPUCardProps) {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
-  const vramPct = gpu.getMemoryUsagePercent();
-  const powerPct = gpu.getPowerDrawPercent();
+  const vramPct =
+    gpu.memoryTotal > 0 ? (gpu.memoryUsed / gpu.memoryTotal) * 100 : 0;
+  const powerPct =
+    gpu.powerLimit > 0 ? (gpu.powerDraw / gpu.powerLimit) * 100 : 0;
   const tempColor = getTemperatureColor(gpu.temperature);
   const gpuHistory = history.map((h) => h.gpuUtil);
 
@@ -113,7 +115,7 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
         <div className="gpu-card__clock gpu-card__clock--left">
           <span className="gpu-card__label">CORE CLOCK</span>
           <span
-            className="gpu-card__clock-value glow-cyan"
+            className="gpu-card__clock-value glow-primary"
             style={{ color: tc.primary }}
           >
             {gpu.coreClock}
@@ -123,8 +125,8 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
         <div className="gpu-card__clock gpu-card__clock--right">
           <span className="gpu-card__label">MEM CLOCK</span>
           <span
-            className="gpu-card__clock-value glow-green"
-            style={{ color: tc.secondary }}
+            className="gpu-card__clock-value glow-tertiary"
+            style={{ color: tc.tertiary }}
           >
             {gpu.memoryClock}
             <span className="gpu-card__clock-unit">MHz</span>

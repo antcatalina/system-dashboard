@@ -7,9 +7,9 @@ export const API_CONFIG = {
 };
 
 export const POLLING_CONFIG = {
-  INTERVAL_MS: 1500, // Refresh every 1.5 second
+  INTERVAL_MS: 1000, // Refresh every 1 second
   RETRY_INTERVAL_MS: 3000, // Retry every 3 seconds if offline
-  HISTORY_SIZE: 120, // Keep last 120 data points
+  HISTORY_SIZE: 60, // Keep last 60 data points
 };
 
 export const THRESHOLDS = {

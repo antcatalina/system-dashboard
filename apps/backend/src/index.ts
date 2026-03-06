@@ -41,7 +41,8 @@ function addCpuLoad(load: number) {
 
 function getSmoothedCpuLoad(): number {
   if (_cpuLoadHistory.length === 0) return 0;
-  const avg = _cpuLoadHistory.reduce((a, b) => a + b, 0) / _cpuLoadHistory.length;
+  const avg =
+    _cpuLoadHistory.reduce((a, b) => a + b, 0) / _cpuLoadHistory.length;
   return Math.round(avg * 10) / 10;
 }
 
@@ -68,12 +69,14 @@ function getCurrentCpuFrequency(): { current: number; max: number } {
   try {
     const raw = execSync(
       `Get-WmiObject Win32_Processor | ForEach-Object { "$($_.CurrentClockSpeed),$($_.MaxClockSpeed)" }`,
-      { shell: 'powershell.exe', timeout: 3000 },
+      { shell: "powershell.exe", timeout: 3000 },
     )
       .toString()
       .trim();
 
-    const [currentMhz, maxMhz] = raw.split(",").map((v) => parseFloat(v.trim()));
+    const [currentMhz, maxMhz] = raw
+      .split(",")
+      .map((v) => parseFloat(v.trim()));
 
     if (isNaN(currentMhz) || isNaN(maxMhz)) {
       console.warn(`[CPU Freq] Failed to parse: "${raw}"`);
@@ -83,7 +86,7 @@ function getCurrentCpuFrequency(): { current: number; max: number } {
     // Convert MHz to GHz
     const currentGhz = currentMhz / 1000;
     const maxGhz = maxMhz / 1000;
-    
+
     return {
       current: currentGhz,
       max: maxGhz,
@@ -273,8 +276,13 @@ function startPresentMon() {
     ]);
 
     _presentMonProc.on("error", (err) => {
-      console.warn("[PresentMon] Failed to start (FPS metrics will be unavailable):", err.message);
-      console.warn("[PresentMon] Note: PresentMon requires admin privileges or Performance Log Users group");
+      console.warn(
+        "[PresentMon] Failed to start (FPS metrics will be unavailable):",
+        err.message,
+      );
+      console.warn(
+        "[PresentMon] Note: PresentMon requires admin privileges or Performance Log Users group",
+      );
       console.warn("[PresentMon] Place PresentMon.exe in:", process.cwd());
     });
 
@@ -331,13 +339,14 @@ function startPresentMon() {
           if (timings.length > FRAME_WINDOW) timings.shift();
 
           if (timings.length > 10) {
-            const sorted = [...timings].sort((a, b) => b > a ? 1 : 0);
+            const sorted = [...timings].sort((a, b) => (b > a ? 1 : 0));
             const fps =
               1000 / (sorted.reduce((a, b) => a + b, 0) / sorted.length);
             const pct1Count = Math.max(1, Math.floor(sorted.length * 0.01));
             const avg1Percent =
               1000 /
-              (sorted.slice(0, pct1Count).reduce((a, b) => a + b, 0) / pct1Count);
+              (sorted.slice(0, pct1Count).reduce((a, b) => a + b, 0) /
+                pct1Count);
             const pct01Count = Math.max(1, Math.floor(sorted.length * 0.001));
             const avg01Percent =
               1000 /
@@ -360,14 +369,19 @@ function startPresentMon() {
     _presentMonProc.stderr?.on("data", (d: Buffer) => {
       const msg = d.toString().trim();
       // Suppress repeated admin privilege warnings
-      if (!msg.includes("access denied") && !msg.includes("elevated privilege")) {
+      if (
+        !msg.includes("access denied") &&
+        !msg.includes("elevated privilege")
+      ) {
         console.warn("[PresentMon]", msg);
       }
     });
 
     _presentMonProc.on("exit", (code) => {
       if (code !== 0) {
-        console.warn(`[PresentMon] exited with code ${code}, will retry in 10s...`);
+        console.warn(
+          `[PresentMon] exited with code ${code}, will retry in 10s...`,
+        );
         _fpsState = null;
         setTimeout(startPresentMon, 10000);
       }
@@ -381,62 +395,47 @@ function startPresentMon() {
 // Start on server init
 startPresentMon();
 
-// ─── Metric collection ────────────────────────────────────────────────────────
-async function collectMetrics(): Promise<DashboardPayload> {
-const graphics = await si.graphics();
-  const [cpuLoad, cpuData, mem, network] = await Promise.all([
+// ─── Individual metric collectors ────────────────────────────────────────────
+async function collectCPU(): Promise<CPUMetrics> {
+  const [graphics, cpuLoad, cpuData] = await Promise.all([
+    si.graphics(),
     si.currentLoad(),
     si.cpu(),
-    si.mem(),
-    getNetworkMetrics(),
   ]);
-  const displays = graphics.displays ?? [];
-
-  // Get current CPU frequency
   const cpuFreq = getCurrentCpuFrequency();
-
-  // Add current load to history and get smoothed value
   addCpuLoad(cpuLoad.currentLoad);
   const smoothedLoad = getSmoothedCpuLoad();
-
-  // Debug: log raw vs smoothed
-  if (Math.random() < 0.1) { // log ~10% of the time to avoid spam
-    console.log(`[CPU] Raw: ${Math.round(cpuLoad.currentLoad * 10) / 10}% → Smoothed: ${smoothedLoad}%`);
+  if (Math.random() < 0.1) {
+    console.log(
+      `[CPU] Raw: ${Math.round(cpuLoad.currentLoad * 10) / 10}% → Smoothed: ${smoothedLoad}%`,
+    );
   }
-
-  // Add per-core loads to history
-  cpuLoad.cpus.forEach((c, i) => {
-    addPerCoreLoad(i, c.load);
-  });
-
-  // CPU temp — AMD iGPU sits on the same die; best available without a kernel driver
+  cpuLoad.cpus.forEach((c, i) => addPerCoreLoad(i, c.load));
   const cpuTemperature: number =
     graphics.controllers?.find(
       (c) =>
         c.vendor?.toLowerCase().includes("amd") ||
         c.name?.toLowerCase().includes("radeon"),
     )?.temperatureGpu ?? 0;
-
-  // GPU via nvidia-smi
-  const nvidiaData = getNvidiaSmiData();
-
-  // CPU
-  const cpu: CPUMetrics = {
+  return {
     model: `${cpuData.manufacturer} ${cpuData.brand}`,
     cores: cpuData.physicalCores,
     threads: cpuData.cores,
-    load: smoothedLoad * 0.75,
+    load: smoothedLoad * 0.85,
     temperature: cpuTemperature,
     frequency: cpuFreq.current * 1000,
     maxFrequency: cpuFreq.max * 1000,
     perCore: cpuLoad.cpus.map((c, i) => ({
       core: i,
-      load: getSmoothedPerCoreLoad(i) * 0.75,
+      load: getSmoothedPerCoreLoad(i) * 0.85,
       frequency: cpuFreq.current * 1000,
     })),
   };
+}
 
-  const gpu: GPUMetrics = {
+async function collectGPU(): Promise<GPUMetrics> {
+  const nvidiaData = getNvidiaSmiData();
+  return {
     model: nvidiaData.model ?? "Unknown GPU",
     utilization: nvidiaData.utilization ?? 0,
     memoryUsed: nvidiaData.memoryUsed ?? 0,
@@ -449,9 +448,11 @@ const graphics = await si.graphics();
     memoryClock: nvidiaData.memoryClock ?? 0,
     driverVersion: nvidiaData.driverVersion ?? "N/A",
   };
+}
 
-  // RAM
-  const ram: RAMMetrics = {
+async function collectRAM(): Promise<RAMMetrics> {
+  const mem = await si.mem();
+  return {
     total: Math.round((mem.total / 1024 ** 3) * 100) / 100,
     used: Math.round((mem.active / 1024 ** 3) * 100) / 100,
     free: Math.round((mem.free / 1024 ** 3) * 100) / 100,
@@ -459,10 +460,12 @@ const graphics = await si.graphics();
     swapTotal: Math.round((mem.swaptotal / 1024 ** 3) * 100) / 100,
     swapUsed: Math.round((mem.swapused / 1024 ** 3) * 100) / 100,
   };
+}
 
-  // Monitors — sort primary first, use d.main for correct detection,
-  // fall back to connection type + resolution when model name is empty
-  const monitors: MonitorInfo[] = displays
+async function collectMonitors(): Promise<MonitorInfo[]> {
+  const graphics = await si.graphics();
+  const displays = graphics.displays ?? [];
+  return displays
     .slice()
     .sort((a, b) => (b.main ? 1 : 0) - (a.main ? 1 : 0))
     .map((d, i) => {
@@ -484,27 +487,13 @@ const graphics = await si.graphics();
         y: d.positionY ?? 0,
       };
     });
-
-  const fps: FPSMetrics | null = _fpsState;
-
-  return {
-    timestamp: Date.now(),
-    cpu,
-    gpu,
-    ram,
-    monitors,
-    network,
-    fps,
-  };
 }
 
 // ─── WebSocket broadcast ──────────────────────────────────────────────────────
 function broadcast(msg: WSMessage) {
   const raw = JSON.stringify(msg);
   wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(raw);
-    }
+    if (client.readyState === WebSocket.OPEN) client.send(raw);
   });
 }
 
@@ -519,20 +508,57 @@ wss.on("connection", (ws) => {
   ws.on("close", () => console.log("[WS] Client disconnected"));
 });
 
-// ─── Poll loop ────────────────────────────────────────────────────────────────
-setInterval(async () => {
-  try {
-    const data = await collectMetrics();
-    broadcast({ type: "metrics", data });
-  } catch (err) {
-    console.error("[Poll] Error:", err);
-  }
+// ─── Poll loop — each metric fires independently, UI updates as each resolves ─
+setInterval(() => {
+  const timestamp = Date.now();
+
+  collectCPU()
+    .then((cpu) => broadcast({ type: "metric_cpu", data: { timestamp, cpu } }))
+    .catch((err) => console.error("[Poll] CPU error:", err));
+
+  collectGPU()
+    .then((gpu) => broadcast({ type: "metric_gpu", data: { timestamp, gpu } }))
+    .catch((err) => console.error("[Poll] GPU error:", err));
+
+  collectRAM()
+    .then((ram) => broadcast({ type: "metric_ram", data: { timestamp, ram } }))
+    .catch((err) => console.error("[Poll] RAM error:", err));
+
+  getNetworkMetrics()
+    .then((network) =>
+      broadcast({ type: "metric_network", data: { timestamp, network } }),
+    )
+    .catch((err) => console.error("[Poll] Network error:", err));
+
+  collectMonitors()
+    .then((monitors) =>
+      broadcast({ type: "metric_monitors", data: { timestamp, monitors } }),
+    )
+    .catch((err) => console.error("[Poll] Monitors error:", err));
+
+  // FPS is sync state — broadcast immediately
+  broadcast({ type: "metric_fps", data: { timestamp, fps: _fpsState } });
 }, POLL_INTERVAL_MS);
 
 // ─── REST endpoint (optional one-shot fetch) ─────────────────────────────────
 app.get("/api/metrics", async (_req, res) => {
   try {
-    const data = await collectMetrics();
+    const [cpu, gpu, ram, network, monitors] = await Promise.all([
+      collectCPU(),
+      collectGPU(),
+      collectRAM(),
+      getNetworkMetrics(),
+      collectMonitors(),
+    ]);
+    const data: DashboardPayload = {
+      timestamp: Date.now(),
+      cpu,
+      gpu,
+      ram,
+      network,
+      monitors,
+      fps: _fpsState,
+    };
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: String(err) });

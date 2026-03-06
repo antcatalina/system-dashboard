@@ -1,41 +1,41 @@
 export interface CPUCore {
   core: number;
-  load: number;       // 0-100
-  frequency: number;  // MHz
+  load: number; // 0-100
+  frequency: number; // MHz
 }
 
 export interface CPUMetrics {
   model: string;
   cores: number;
   threads: number;
-  load: number;         // overall %
-  temperature: number;  // °C
-  frequency: number;    // MHz current
+  load: number; // overall %
+  temperature: number; // °C
+  frequency: number; // MHz current
   maxFrequency: number; // MHz max
   perCore: CPUCore[];
 }
 
 export interface GPUMetrics {
   model: string;
-  utilization: number;     // 0-100
-  memoryUsed: number;      // MB
-  memoryTotal: number;     // MB
-  temperature: number;     // °C
-  fanSpeed: number;        // 0-100 %
-  powerDraw: number;       // Watts
-  powerLimit: number;      // Watts
-  coreClock: number;       // MHz
-  memoryClock: number;     // MHz
+  utilization: number; // 0-100
+  memoryUsed: number; // MB
+  memoryTotal: number; // MB
+  temperature: number; // °C
+  fanSpeed: number; // 0-100 %
+  powerDraw: number; // Watts
+  powerLimit: number; // Watts
+  coreClock: number; // MHz
+  memoryClock: number; // MHz
   driverVersion: string;
 }
 
 export interface RAMMetrics {
-  total: number;      // GB
-  used: number;       // GB
-  free: number;       // GB
+  total: number; // GB
+  used: number; // GB
+  free: number; // GB
   usedPercent: number;
-  swapTotal: number;  // GB
-  swapUsed: number;   // GB
+  swapTotal: number; // GB
+  swapUsed: number; // GB
 }
 
 export interface MonitorInfo {
@@ -51,25 +51,25 @@ export interface MonitorInfo {
 
 export interface FPSMetrics {
   fps: number;
-  avg1Percent: number;   // 1% low
-  avg01Percent: number;  // 0.1% low
+  avg1Percent: number; // 1% low
+  avg01Percent: number; // 0.1% low
   processName: string;
 }
 
 export interface NetworkAdapter {
   name: string;
-  type: string;          // 'wired' | 'wireless' | 'other'
+  type: string; // 'wired' | 'wireless' | 'other'
   ipv4: string;
   mac: string;
-  speed: number;         // Mbps (link speed)
+  speed: number; // Mbps (link speed)
 }
 
 export interface NetworkMetrics {
-  downloadSpeed: number;   // Mbps current
-  uploadSpeed: number;     // Mbps current
-  downloadTotal: number;   // GB since boot
-  uploadTotal: number;     // GB since boot
-  latency: number;         // ms ping to gateway
+  downloadSpeed: number; // Mbps current
+  uploadSpeed: number; // Mbps current
+  downloadTotal: number; // GB since boot
+  uploadTotal: number; // GB since boot
+  latency: number; // ms ping to gateway
   adapters: NetworkAdapter[];
   primaryAdapter: string;
 }
@@ -85,7 +85,18 @@ export interface DashboardPayload {
 }
 
 export type WSMessage =
-  | { type: 'metrics'; data: DashboardPayload }
-  | { type: 'error'; message: string }
-  | { type: 'ping' }
-  | { type: 'pong' };
+  | { type: "metric_cpu"; data: { timestamp: number; cpu: CPUMetrics } }
+  | { type: "metric_gpu"; data: { timestamp: number; gpu: GPUMetrics } }
+  | { type: "metric_ram"; data: { timestamp: number; ram: RAMMetrics } }
+  | {
+      type: "metric_network";
+      data: { timestamp: number; network: NetworkMetrics };
+    }
+  | {
+      type: "metric_monitors";
+      data: { timestamp: number; monitors: MonitorInfo[] };
+    }
+  | { type: "metric_fps"; data: { timestamp: number; fps: FPSMetrics | null } }
+  | { type: "error"; message: string }
+  | { type: "ping" }
+  | { type: "pong" };

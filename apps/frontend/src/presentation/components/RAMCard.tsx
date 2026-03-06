@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import type { RAM } from "../../domain";
-import type { MetricHistory } from "../hooks/useMetrics";
+import type { MetricHistory } from "../../hooks/useMetrics";
 import { Sparkline } from "./Sparkline";
 import { getThemeColors } from "../../shared/utils/themeColors";
 import { useTheme } from "../context/ThemeContext";
+import { getMemoryColor } from "../../shared/utils/colors";
 
 interface RAMCardProps {
   ram: RAM;
@@ -19,7 +20,8 @@ export function RAMCard({ ram, history }: RAMCardProps) {
       ? "glow-red"
       : ram.usedPercent > 65
         ? "glow-amber"
-        : "glow-purple";
+        : "glow-tertiary";
+  const mc = getMemoryColor(ram.usedPercent);
   const segments = 32;
 
   return (
@@ -34,7 +36,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
         <div className="flex items-center gap-3">
           <div
             className="ram-card__dot"
-            style={{ backgroundColor: tc.primary, color: tc.secondary }}
+            style={{ backgroundColor: tc.tertiary, color: tc.tertiary }}
           />
           <span className="ram-card__label">MEMORY</span>
           <span
@@ -48,7 +50,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
           <span className="ram-card__label">PRESSURE</span>
           <span
             className={`ram-card__pressure ${glowClass}`}
-            style={{ color: tc.tertiary }}
+            style={{ color: mc }}
           >
             {ram.usedPercent.toFixed(1)}
             <span className={`ram-card__pressure-unit`}>%</span>
@@ -70,9 +72,9 @@ export function RAMCard({ ram, history }: RAMCardProps) {
                 style={{
                   height: 48,
                   backgroundColor: active
-                    ? tc.tertiary
+                    ? mc
                     : "rgba(255,255,255,0.04)",
-                  boxShadow: active ? `0 0 4px ${tc.tertiary}50` : "none",
+                  boxShadow: active ? `0 0 4px ${mc}50` : "none",
                 }}
                 animate={{ opacity: active ? 1 : 0.3 }}
                 transition={{ duration: 0.3, delay: i * 0.01 }}
@@ -95,7 +97,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
           <span className="ram-card__label">USED</span>
           <span
             className={`ram-card__stat-value ${glowClass}`}
-            style={{ color: tc.tertiary }}
+            style={{ color: mc }}
           >
             {ram.used.toFixed(1)}
             <span className="ram-card__stat-unit">GB</span>
