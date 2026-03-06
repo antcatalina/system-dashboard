@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,14 +8,26 @@
   body {
     @apply bg-surface text-white overflow-x-hidden;
     background-image:
-      radial-gradient(ellipse at 15% 40%, rgba(0, 229, 255, 0.06) 0%, transparent 55%),
-      radial-gradient(ellipse at 85% 15%, rgba(0, 255, 157, 0.05) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 90%, rgba(179, 136, 255, 0.04) 0%, transparent 50%);
+      radial-gradient(
+        ellipse at 15% 40%,
+        rgba(0, 229, 255, 0.06) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse at 85% 15%,
+        rgba(0, 255, 157, 0.05) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at 50% 90%,
+        rgba(179, 136, 255, 0.04) 0%,
+        transparent 50%
+      );
     background-attachment: fixed;
   }
 
   body::before {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
     background-image:
@@ -27,7 +39,7 @@
   }
 
   body::after {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
     background: repeating-linear-gradient(
@@ -41,12 +53,23 @@
     z-index: 0;
   }
 
-  * { position: relative; z-index: 1; }
+  * {
+    position: relative;
+    z-index: 1;
+  }
 
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #0a0c10; }
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0c10;
+  }
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, rgba(var(--color-cyan-rgb), 0.25), rgba(var(--color-green-rgb), 0.25));
+    background: linear-gradient(
+      180deg,
+      rgba(var(--color-primary-rgb), 0.25),
+      rgba(var(--color-secondary-rgb), 0.25)
+    );
     border-radius: 2px;
   }
 }
@@ -57,53 +80,65 @@
     @apply bg-surface-card border border-surface-border relative overflow-hidden;
     backdrop-filter: blur(var(--card-backdrop-blur, 12px));
     box-shadow:
-      0 0 0 1px rgba(255,255,255,0.03),
-      inset 0 1px 0 rgba(255,255,255,0.04);
+      0 0 0 1px rgba(255, 255, 255, 0.03),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
     border-radius: var(--card-border-radius, 0px);
   }
 
-  .card-cyan {
+  .card-primary {
     @apply card;
-    border-color: rgba(var(--color-cyan-rgb), 0.18);
+    border-color: rgba(var(--color-primary-rgb), 0.18);
     box-shadow:
-      0 0 0 1px rgba(var(--color-cyan-rgb), 0.05),
-      0 0 40px rgba(var(--color-cyan-rgb), 0.03),
-      inset 0 1px 0 rgba(var(--color-cyan-rgb), 0.08);
+      0 0 0 1px rgba(var(--color-primary-rgb), 0.05),
+      0 0 40px rgba(var(--color-primary-rgb), 0.03),
+      inset 0 1px 0 rgba(var(--color-primary-rgb), 0.08);
   }
-  .card-cyan::before {
-    content: '';
+  .card-primary::before {
+    content: "";
     @apply absolute inset-0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(var(--color-cyan-rgb), 0.06), transparent 60%);
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(var(--color-primary-rgb), 0.06),
+      transparent 60%
+    );
     pointer-events: none;
   }
 
-  .card-green {
+  .card-secondary {
     @apply card;
-    border-color: rgba(var(--color-green-rgb), 0.18);
+    border-color: rgba(var(--color-secondary-rgb), 0.18);
     box-shadow:
-      0 0 0 1px rgba(var(--color-green-rgb), 0.05),
-      0 0 40px rgba(var(--color-green-rgb), 0.03),
-      inset 0 1px 0 rgba(var(--color-green-rgb), 0.08);
+      0 0 0 1px rgba(var(--color-secondary-rgb), 0.05),
+      0 0 40px rgba(var(--color-secondary-rgb), 0.03),
+      inset 0 1px 0 rgba(var(--color-secondary-rgb), 0.08);
   }
-  .card-green::before {
-    content: '';
+  .card-secondary::before {
+    content: "";
     @apply absolute inset-0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(var(--color-green-rgb), 0.06), transparent 60%);
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(var(--color-secondary-rgb), 0.06),
+      transparent 60%
+    );
     pointer-events: none;
   }
 
-  .card-purple {
+  .card-tertiary {
     @apply card;
-    border-color: rgba(var(--color-purple-rgb), 0.18);
+    border-color: rgba(var(--color-tertiary-rgb), 0.18);
     box-shadow:
-      0 0 0 1px rgba(var(--color-purple-rgb), 0.05),
-      0 0 40px rgba(var(--color-purple-rgb), 0.03),
-      inset 0 1px 0 rgba(var(--color-purple-rgb), 0.08);
+      0 0 0 1px rgba(var(--color-tertiary-rgb), 0.05),
+      0 0 40px rgba(var(--color-tertiary-rgb), 0.03),
+      inset 0 1px 0 rgba(var(--color-tertiary-rgb), 0.08);
   }
-  .card-purple::before {
-    content: '';
+  .card-tertiary::before {
+    content: "";
     @apply absolute inset-0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(var(--color-purple-rgb), 0.06), transparent 60%);
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(var(--color-tertiary-rgb), 0.06),
+      transparent 60%
+    );
     pointer-events: none;
   }
 
@@ -116,31 +151,43 @@
       inset 0 1px 0 rgba(var(--color-amber-rgb), 0.08);
   }
   .card-amber::before {
-    content: '';
+    content: "";
     @apply absolute inset-0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(var(--color-amber-rgb), 0.06), transparent 60%);
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(var(--color-amber-rgb), 0.06),
+      transparent 60%
+    );
     pointer-events: none;
   }
 
   /* ── Corner bracket decoration ── */
   .corner-brackets::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
     background:
       /* top-left */
-      linear-gradient(to right, currentColor 12px, transparent 12px) 0 0 / 12px 1.5px no-repeat,
-      linear-gradient(to bottom, currentColor 12px, transparent 12px) 0 0 / 1.5px 12px no-repeat,
+      linear-gradient(to right, currentColor 12px, transparent 12px) 0 0 / 12px
+        1.5px no-repeat,
+      linear-gradient(to bottom, currentColor 12px, transparent 12px) 0 0 /
+        1.5px 12px no-repeat,
       /* top-right */
-      linear-gradient(to left, currentColor 12px, transparent 12px) 100% 0 / 12px 1.5px no-repeat,
-      linear-gradient(to bottom, currentColor 12px, transparent 12px) 100% 0 / 1.5px 12px no-repeat,
+        linear-gradient(to left, currentColor 12px, transparent 12px) 100% 0 /
+        12px 1.5px no-repeat,
+      linear-gradient(to bottom, currentColor 12px, transparent 12px) 100% 0 /
+        1.5px 12px no-repeat,
       /* bottom-left */
-      linear-gradient(to right, currentColor 12px, transparent 12px) 0 100% / 12px 1.5px no-repeat,
-      linear-gradient(to top, currentColor 12px, transparent 12px) 0 100% / 1.5px 12px no-repeat,
+        linear-gradient(to right, currentColor 12px, transparent 12px) 0 100% /
+        12px 1.5px no-repeat,
+      linear-gradient(to top, currentColor 12px, transparent 12px) 0 100% /
+        1.5px 12px no-repeat,
       /* bottom-right */
-      linear-gradient(to left, currentColor 12px, transparent 12px) 100% 100% / 12px 1.5px no-repeat,
-      linear-gradient(to top, currentColor 12px, transparent 12px) 100% 100% / 1.5px 12px no-repeat;
+        linear-gradient(to left, currentColor 12px, transparent 12px) 100%
+        100% / 12px 1.5px no-repeat,
+      linear-gradient(to top, currentColor 12px, transparent 12px) 100% 100% /
+        1.5px 12px no-repeat;
     opacity: 0.5;
   }
 
@@ -152,18 +199,23 @@
 
   .label-text {
     @apply font-mono text-[20px] uppercase tracking-[0.2em] font-medium;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255, 255, 255, 0.35);
   }
 
   .stat-value {
     @apply font-mono text-[24px] tabular-nums;
-    color: rgba(255,255,255,0.75);
+    color: rgba(255, 255, 255, 0.75);
   }
 
   /* ── Section divider ── */
   .section-divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.06),
+      transparent
+    );
   }
 
   /* ── Live pulse dot ── */
@@ -172,12 +224,44 @@
     animation: livePulse 2s ease-in-out infinite;
   }
 
-  /* ── Glow text ── */
-  .glow-cyan   { text-shadow: 0 0 20px rgba(var(--color-cyan-rgb), 0.8),   0 0 40px rgba(var(--color-cyan-rgb), 0.4); }
-  .glow-green  { text-shadow: 0 0 20px rgba(var(--color-green-rgb), 0.8),   0 0 40px rgba(var(--color-green-rgb), 0.4); }
-  .glow-amber  { text-shadow: 0 0 20px rgba(var(--color-amber-rgb), 0.8),   0 0 40px rgba(var(--color-amber-rgb), 0.4); }
-  .glow-red    { text-shadow: 0 0 20px rgba(var(--color-red-rgb), 0.8),   0 0 40px rgba(var(--color-red-rgb), 0.4); }
-  .glow-purple { text-shadow: 0 0 20px rgba(var(--color-purple-rgb), 0.8), 0 0 40px rgba(var(--color-purple-rgb), 0.4); }
+  .glow-green {
+    text-shadow:
+      0 0 20px rgba(var(--color-green-rgb), 0.8),
+      0 0 40px rgba(var(--color-green-rgb), 0.4);
+  }
+  .glow-amber {
+    text-shadow:
+      0 0 20px rgba(var(--color-amber-rgb), 0.8),
+      0 0 40px rgba(var(--color-amber-rgb), 0.4);
+  }
+  .glow-red {
+    text-shadow:
+      0 0 20px rgba(var(--color-red-rgb), 0.8),
+      0 0 40px rgba(var(--color-red-rgb), 0.4);
+  }
+  .glow-tertiary {
+    text-shadow:
+      0 0 20px rgba(var(--color-tertiary-rgb), 0.8),
+      0 0 40px rgba(var(--color-tertiary-rgb), 0.4);
+  }
+
+  /* ── Glow text — dynamic theme-relative colors ── */
+  /* Use these when you want the glow to follow the active theme's palette   */
+  .glow-primary {
+    text-shadow:
+      0 0 20px rgba(var(--color-primary-rgb), 0.8),
+      0 0 40px rgba(var(--color-primary-rgb), 0.4);
+  }
+  .glow-secondary {
+    text-shadow:
+      0 0 20px rgba(var(--color-secondary-rgb), 0.8),
+      0 0 40px rgba(var(--color-secondary-rgb), 0.4);
+  }
+  .glow-tertiary {
+    text-shadow:
+      0 0 20px rgba(var(--color-tertiary-rgb), 0.8),
+      0 0 40px rgba(var(--color-tertiary-rgb), 0.4);
+  }
 
   /* ── Badge ── */
   .badge {
@@ -189,18 +273,37 @@
   /* ── Stat strip — horizontal KV row ── */
   .stat-strip {
     @apply flex items-center justify-between px-4 py-2;
-    border-top: 1px solid rgba(255,255,255,0.04);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
   }
-  .stat-strip:first-child { border-top: none; }
+  .stat-strip:first-child {
+    border-top: none;
+  }
 }
 
 @keyframes livePulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.5; transform: scale(0.8); }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
 }
 @keyframes scanDown {
-  0%   { transform: translateY(-100%); opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
 }

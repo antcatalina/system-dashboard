@@ -20,18 +20,17 @@ function latencyLabel(ms: number) {
   return 'POOR';
 }
 
-function SpeedBlock({ label, speed, color, secondaryColor, arrow, borderColor }: {
-  label: string; speed: number; color: string; secondaryColor: string; arrow: '↓' | '↑'; borderColor: string;
+function SpeedBlock({ label, speed, color, arrow, borderColor }: {
+  label: string; speed: number; color: string; arrow: '↓' | '↑'; borderColor: string;
 }) {
   const formatted = formatSpeed(speed);
-  const c = arrow === '↓' ? color : secondaryColor;
   return (
     <div className="flex-1 flex flex-col items-center justify-center py-5 px-6"
       style={{ borderRight: arrow === '↓' ? `1px solid ${borderColor}` : 'none' }}>
       <span className="label-text mb-3">{label}</span>
       <div className="flex flex-col items-center gap-1 mb-3">
         {[0, 1, 2].map((i) => (
-          <motion.div key={i} style={{ width: 24, height: 5, backgroundColor: c, borderRadius: 2 }}
+          <motion.div key={i} style={{ width: 24, height: 5, backgroundColor: color, borderRadius: 2 }}
             animate={{ opacity: [0.15, 1, 0.15] }}
             transition={{ duration: 1.2, repeat: Infinity, delay: arrow === '↓' ? i * 0.2 : (2 - i) * 0.2 }}
           />
@@ -39,12 +38,12 @@ function SpeedBlock({ label, speed, color, secondaryColor, arrow, borderColor }:
       </div>
       <div className="flex flex-col items-center" style={{ minHeight: 68 }}>
         <motion.span className="font-display font-bold tabular-nums leading-none"
-          style={{ fontSize: 56, color: c, textShadow: `0 0 28px ${c}70` }}
+          style={{ fontSize: 56, color, textShadow: `0 0 28px ${color}70` }}
           key={formatted.value}
           initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} transition={{ duration: 0.2 }}>
           {formatted.value}
         </motion.span>
-        <span className="font-mono text-xl mt-1.5 uppercase tracking-widest" style={{ color: `${c}99` }}>
+        <span className="font-mono text-xl mt-1.5 uppercase tracking-widest" style={{ color: `${color}99` }}>
           {formatted.unit}
         </span>
       </div>
@@ -60,14 +59,14 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
   const lc = getLatencyColor(network.latency);
 
   return (
-    <motion.div className="card-cyan flex"
+    <motion.div className="card-primary flex"
       style={{ color: tc.primary, minHeight: 200 }}
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.2 }}>
 
       {/* ── Speed readouts ── */}
       <div className="flex" style={{ borderRight: `1px solid ${tc.border}`, minWidth: 380 }}>
-        <SpeedBlock label="DOWNLOAD" speed={network.downloadSpeed} color={tc.primary} secondaryColor={tc.secondary} arrow="↓" borderColor={tc.borderFaint} />
-        <SpeedBlock label="UPLOAD"   speed={network.uploadSpeed}   color={tc.primary} secondaryColor={tc.secondary} arrow="↑" borderColor={tc.borderFaint} />
+        <SpeedBlock label="DOWNLOAD" speed={network.downloadSpeed} color={tc.primary} arrow="↓" borderColor={tc.borderFaint} />
+        <SpeedBlock label="UPLOAD"   speed={network.uploadSpeed}   color={tc.secondary} arrow="↑" borderColor={tc.borderFaint} />
       </div>
 
       {/* ── Sparklines ── */}

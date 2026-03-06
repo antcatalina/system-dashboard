@@ -4,8 +4,8 @@
   justify-content: space-between;
   padding: 12px 20px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-purple-rgb), var(--border-opacity-med));
-  background: rgba(var(--color-purple-rgb), var(--bg-opacity-med));
+  border-bottom-color: rgba(var(--color-tertiary-rgb), var(--border-opacity-med));
+  background: rgba(var(--color-tertiary-rgb), var(--bg-opacity-med));
 }
 
 .ram-card__header-left {
@@ -63,7 +63,7 @@
 .ram-card__bar-section {
   padding: 20px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-purple-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(var(--color-tertiary-rgb), var(--border-opacity-min));
 }
 
 .ram-card__segments {
@@ -92,7 +92,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-purple-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(var(--color-tertiary-rgb), var(--border-opacity-min));
 }
 
 .ram-card__stat {
@@ -103,7 +103,7 @@
 
 .ram-card__stat--used {
   border-right: 1px solid;
-  border-right-color: rgba(var(--color-purple-rgb), var(--border-opacity-min));
+  border-right-color: rgba(var(--color-tertiary-rgb), var(--border-opacity-min));
 }
 
 .ram-card__stat-label {
@@ -133,7 +133,7 @@
 .ram-card__swap {
   padding: 12px 20px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-purple-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(var(--color-tertiary-rgb), var(--border-opacity-min));
 }
 
 .ram-card__swap-label {
@@ -151,7 +151,7 @@
 .ram-card__swap-value {
   font-family: 'JetBrains Mono', monospace;
   font-size: 24px;
-  color: var(--color-purple);
+  color: var(--color-tertiary);
   font-variant-numeric: tabular-nums;
 }
 

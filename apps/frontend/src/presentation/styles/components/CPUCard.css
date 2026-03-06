@@ -1,7 +1,7 @@
 /* CPU Card component styles */
 
 .cpu-card {
-  color: var(--color-green);
+  color: var(--color-secondary);
 }
 
 .cpu-card__header {
@@ -10,8 +10,8 @@
   justify-content: space-between;
   padding: 12px 20px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-green-rgb), var(--border-opacity-med));
-  background: rgba(var(--color-green-rgb), var(--bg-opacity-med));
+  border-bottom-color: rgba(var(--color-secondary-rgb), var(--border-opacity-med));
+  background: rgba(var(--color-secondary-rgb), var(--bg-opacity-med));
 }
 
 .cpu-card__header-left {
@@ -26,7 +26,7 @@
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
-  background-color: var(--color-green);
+  background-color: var(--color-secondary);
   animation: livePulse 2s ease-in-out infinite;
 }
 
@@ -43,9 +43,9 @@
   font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--color-green);
+  color: var(--color-secondary);
   border: 1px solid;
-  border-color: rgba(var(--color-green-rgb), 0.3);
+  border-color: rgba(var(--color-secondary-rgb), 0.3);
   padding: 4px 8px;
   opacity: 0.7;
 }
@@ -72,9 +72,9 @@
   font-family: 'Orbitron', sans-serif;
   font-size: 36px;
   font-weight: 700;
-  color: var(--color-green);
-  text-shadow: 0 0 20px rgba(var(--color-green-rgb), 0.8), 
-               0 0 40px rgba(var(--color-green-rgb), 0.4);
+  color: var(--color-secondary);
+  text-shadow: 0 0 20px rgba(var(--color-secondary-rgb), 0.8), 
+               0 0 40px rgba(var(--color-secondary-rgb), 0.4);
 }
 
 .cpu-card__value-unit {
@@ -90,13 +90,13 @@
   align-items: center;
   padding: 20px 16px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-green-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(var(--color-secondary-rgb), var(--border-opacity-min));
 }
 
 .cpu-card__activity {
   padding: 20px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-green-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(var(--color-secondary-rgb), var(--border-opacity-min));
 }
 
 .cpu-card__activity-label {
@@ -146,7 +146,7 @@
 .cpu-card__frequency {
   padding: 12px 20px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-green-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(var(--color-secondary-rgb), var(--border-opacity-min));
 }
 
 .cpu-card__frequency-label {
@@ -163,7 +163,7 @@
 .cpu-card__frequency-value {
   font-family: 'JetBrains Mono', monospace;
   font-size: 24px;
-  color: var(--color-purple);
+  color: var(--color-tertiary);
   font-variant-numeric: tabular-nums;
 }
 

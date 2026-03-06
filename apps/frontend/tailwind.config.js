@@ -16,11 +16,11 @@ export default {
           hover: 'rgba(21, 27, 38, 1)',
         },
         accent: {
-          cyan: 'var(--color-cyan)',
-          green: 'var(--color-green)',
           amber: 'var(--color-amber)',
           red: 'var(--color-red)',
-          purple: 'var(--color-purple)',
+          primary: 'var(--color-primary)',
+          secondary: 'var(--color-secondary)',
+          tertiary: 'var(--color-tertiary)',
         },
       },
       animation: {
@@ -29,8 +29,8 @@ export default {
       },
       keyframes: {
         glow: {
-          '0%': { boxShadow: '0 0 5px rgba(var(--color-cyan-rgb), 0.2)' },
-          '100%': { boxShadow: '0 0 20px rgba(var(--color-cyan-rgb), 0.5)' },
+          '0%': { boxShadow: '0 0 5px rgba(var(--color-primary-rgb), 0.2)' },
+          '100%': { boxShadow: '0 0 20px rgba(var(--color-primary-rgb), 0.5)' },
         },
       },
     },

@@ -27,9 +27,9 @@ export function StatusBar({ connected }: { connected: boolean }) {
       {/* Logo block */}
       <div className="status-bar__logo">
         <div className="status-bar__icon">
-          <motion.div className="absolute inset-0 border border-accent-cyan/40"
+          <motion.div className="absolute inset-0 border border-accent-primary/40"
             animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: 'linear' }} />
-          <motion.div className="absolute inset-1.5 border border-accent-cyan/20"
+          <motion.div className="absolute inset-1.5 border border-accent-primary/20"
             animate={{ rotate: -360 }} transition={{ duration: 5, repeat: Infinity, ease: 'linear' }} />
           <div className="status-bar__icon-dot" />
         </div>

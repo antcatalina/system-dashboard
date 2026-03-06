@@ -4,11 +4,11 @@
   display: flex;
   align-items: stretch;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-cyan-rgb), var(--border-opacity-med));
+  border-bottom-color: rgba(var(--color-primary-rgb), var(--border-opacity-med));
   background: linear-gradient(
     180deg,
-    rgba(var(--color-cyan-rgb), var(--bg-opacity-max)) 0%,
-    rgba(var(--color-cyan-rgb), var(--bg-opacity-min)) 100%
+    rgba(var(--color-primary-rgb), var(--bg-opacity-max)) 0%,
+    rgba(var(--color-primary-rgb), var(--bg-opacity-min)) 100%
   );
   min-height: 64px;
   position: relative;
@@ -27,7 +27,7 @@
   right: 0;
   height: 1px;
   pointer-events: none;
-  background: linear-gradient(90deg, transparent 0%, var(--color-cyan) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, var(--color-primary) 50%, transparent 100%);
   animation: scan-pulse 3s ease-in-out infinite;
 }
 
@@ -44,8 +44,8 @@
   gap: 12px;
   padding: 0 24px;
   border-right: 1px solid;
-  border-right-color: rgba(var(--color-cyan-rgb), 0.15);
-  background: rgba(var(--color-cyan-rgb), 0.03);
+  border-right-color: rgba(var(--color-primary-rgb), 0.15);
+  background: rgba(var(--color-primary-rgb), 0.03);
 }
 
 .status-bar__icon {
@@ -64,8 +64,8 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--color-cyan);
-  box-shadow: 0 0 10px var(--color-cyan);
+  background-color: var(--color-primary);
+  box-shadow: 0 0 10px var(--color-primary);
 }
 
 .status-bar__title {
@@ -76,9 +76,9 @@
 }
 
 .status-bar__title-highlight {
-  color: var(--color-cyan);
-  text-shadow: 0 0 20px rgba(var(--color-cyan-rgb), 0.8),
-               0 0 40px rgba(var(--color-cyan-rgb), 0.4);
+  color: var(--color-primary);
+  text-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.8),
+               0 0 40px rgba(var(--color-primary-rgb), 0.4);
 }
 
 .status-bar__subtitle {
@@ -96,7 +96,7 @@
   gap: 12px;
   padding: 0 24px;
   border-right: 1px solid;
-  border-right-color: rgba(var(--color-cyan-rgb), 0.1);
+  border-right-color: rgba(var(--color-primary-rgb), 0.1);
 }
 
 .status-bar__dot {
@@ -148,8 +148,8 @@
   gap: 16px;
   padding: 0 24px;
   border-left: 1px solid;
-  border-left-color: rgba(var(--color-cyan-rgb), 0.1);
-  background: rgba(var(--color-cyan-rgb), 0.02);
+  border-left-color: rgba(var(--color-primary-rgb), 0.1);
+  background: rgba(var(--color-primary-rgb), 0.02);
 }
 
 .status-bar__time {
@@ -179,5 +179,5 @@
   align-items: center;
   padding: 0 24px;
   border-left: 1px solid;
-  border-left-color: rgba(var(--color-cyan-rgb), 0.1);
+  border-left-color: rgba(var(--color-primary-rgb), 0.1);
 }

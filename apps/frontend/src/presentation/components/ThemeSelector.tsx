@@ -3,90 +3,163 @@ import { createPortal } from "react-dom";
 import { useTheme, type Theme } from "../context/ThemeContext";
 import "../styles/components/ThemeSelector.css";
 
-const THEMES = [
+const THEMES: {
+  id: Theme;
+  label: string;
+  icon: string;
+  color: string;
+  description: string;
+}[] = [
+  // ── Dark / neon ──────────────────────────────────────────────────────────
   {
-    id: "default" as Theme,
+    id: "default",
     label: "DARK",
     icon: "◐",
     color: "#00e5ff",
     description: "Balanced dark mode",
   },
   {
-    id: "light" as Theme,
-    label: "LIGHT",
-    icon: "◯",
-    color: "#663399",
-    description: "Professional light",
-  },
-  {
-    id: "pink" as Theme,
+    id: "pink",
     label: "PINK",
     icon: "◆",
     color: "#ff006e",
     description: "Vibrant pink glow",
   },
   {
-    id: "red" as Theme,
+    id: "red",
     label: "RED",
     icon: "◆",
     color: "#ff3d3d",
     description: "Bold red energy",
   },
   {
-    id: "yellow" as Theme,
+    id: "yellow",
     label: "YELLOW",
     icon: "◆",
     color: "#ffff00",
     description: "Neon yellow shine",
   },
   {
-    id: "obsidian" as Theme,
-    label: "OBSIDIAN",
-    icon: "◈",
-    color: "#c084fc",
-    description: "Purple, black & cream",
-  },
-  {
-    id: "midnight" as Theme,
-    label: "MIDNIGHT",
-    icon: "◈",
-    color: "#4d9fff",
-    description: "Deep navy & violet",
-  },
-  {
-    id: "forest" as Theme,
-    label: "FOREST",
-    icon: "◈",
-    color: "#4ade80",
-    description: "Dark green & warm wood",
-  },
-  {
-    id: "aurora" as Theme,
-    label: "AURORA",
-    icon: "◈",
-    color: "#00e5cc",
-    description: "Teal & violet drift",
-  },
-  {
-    id: "ocean" as Theme,
-    label: "OCEAN",
-    icon: "◈",
-    color: "#0096ff",
-    description: "Deep blue & cyan",
-  },
-  {
-    id: "matrix" as Theme,
+    id: "matrix",
     label: "MATRIX",
     icon: "◈",
     color: "#00ff9d",
     description: "Phosphor green",
   },
   {
-    id: "neon" as Theme,
+    id: "neon",
     label: "NEON",
     icon: "◈",
     color: "#bf5af2",
     description: "Purple & electric yellow",
+  },
+  {
+    id: "cyberpunk",
+    label: "CYBERPUNK",
+    icon: "◈",
+    color: "#f9e900",
+    description: "Yellow, magenta & electric blue",
+  },
+  // ── Atmospheric ──────────────────────────────────────────────────────────
+  {
+    id: "aurora",
+    label: "AURORA",
+    icon: "◈",
+    color: "#00e5cc",
+    description: "Teal & violet drift",
+  },
+  {
+    id: "ocean",
+    label: "OCEAN",
+    icon: "◈",
+    color: "#0096ff",
+    description: "Deep blue & primary",
+  },
+  {
+    id: "obsidian",
+    label: "OBSIDIAN",
+    icon: "◈",
+    color: "#c084fc",
+    description: "Purple, black & cream",
+  },
+  {
+    id: "midnight",
+    label: "MIDNIGHT",
+    icon: "◈",
+    color: "#4d9fff",
+    description: "Deep navy & violet",
+  },
+  {
+    id: "forest",
+    label: "FOREST",
+    icon: "◈",
+    color: "#4ade80",
+    description: "Dark green & warm wood",
+  },
+  // ── Light ────────────────────────────────────────────────────────────────
+  {
+    id: "light",
+    label: "LIGHT",
+    icon: "◯",
+    color: "#5b21b6",
+    description: "Professional light",
+  },
+  {
+    id: "winxp",
+    label: "WIN XP",
+    icon: "◯",
+    color: "#2a6dd9",
+    description: "Luna blue bevel",
+  },
+  // ── Editor / retro ───────────────────────────────────────────────────────
+  {
+    id: "dracula",
+    label: "DRACULA",
+    icon: "◈",
+    color: "#bd93f9",
+    description: "Purple, pink & primary",
+  },
+  {
+    id: "tokyonight",
+    label: "TOKYO",
+    icon: "◈",
+    color: "#7aa2f7",
+    description: "Tokyo Night deep navy",
+  },
+  {
+    id: "catppuccin",
+    label: "CATPPUCCIN",
+    icon: "◈",
+    color: "#cba6f7",
+    description: "Catppuccin Mocha pastels",
+  },
+  {
+    id: "nord",
+    label: "NORD",
+    icon: "◈",
+    color: "#88c0d0",
+    description: "Arctic blue-grey",
+  },
+  {
+    id: "gruvbox",
+    label: "GRUVBOX",
+    icon: "◈",
+    color: "#d79921",
+    description: "Warm retro amber",
+  },
+  {
+    id: "solarized",
+    label: "SOLARIZED",
+    icon: "◈",
+    color: "#268bd2",
+    description: "Solarized Dark",
+  },
+  {
+    id: "ubuntu",
+    label: "UBUNTU",
+    icon: "◈",
+    color: "#e95420",
+    description: "Aubergine & orange",
   },
 ];
 

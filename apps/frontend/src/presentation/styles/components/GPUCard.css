@@ -1,7 +1,7 @@
 /* GPU Card component styles */
 
 .gpu-card {
-  color: var(--color-cyan);
+  color: var(--color-primary);
 }
 
 .gpu-card__header {
@@ -10,8 +10,8 @@
   justify-content: space-between;
   padding: 12px 20px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-cyan-rgb), var(--border-opacity-med));
-  background: rgba(var(--color-cyan-rgb), var(--bg-opacity-med));
+  border-bottom-color: rgba(var(--color-primary-rgb), var(--border-opacity-med));
+  background: rgba(var(--color-primary-rgb), var(--bg-opacity-med));
 }
 
 .gpu-card__header-left {
@@ -26,7 +26,7 @@
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
-  background-color: var(--color-cyan);
+  background-color: var(--color-primary);
   animation: livePulse 2s ease-in-out infinite;
 }
 
@@ -43,9 +43,9 @@
   font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--color-cyan);
+  color: var(--color-primary);
   border: 1px solid;
-  border-color: rgba(var(--color-cyan-rgb), 0.3);
+  border-color: rgba(var(--color-primary-rgb), 0.3);
   padding: 4px 8px;
   opacity: 0.7;
 }
@@ -72,9 +72,9 @@
   font-family: 'Orbitron', sans-serif;
   font-size: 36px;
   font-weight: 700;
-  color: var(--color-cyan);
-  text-shadow: 0 0 20px rgba(var(--color-cyan-rgb), 0.8), 
-               0 0 40px rgba(var(--color-cyan-rgb), 0.4);
+  color: var(--color-primary);
+  text-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.8), 
+               0 0 40px rgba(var(--color-primary-rgb), 0.4);
 }
 
 .gpu-card__gauges {
@@ -83,12 +83,12 @@
   align-items: center;
   padding: 20px 16px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-cyan-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(var(--color-primary-rgb), var(--border-opacity-min));
 }
 
 .gpu-card__stats {
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-cyan-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(var(--color-primary-rgb), var(--border-opacity-min));
 }
 
 .gpu-card__stat-row {
@@ -134,7 +134,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-cyan-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(var(--color-primary-rgb), var(--border-opacity-min));
 }
 
 .gpu-card__clock {
@@ -145,8 +145,8 @@
 
 .gpu-card__clock--left {
   border-right: 1px solid;
-  border-right-color: rgba(var(--color-cyan-rgb), var(--border-opacity-min));
-  background: rgba(var(--color-cyan-rgb), 0.03);
+  border-right-color: rgba(var(--color-primary-rgb), var(--border-opacity-min));
+  background: rgba(var(--color-primary-rgb), 0.03);
 }
 
 .gpu-card__clock--right {
@@ -160,16 +160,16 @@
   font-variant-numeric: tabular-nums;
 }
 
-.gpu-card__clock-value--cyan {
-  color: var(--color-cyan);
-  text-shadow: 0 0 20px rgba(var(--color-cyan-rgb), 0.8), 
-               0 0 40px rgba(var(--color-cyan-rgb), 0.4);
+.gpu-card__clock-value--primary {
+  color: var(--color-primary);
+  text-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.8), 
+               0 0 40px rgba(var(--color-primary-rgb), 0.4);
 }
 
-.gpu-card__clock-value--purple {
-  color: var(--color-purple);
-  text-shadow: 0 0 20px rgba(var(--color-purple-rgb), 0.8), 
-               0 0 40px rgba(var(--color-purple-rgb), 0.4);
+.gpu-card__clock-value--tertiary {
+  color: var(--color-tertiary);
+  text-shadow: 0 0 20px rgba(var(--color-tertiary-rgb), 0.8), 
+               0 0 40px rgba(var(--color-tertiary-rgb), 0.4);
 }
 
 .gpu-card__clock-unit {
@@ -196,7 +196,7 @@
 .gpu-card__sparkline-value {
   font-family: 'JetBrains Mono', monospace;
   font-size: 24px;
-  color: var(--color-cyan);
+  color: var(--color-primary);
   font-variant-numeric: tabular-nums;
 }
 
