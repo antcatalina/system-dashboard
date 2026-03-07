@@ -62,6 +62,7 @@ export type MonitorInfoResponse = {
 
 export type FPSMetricsResponse = {
   fps: number;
+  processName: string;
 };
 
 export type MetricsResponse = {

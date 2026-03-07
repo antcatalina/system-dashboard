@@ -1,9 +1,4 @@
 /* GPU Card component styles */
-
-.gpu-card {
-  color: var(--color-primary);
-}
-
 .gpu-card__header {
   display: flex;
   align-items: center;
@@ -35,7 +30,6 @@
   font-size: 20px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.35);
 }
 
 .gpu-card__badge {
@@ -53,7 +47,6 @@
 .gpu-card__model {
   font-family: 'DM Sans', sans-serif;
   font-size: 20px;
-  color: rgba(255, 255, 255, 0.5);
   margin-left: 4px;
   min-width: 0;
   overflow: hidden;
@@ -106,7 +99,6 @@
   font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.35);
   display: flex;
   justify-content: space-between;
   align-items: center;

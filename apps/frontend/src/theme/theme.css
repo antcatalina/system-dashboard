@@ -84,7 +84,7 @@ body.theme-light {
 }
 
 body.theme-light .bg-surface {
-  background-color: #ede9fe !important;
+  background-color: #e7e2ff !important;
 }
 body.theme-light .bg-surface-card {
   background-color: #ffffff !important;
@@ -1167,11 +1167,11 @@ body.theme-forest .theme-indicator {
 /* ── Windows XP Luna Blue ── */
 body.theme-winxp {
   --color-primary: #00b41b;
---color-primary-rgb: 0, 180, 27;
---color-secondary: #8ec3ff;
---color-secondary-rgb: 78, 161, 255;
---color-tertiary: #46cec0;
---color-tertiary-rgb: 70, 206, 192;
+  --color-primary-rgb: 0, 180, 27;
+  --color-secondary: #8ec3ff;
+  --color-secondary-rgb: 78, 161, 255;
+  --color-tertiary: #46cec0;
+  --color-tertiary-rgb: 70, 206, 192;
   --color-green: #59c12b;
   --color-green-rgb: 89, 193, 43;
   --color-amber: #ffb300;

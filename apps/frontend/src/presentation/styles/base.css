@@ -204,7 +204,6 @@
 
   .stat-value {
     @apply font-mono text-[24px] tabular-nums;
-    color: rgba(255, 255, 255, 0.75);
   }
 
   /* ── Section divider ── */

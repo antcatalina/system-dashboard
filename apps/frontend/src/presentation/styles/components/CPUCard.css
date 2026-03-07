@@ -1,9 +1,4 @@
 /* CPU Card component styles */
-
-.cpu-card {
-  color: var(--color-secondary);
-}
-
 .cpu-card__header {
   display: flex;
   align-items: center;
@@ -35,7 +30,6 @@
   font-size: 20px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.35);
 }
 
 .cpu-card__badge {
@@ -53,7 +47,6 @@
 .cpu-card__model {
   font-family: 'DM Sans', sans-serif;
   font-size: 20px;
-  color: rgba(255, 255, 255, 0.5);
   margin-left: 4px;
   min-width: 0;
   overflow: hidden;
@@ -140,7 +133,6 @@
 .cpu-card__core-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.2);
 }
 
 .cpu-card__frequency {
@@ -153,7 +145,6 @@
   font-family: 'JetBrains Mono', monospace;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.35);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -163,7 +154,6 @@
 .cpu-card__frequency-value {
   font-family: 'JetBrains Mono', monospace;
   font-size: 24px;
-  color: var(--color-tertiary);
   font-variant-numeric: tabular-nums;
 }
 

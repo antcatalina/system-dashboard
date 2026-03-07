@@ -20,7 +20,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
       ? "glow-red"
       : ram.usedPercent > 65
         ? "glow-amber"
-        : "glow-tertiary";
+        : "glow-green";
   const mc = getMemoryColor(ram.usedPercent);
   const segments = 32;
 
@@ -49,8 +49,8 @@ export function RAMCard({ ram, history }: RAMCardProps) {
         <div className="flex items-center gap-3">
           <span className="ram-card__label">PRESSURE</span>
           <span
-            className={`ram-card__pressure ${glowClass}`}
-            style={{ color: mc }}
+            className="ram-card__pressure glow-tertiary"
+            style={{ color: tc.tertiary }}
           >
             {ram.usedPercent.toFixed(1)}
             <span className={`ram-card__pressure-unit`}>%</span>
@@ -71,9 +71,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
                 className="flex-1"
                 style={{
                   height: 48,
-                  backgroundColor: active
-                    ? mc
-                    : "rgba(255,255,255,0.04)",
+                  backgroundColor: active ? mc : "rgba(255,255,255,0.04)",
                   boxShadow: active ? `0 0 4px ${mc}50` : "none",
                 }}
                 animate={{ opacity: active ? 1 : 0.3 }}

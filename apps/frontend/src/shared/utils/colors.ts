@@ -22,7 +22,7 @@ export function getLatencyColor(ms: number): string {
 export function getMemoryColor(percentUsed: number): string {
   if (percentUsed > 85) return 'var(--color-red)';
   if (percentUsed > 65) return 'var(--color-amber)';
-  return 'var(--color-tertiary)';
+  return 'var(--color-green)';
 }
 
 export function getFpsColor(fps: number | null): string {

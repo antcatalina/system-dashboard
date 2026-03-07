@@ -28,9 +28,11 @@ export class Monitor {
 
 export class FPS {
   readonly fps: number;
+  readonly processName: string;
 
   constructor(data: FPSMetricsResponse) {
     this.fps = data.fps;
+    this.processName = data.processName;
   }
 
   isExcellent(): boolean {
