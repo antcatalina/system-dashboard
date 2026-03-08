@@ -321,6 +321,7 @@ function startPresentMon() {
           "galaxyclient helper.exe",
           "steamwebhelper.exe",
           "msedgewebview2.exe",
+          "crs-video.exe",
         ];
         if (skipList.some((p) => processName.toLowerCase() === p.toLowerCase()))
           continue;

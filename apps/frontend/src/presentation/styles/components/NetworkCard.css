@@ -1,15 +1,15 @@
-/* Network Card component styles */
+/* Network Card — iPad-optimised */
 
 .network-card {
   color: var(--color-primary);
   display: flex;
-  min-height: 200px;
 }
 
 .network-card__speeds {
   display: flex;
-  border-right: 1px solid rgba(var(--color-primary-rgb), var(--border-opacity-med));
-  min-width: 380px;
+  border-right: 1px solid
+    rgba(var(--color-primary-rgb), var(--border-opacity-med));
+  min-width: 100px;
 }
 
 .network-card__speed-block {
@@ -18,126 +18,136 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px 24px;
-  border-right: 1px solid rgba(var(--color-primary-rgb), var(--border-opacity-min));
+  padding: 10px 12px;
+  border-right: 1px solid
+    rgba(var(--color-primary-rgb), var(--border-opacity-min));
 }
 
-.network-card__speed-block:last-child { border-right: none; }
+.network-card__speed-block:last-child {
+  border-right: none;
+}
 
 .network-card__speed-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: var(--label-text-color);
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .network-card__chevrons {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  margin-bottom: 12px;
+  gap: 2px;
+  margin-bottom: 6px;
 }
 
 .network-card__chevron {
-  width: 24px;
-  height: 5px;
-  border-radius: 2px;
+  width: 14px;
+  height: 3px;
+  border-radius: 1px;
 }
 
 .network-card__value {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 56px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 28px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   line-height: 1;
-  min-height: 68px;
 }
 
 .network-card__unit {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  margin-top: 6px;
+  margin-top: 3px;
   opacity: 0.5;
 }
 
-/* Light mode: unit darker */
-body.theme-light .network-card__unit { opacity: 0.6; }
+body.theme-light .network-card__unit {
+  opacity: 0.6;
+}
 
 .network-card__charts {
   flex: 1;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid rgba(var(--color-primary-rgb), var(--border-opacity-med));
+  border-right: 1px solid
+    rgba(var(--color-primary-rgb), var(--border-opacity-med));
 }
 
 .network-card__chart {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  border-bottom: 1px solid rgba(var(--color-primary-rgb), var(--border-opacity-min));
+  padding: 8px 12px;
+  border-bottom: 1px solid
+    rgba(var(--color-primary-rgb), var(--border-opacity-min));
 }
 
-.network-card__chart:last-child { border-bottom: none; }
+.network-card__chart:last-child {
+  border-bottom: none;
+}
 
 .network-card__chart-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: var(--label-text-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .network-card__chart-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
   font-variant-numeric: tabular-nums;
   color: var(--stat-value-color);
 }
 
 .network-card__chart-container {
   flex: 1;
-  min-height: 56px;
 }
 
 .network-card__info {
   display: flex;
   flex-direction: column;
-  min-width: 280px;
-  border-right: 1px solid rgba(var(--color-primary-rgb), var(--border-opacity-med));
+  min-width: 160px;
+  border-right: 1px solid
+    rgba(var(--color-primary-rgb), var(--border-opacity-med));
 }
 
 .network-card__info-row {
   display: flex;
   flex-direction: column;
-  padding: 12px 16px;
-  border-bottom: 1px solid rgba(var(--color-primary-rgb), var(--border-opacity-min));
+  padding: 7px 10px;
+  border-bottom: 1px solid
+    rgba(var(--color-primary-rgb), var(--border-opacity-min));
   flex: 1;
 }
 
-.network-card__info-row:last-child { border-bottom: none; }
+.network-card__info-row:last-child {
+  border-bottom: none;
+}
 
 .network-card__info-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 8px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: var(--label-text-color);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .network-card__info-value {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 16px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 10px;
   font-weight: 700;
   color: var(--stat-value-color);
 }
@@ -148,26 +158,28 @@ body.theme-light .network-card__unit { opacity: 0.6; }
 }
 
 .network-card__adapter {
-  padding: 8px 12px;
-  border-bottom: 1px solid rgba(var(--color-primary-rgb), var(--border-opacity-min));
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+  padding: 5px 8px;
+  border-bottom: 1px solid
+    rgba(var(--color-primary-rgb), var(--border-opacity-min));
+  font-family: "JetBrains Mono", monospace;
+  font-size: 8px;
   color: var(--muted-text-color);
   cursor: pointer;
   transition: color 0.2s;
 }
 
-.network-card__adapter:hover { color: var(--stat-value-color); }
+.network-card__adapter:hover {
+  color: var(--stat-value-color);
+}
 
 .network-card__adapter--primary {
   background: rgba(var(--color-primary-rgb), 0.05);
   color: var(--color-primary);
   font-weight: 600;
   border-left: 2px solid var(--color-primary);
-  padding-left: 10px;
+  padding-left: 6px;
 }
 
-/* Light mode overrides */
 body.theme-light .network-card {
   color: var(--color-primary);
 }

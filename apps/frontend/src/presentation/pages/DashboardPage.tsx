@@ -61,9 +61,9 @@ export function DashboardPage() {
     cpu: metrics?.cpu ?? PLACEHOLDER.cpu,
     gpu: metrics?.gpu ?? PLACEHOLDER.gpu,
     ram: (metrics?.ram ?? PLACEHOLDER.ram) as RAM,
-    monitors: metrics?.monitors ?? PLACEHOLDER.monitors, // already Array<Monitor> from hook
+    monitors: metrics?.monitors ?? PLACEHOLDER.monitors,
     network: (metrics?.network ?? PLACEHOLDER.network) as Network,
-    fps: metrics?.fps ?? PLACEHOLDER.fps, // already FPS | null from hook
+    fps: metrics?.fps ?? PLACEHOLDER.fps,
     timestamp: metrics?.timestamp ?? PLACEHOLDER.timestamp,
   };
 
@@ -74,7 +74,7 @@ export function DashboardPage() {
       <main className="flex-1 flex flex-col overflow-visible">
         {!connected && (
           <motion.div
-            className="mx-0 px-5 py-3 font-mono text-sm flex items-center gap-3"
+            className="mx-0 px-5 py-2 font-mono text-sm flex items-center gap-3"
             style={{
               background: "rgba(255,179,0,0.08)",
               borderBottom: "1px solid rgba(255,179,0,0.2)",
@@ -98,7 +98,7 @@ export function DashboardPage() {
           </motion.div>
         )}
 
-        {/* Top row: 3 equal columns, zero gap */}
+        {/* Top row: GPU | CPU | RAM — three equal columns */}
         <div
           className="flex flex-1 min-h-0"
           style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
@@ -115,26 +115,23 @@ export function DashboardPage() {
           >
             <CPUCard cpu={data.cpu} history={history} />
           </div>
-          <div className="flex-1 flex flex-col">
-            <div
-              className="flex-1"
-              style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
-            >
-              <RAMCard ram={data.ram} history={history} />
-            </div>
-            {data.monitors.length > 0 && (
-              <div>
-                <MonitorCard
-                  monitors={data.monitors}
-                  fps={data.fps}
-                  processIcon={processIcon}
-                />
-              </div>
-            )}
+          <div className="flex-1">
+            <RAMCard ram={data.ram} history={history} />
           </div>
         </div>
 
-        {/* Bottom row: Network full width */}
+        {/* Monitor row — full width, only rendered when monitors are present */}
+        {data.monitors.length > 0 && (
+          <div style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <MonitorCard
+              monitors={data.monitors}
+              fps={data.fps}
+              processIcon={processIcon}
+            />
+          </div>
+        )}
+
+        {/* Network row — full width */}
         <div>
           <NetworkCard network={data.network} history={history} />
         </div>

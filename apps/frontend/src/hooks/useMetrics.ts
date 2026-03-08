@@ -4,8 +4,8 @@ import { GPU } from "../domain/entities/GPU";
 import { CPU } from "../domain/entities/CPU";
 import {  Monitor } from "../domain/entities/Monitor";
 
-const WS_URL = "ws://localhost:3001";
-const API_URL = "http://localhost:3001";
+const WS_URL = `ws://${window.location.hostname}:3001`;
+const API_URL = `http://${window.location.hostname}:3001`;
 const RECONNECT_DELAY_MS = 2000;
 const HISTORY_LENGTH = 60;
 

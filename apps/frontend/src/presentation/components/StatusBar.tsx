@@ -24,23 +24,6 @@ export function StatusBar({ connected }: { connected: boolean }) {
       */}
       <div className="status-bar__scan-line" />
 
-      {/* Logo block */}
-      <div className="status-bar__logo">
-        <div className="status-bar__icon">
-          <motion.div className="absolute inset-0 border border-accent-primary/40"
-            animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: 'linear' }} />
-          <motion.div className="absolute inset-1.5 border border-accent-primary/20"
-            animate={{ rotate: -360 }} transition={{ duration: 5, repeat: Infinity, ease: 'linear' }} />
-          <div className="status-bar__icon-dot" />
-        </div>
-        <div>
-          <span className="status-bar__title">
-            SYS<span className="status-bar__title-highlight">PULSE</span>
-          </span>
-          <p className="status-bar__subtitle">REAL-TIME MONITOR</p>
-        </div>
-      </div>
-
       {/* Status block */}
       <div className="status-bar__status">
         <div className="relative">

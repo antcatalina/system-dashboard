@@ -25,25 +25,25 @@ function SpeedBlock({ label, speed, color, arrow, borderColor }: {
 }) {
   const formatted = formatSpeed(speed);
   return (
-    <div className="flex-1 flex flex-col items-center justify-center py-5 px-6"
+    <div className="flex-1 flex flex-col items-center justify-center py-3 px-6"
       style={{ borderRight: arrow === '↓' ? `1px solid ${borderColor}` : 'none' }}>
       <span className="label-text mb-3">{label}</span>
       <div className="flex flex-col items-center gap-1 mb-3">
         {[0, 1, 2].map((i) => (
-          <motion.div key={i} style={{ width: 24, height: 5, backgroundColor: color, borderRadius: 2 }}
+          <motion.div key={i} style={{ width: 18, height: 3, backgroundColor: color, borderRadius: 2 }}
             animate={{ opacity: [0.15, 1, 0.15] }}
             transition={{ duration: 1.2, repeat: Infinity, delay: arrow === '↓' ? i * 0.2 : (2 - i) * 0.2 }}
           />
         ))}
       </div>
-      <div className="flex flex-col items-center" style={{ minHeight: 68 }}>
+      <div className="flex flex-col items-center">
         <motion.span className="font-display font-bold tabular-nums leading-none"
-          style={{ fontSize: 56, color, textShadow: `0 0 28px ${color}70` }}
+          style={{ fontSize: 32, color, textShadow: `0 0 28px ${color}70` }}
           key={formatted.value}
           initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} transition={{ duration: 0.2 }}>
           {formatted.value}
         </motion.span>
-        <span className="font-mono text-xl mt-1.5 uppercase tracking-widest" style={{ color: `${color}99` }}>
+        <span className="font-mono text-sm mt-1.5 uppercase tracking-widest" style={{ color: `${color}99` }}>
           {formatted.unit}
         </span>
       </div>
@@ -60,11 +60,11 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
 
   return (
     <motion.div className="card-primary flex"
-      style={{ color: tc.primary, minHeight: 200 }}
+      style={{ color: tc.primary }}
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.2 }}>
 
       {/* ── Speed readouts ── */}
-      <div className="flex" style={{ borderRight: `1px solid ${tc.border}`, minWidth: 380 }}>
+      <div className="flex" style={{ borderRight: `1px solid ${tc.border}`, minWidth: 120 }}>
         <SpeedBlock label="DOWNLOAD" speed={network.downloadSpeed} color={tc.primary} arrow="↓" borderColor={tc.borderFaint} />
         <SpeedBlock label="UPLOAD"   speed={network.uploadSpeed}   color={tc.secondary} arrow="↑" borderColor={tc.borderFaint} />
       </div>
@@ -74,54 +74,54 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
         <div className="flex-1 px-5 py-3" style={{ borderBottom: `1px solid ${tc.borderFaint}` }}>
           <div className="flex justify-between items-center mb-2">
             <span className="label-text">↓ DOWNLOAD</span>
-            <span className="font-mono text-2xl" style={{ color: tc.primary }}>
+            <span className="font-mono text-md" style={{ color: tc.primary }}>
               {formatSpeed(network.downloadSpeed).value} {formatSpeed(network.downloadSpeed).unit}
             </span>
           </div>
-          <Sparkline data={dlHistory} color={tc.primary} height={86} />
+          <Sparkline data={dlHistory} color={tc.primary} height={54} />
         </div>
         <div className="flex-1 px-5 py-3">
           <div className="flex justify-between items-center mb-2">
             <span className="label-text">↑ UPLOAD</span>
-            <span className="font-mono text-2xl" style={{ color: tc.secondary }}>
+            <span className="font-mono text-md" style={{ color: tc.secondary }}>
               {formatSpeed(network.uploadSpeed).value} {formatSpeed(network.uploadSpeed).unit}
             </span>
           </div>
-          <Sparkline data={ulHistory} color={tc.secondary} height={86} />
+          <Sparkline data={ulHistory} color={tc.secondary} height={54} />
         </div>
       </div>
 
       {/* ── Stats column ── */}
-      <div className="flex flex-col" style={{ minWidth: 300, borderRight: `1px solid ${tc.border}` }}>
-        <div className="px-5 py-4 flex flex-col items-center justify-center flex-1"
+      <div className="flex flex-col" style={{ minWidth: 180, borderRight: `1px solid ${tc.border}` }}>
+        <div className="px-2 flex flex-col items-center justify-center flex-1"
           style={{ borderBottom: `1px solid ${tc.borderFaint}`, background: `${lc}08` }}>
-          <span className="label-text mb-2">LATENCY</span>
+          <span className="label-text">LATENCY</span>
           <div className="flex items-baseline gap-1.5">
-            <span className="font-display text-4xl font-bold tabular-nums"
+            <span className="font-display text-2xl font-bold tabular-nums"
               style={{ color: lc, textShadow: `0 0 20px ${lc}60` }}>
               {network.latency > 0 ? network.latency : '—'}
             </span>
-            {network.latency > 0 && <span className="font-mono text-xl" style={{ color: lc }}>ms</span>}
+            {network.latency > 0 && <span className="font-mono text-md" style={{ color: lc }}>ms</span>}
           </div>
-          <span className="font-mono text-2xl mt-1" style={{ color: lc }}>{latencyLabel(network.latency)}</span>
+          <span className="font-mono text-sm mt-1" style={{ color: lc }}>{latencyLabel(network.latency)}</span>
         </div>
-        <div className="px-5 py-3" style={{ borderBottom: `1px solid ${tc.borderFaint}` }}>
+        <div className="px-5 py-1" style={{ borderBottom: `1px solid ${tc.borderFaint}` }}>
           <span className="label-text block mb-1">↓ SESSION</span>
-          <span className="font-display text-3xl font-bold" style={{ color: tc.primary, textShadow: `0 0 12px ${tc.primary}60` }}>
+          <span className="font-display text-lg font-bold" style={{ color: tc.primary, textShadow: `0 0 12px ${tc.primary}60` }}>
             {formatBytes(network.downloadTotal)}
           </span>
         </div>
-        <div className="px-5 py-3">
+        <div className="px-5 py-1">
           <span className="label-text block mb-1">↑ SESSION</span>
-          <span className="font-display text-3xl font-bold" style={{ color: tc.secondary, textShadow: `0 0 12px ${tc.secondary}60` }}>
+          <span className="font-display text-lg font-bold" style={{ color: tc.secondary, textShadow: `0 0 12px ${tc.secondary}60` }}>
             {formatBytes(network.uploadTotal)}
           </span>
         </div>
       </div>
 
       {/* ── Adapters ── */}
-      <div className="flex flex-col" style={{ minWidth: 350 }}>
-        <div className="px-5 py-3 flex items-center gap-3"
+      <div className="flex flex-col" style={{ minWidth: 180 }}>
+        <div className="px-3 py-2 flex items-center gap-3"
           style={{ borderBottom: `1px solid ${tc.border}`, background: tc.bg }}>
           <div className="live-dot" style={{ backgroundColor: tc.primary, color: tc.primary }} />
           <span className="label-text">INTERFACES</span>
@@ -130,7 +130,7 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
           const isActive = adapter.name === network.primaryAdapter;
           return (
             <div key={adapter.name}
-              className="flex items-center gap-3 px-5 py-3"
+              className="flex items-center gap-3 px-4 py-2"
               style={{
                 borderBottom: `1px solid ${tc.borderFaint}`,
                 background: isActive ? tc.bg : 'transparent',
@@ -141,11 +141,11 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
                   boxShadow: isActive ? `0 0 8px ${tc.primary}` : 'none',
                 }} />
               <div className="min-w-0 flex-1">
-                <p className="font-mono text-xl truncate"
+                <p className="font-mono text-sm truncate"
                   style={{ color: isActive ? tc.primary : 'var(--label-text-color)' }}>
                   {adapter.name}
                 </p>
-                <p className="font-mono text-xl" style={{ color: 'var(--muted-text-color)' }}>
+                <p className="font-mono text-sm" style={{ color: 'var(--muted-text-color)' }}>
                   {adapter.ipv4 || adapter.ipv6 || 'N/A'}
                 </p>
               </div>

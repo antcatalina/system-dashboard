@@ -13,6 +13,54 @@ interface CPUCardProps {
   history: Array<MetricHistory>;
 }
 
+/** Compact heatmap — each core is a small square, colour-coded by load */
+function CoreHeatmap({
+  cores,
+}: {
+  cores: CPUMetrics["perCore"];
+  color: string;
+}) {
+  const items =
+    cores.length > 0
+      ? cores
+      : Array.from({ length: 16 }, (_, i) => ({
+          core: i,
+          load: 0,
+          frequency: 0,
+        }));
+
+  // Pick grid columns: ≤8 cores → 8 cols, else 16 cols (two rows of 8)
+  const cols = items.length <= 8 ? items.length : Math.ceil(items.length / 2);
+
+  return (
+    <div
+      className="cpu-card__heatmap"
+      style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}
+    >
+      {items.map((core) => {
+        const cc = getLoadColor(core.load);
+        const pct = core.load;
+        return (
+          <motion.div
+            key={core.core}
+            className="cpu-card__heatmap-cell"
+            title={`Core ${core.core + 1}: ${core.load.toFixed(1)}%`}
+            animate={{ backgroundColor: `${cc}` }}
+            transition={{ duration: 0.4 }}
+            style={{
+              // base tint + glow scales with load
+              opacity: 0.25 + (pct / 100) * 0.75,
+              boxShadow: pct > 60 ? `inset 0 0 6px ${cc}80` : "none",
+            }}
+          >
+            <span className="cpu-card__heatmap-label">{core.core + 1}</span>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}
+
 export function CPUCard({ cpu, history }: CPUCardProps) {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
@@ -35,7 +83,7 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
           <div className="cpu-card__dot" />
           <span className="cpu-card__label">CPU</span>
           <span className="cpu-card__badge">
-            {cpu.cores}C / {cpu.threads}T
+            {cpu.model.split(" ")[0]}
           </span>
           <span className="cpu-card__model">{cpu.model}</span>
         </div>
@@ -50,58 +98,26 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
 
       {/* ── Gauges ── */}
       <div className="cpu-card__gauges">
-        <RadialGauge value={cpu.load} color={lc} label="LOAD" size={250} />
+        <RadialGauge value={cpu.load} color={lc} label="LOAD" size={128} />
         <RadialGauge
           value={freqPct}
           color={tc.secondary}
           label="BOOST"
           unit={`${ghz}G`}
           decimals={0}
-          size={250}
+          size={128}
         />
       </div>
 
-      {/* ── Core bars ── */}
+      {/* ── Core heatmap ── */}
       <div className="cpu-card__activity">
         <div className="cpu-card__activity-label">
-          <span className="cpu-card__label">CORE ACTIVITY</span>
+          <span className="cpu-card__label">CORE MAP</span>
           <span className="cpu-card__activity-value" style={{ color: lc }}>
             {cpu.load.toFixed(1)}% AVG
           </span>
         </div>
-        <div
-          className="cpu-card__cores"
-          style={{
-            gridTemplateColumns: `repeat(${Math.min(cpu.perCore.length || 8, 16)}, 1fr)`,
-          }}
-        >
-          {(cpu.perCore.length > 0
-            ? cpu.perCore
-            : Array.from({ length: 16 }, (_, i) => ({
-                core: i,
-                load: 0,
-                frequency: 0,
-              }))
-          ).map((core) => {
-            const cc = getLoadColor(core.load);
-            return (
-              <div key={core.core} className="cpu-card__core">
-                <div className="cpu-card__core-bar">
-                  <motion.div
-                    className="cpu-card__core-fill"
-                    style={{
-                      backgroundColor: cc,
-                      boxShadow: `0 0 6px ${cc}70`,
-                    }}
-                    animate={{ height: `${core.load}%` }}
-                    transition={{ duration: 0.4 }}
-                  />
-                </div>
-                <span className="cpu-card__core-label">{core.core + 1}</span>
-              </div>
-            );
-          })}
-        </div>
+        <CoreHeatmap cores={cpu.perCore} color={lc} />
       </div>
 
       {/* ── Frequency bar ── */}
@@ -140,7 +156,7 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
           </span>
         </div>
         <div className="cpu-card__sparkline-chart">
-          <Sparkline data={cpuHistory} color={tc.tertiary} height={132} />
+          <Sparkline data={cpuHistory} color={tc.tertiary} height={48} />
         </div>
       </div>
     </motion.div>

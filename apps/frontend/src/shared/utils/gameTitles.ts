@@ -156,6 +156,8 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "horizonzerodawnremastered.exe": "Horizon Zero Dawn Remastered",
   "icarus-win64-shipping.exe": "Icarus",
   "icarus.exe": "Icarus",
+  "jagexlauncher.exe": "Jagex Launcher",
+  "runelite.exe": "RuneLite",
   "justcause3.exe": "Just Cause 3",
   "justcause4.exe": "Just Cause 4",
   "kcd2.exe": "Kingdom Come: Deliverance II",

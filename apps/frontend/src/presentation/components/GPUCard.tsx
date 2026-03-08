@@ -50,7 +50,7 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
           value={gpu.utilization}
           color={tc.primary}
           label="UTILIZATION"
-          size={250}
+          size={128}
         />
         <RadialGauge
           value={gpu.temperature}
@@ -58,13 +58,13 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
           label="TEMP"
           unit="°C"
           max={110}
-          size={250}
+          size={128}
         />
         <RadialGauge
           value={gpu.fanSpeed}
           color={tc.secondary}
           label="FAN SPEED"
-          size={250}
+          size={128}
         />
       </div>
 
@@ -146,7 +146,7 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
           </span>
         </div>
         <div className="gpu-card__sparkline-chart">
-          <Sparkline data={gpuHistory} color={tc.primary} height={164} />
+          <Sparkline data={gpuHistory} color={tc.primary} height={48} />
         </div>
       </div>
     </motion.div>

@@ -1,7 +1,7 @@
 /* Application constants */
 
 export const API_CONFIG = {
-  BASE_URL: 'http://localhost:3001',
+  BASE_URL: `http://${window.location.hostname}:3001`,
   METRICS_ENDPOINT: '/api/metrics',
   HEALTH_ENDPOINT: '/health',
 };

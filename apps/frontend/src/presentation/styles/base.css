@@ -1,3 +1,8 @@
+/* base.css — iPad-optimised overrides
+   Drop-in replacement for the @layer base / @layer components section.
+   Keeps the same CSS variable system, grid background, and card classes
+   but tightens font-sizes, padding, and fixed dimensions. */
+
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap");
 
 @tailwind base;
@@ -33,7 +38,7 @@
     background-image:
       linear-gradient(rgba(0, 229, 255, 0.015) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0, 229, 255, 0.015) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background-size: 28px 28px; /* tighter grid on smaller screen */
     pointer-events: none;
     z-index: 0;
   }
@@ -59,7 +64,7 @@
   }
 
   ::-webkit-scrollbar {
-    width: 4px;
+    width: 3px;
   }
   ::-webkit-scrollbar-track {
     background: #0a0c10;
@@ -75,7 +80,7 @@
 }
 
 @layer components {
-  /* ── Base card — no radius, no gap, flush borders ── */
+  /* ── Base card ── */
   .card {
     @apply bg-surface-card border border-surface-border relative overflow-hidden;
     backdrop-filter: blur(var(--card-backdrop-blur, 12px));
@@ -90,7 +95,7 @@
     border-color: rgba(var(--color-primary-rgb), 0.18);
     box-shadow:
       0 0 0 1px rgba(var(--color-primary-rgb), 0.05),
-      0 0 40px rgba(var(--color-primary-rgb), 0.03),
+      0 0 30px rgba(var(--color-primary-rgb), 0.03),
       inset 0 1px 0 rgba(var(--color-primary-rgb), 0.08);
   }
   .card-primary::before {
@@ -109,7 +114,7 @@
     border-color: rgba(var(--color-secondary-rgb), 0.18);
     box-shadow:
       0 0 0 1px rgba(var(--color-secondary-rgb), 0.05),
-      0 0 40px rgba(var(--color-secondary-rgb), 0.03),
+      0 0 30px rgba(var(--color-secondary-rgb), 0.03),
       inset 0 1px 0 rgba(var(--color-secondary-rgb), 0.08);
   }
   .card-secondary::before {
@@ -128,7 +133,7 @@
     border-color: rgba(var(--color-tertiary-rgb), 0.18);
     box-shadow:
       0 0 0 1px rgba(var(--color-tertiary-rgb), 0.05),
-      0 0 40px rgba(var(--color-tertiary-rgb), 0.03),
+      0 0 30px rgba(var(--color-tertiary-rgb), 0.03),
       inset 0 1px 0 rgba(var(--color-tertiary-rgb), 0.08);
   }
   .card-tertiary::before {
@@ -147,7 +152,7 @@
     border-color: rgba(var(--color-amber-rgb), 0.18);
     box-shadow:
       0 0 0 1px rgba(var(--color-amber-rgb), 0.05),
-      0 0 40px rgba(var(--color-amber-rgb), 0.03),
+      0 0 30px rgba(var(--color-amber-rgb), 0.03),
       inset 0 1px 0 rgba(var(--color-amber-rgb), 0.08);
   }
   .card-amber::before {
@@ -161,49 +166,49 @@
     pointer-events: none;
   }
 
-  /* ── Corner bracket decoration ── */
+  /* ── Corner brackets ── */
   .corner-brackets::after {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
     background:
-      /* top-left */
-      linear-gradient(to right, currentColor 12px, transparent 12px) 0 0 / 12px
-        1.5px no-repeat,
-      linear-gradient(to bottom, currentColor 12px, transparent 12px) 0 0 /
-        1.5px 12px no-repeat,
-      /* top-right */
-        linear-gradient(to left, currentColor 12px, transparent 12px) 100% 0 /
-        12px 1.5px no-repeat,
-      linear-gradient(to bottom, currentColor 12px, transparent 12px) 100% 0 /
-        1.5px 12px no-repeat,
-      /* bottom-left */
-        linear-gradient(to right, currentColor 12px, transparent 12px) 0 100% /
-        12px 1.5px no-repeat,
-      linear-gradient(to top, currentColor 12px, transparent 12px) 0 100% /
-        1.5px 12px no-repeat,
-      /* bottom-right */
-        linear-gradient(to left, currentColor 12px, transparent 12px) 100%
-        100% / 12px 1.5px no-repeat,
-      linear-gradient(to top, currentColor 12px, transparent 12px) 100% 100% /
-        1.5px 12px no-repeat;
+      linear-gradient(to right, currentColor 8px, transparent 8px) 0 0 / 8px 1px
+        no-repeat,
+      linear-gradient(to bottom, currentColor 8px, transparent 8px) 0 0 / 1px
+        8px no-repeat,
+      linear-gradient(to left, currentColor 8px, transparent 8px) 100% 0 / 8px
+        1px no-repeat,
+      linear-gradient(to bottom, currentColor 8px, transparent 8px) 100% 0 / 1px
+        8px no-repeat,
+      linear-gradient(to right, currentColor 8px, transparent 8px) 0 100% / 8px
+        1px no-repeat,
+      linear-gradient(to top, currentColor 8px, transparent 8px) 0 100% / 1px
+        8px no-repeat,
+      linear-gradient(to left, currentColor 8px, transparent 8px) 100% 100% /
+        8px 1px no-repeat,
+      linear-gradient(to top, currentColor 8px, transparent 8px) 100% 100% / 1px
+        8px no-repeat;
     opacity: 0.5;
   }
 
   /* ── Typography ── */
   .value-display {
-    @apply font-display text-[24px] font-bold tabular-nums;
+    @apply font-display tabular-nums font-bold;
+    font-size: 16px;
     text-shadow: 0 0 30px currentColor;
   }
 
   .label-text {
-    @apply font-mono text-[20px] uppercase tracking-[0.2em] font-medium;
+    @apply font-mono uppercase font-medium;
+    font-size: 12px;
+    letter-spacing: 0.2em;
     color: rgba(255, 255, 255, 0.35);
   }
 
   .stat-value {
-    @apply font-mono text-[24px] tabular-nums;
+    @apply font-mono tabular-nums;
+    font-size: 13px;
   }
 
   /* ── Section divider ── */
@@ -219,59 +224,55 @@
 
   /* ── Live pulse dot ── */
   .live-dot {
-    @apply w-2 h-2 rounded-full flex-shrink-0;
+    @apply w-1.5 h-1.5 rounded-full flex-shrink-0;
     animation: livePulse 2s ease-in-out infinite;
   }
 
   .glow-green {
     text-shadow:
-      0 0 20px rgba(var(--color-green-rgb), 0.8),
-      0 0 40px rgba(var(--color-green-rgb), 0.4);
+      0 0 16px rgba(var(--color-green-rgb), 0.8),
+      0 0 32px rgba(var(--color-green-rgb), 0.4);
   }
   .glow-amber {
     text-shadow:
-      0 0 20px rgba(var(--color-amber-rgb), 0.8),
-      0 0 40px rgba(var(--color-amber-rgb), 0.4);
+      0 0 16px rgba(var(--color-amber-rgb), 0.8),
+      0 0 32px rgba(var(--color-amber-rgb), 0.4);
   }
   .glow-red {
     text-shadow:
-      0 0 20px rgba(var(--color-red-rgb), 0.8),
-      0 0 40px rgba(var(--color-red-rgb), 0.4);
+      0 0 16px rgba(var(--color-red-rgb), 0.8),
+      0 0 32px rgba(var(--color-red-rgb), 0.4);
   }
-  .glow-tertiary {
-    text-shadow:
-      0 0 20px rgba(var(--color-tertiary-rgb), 0.8),
-      0 0 40px rgba(var(--color-tertiary-rgb), 0.4);
-  }
-
-  /* ── Glow text — dynamic theme-relative colors ── */
-  /* Use these when you want the glow to follow the active theme's palette   */
   .glow-primary {
     text-shadow:
-      0 0 20px rgba(var(--color-primary-rgb), 0.8),
-      0 0 40px rgba(var(--color-primary-rgb), 0.4);
+      0 0 16px rgba(var(--color-primary-rgb), 0.8),
+      0 0 32px rgba(var(--color-primary-rgb), 0.4);
   }
   .glow-secondary {
     text-shadow:
-      0 0 20px rgba(var(--color-secondary-rgb), 0.8),
-      0 0 40px rgba(var(--color-secondary-rgb), 0.4);
+      0 0 16px rgba(var(--color-secondary-rgb), 0.8),
+      0 0 32px rgba(var(--color-secondary-rgb), 0.4);
   }
   .glow-tertiary {
     text-shadow:
-      0 0 20px rgba(var(--color-tertiary-rgb), 0.8),
-      0 0 40px rgba(var(--color-tertiary-rgb), 0.4);
+      0 0 16px rgba(var(--color-tertiary-rgb), 0.8),
+      0 0 32px rgba(var(--color-tertiary-rgb), 0.4);
   }
 
   /* ── Badge ── */
   .badge {
-    @apply font-mono text-[18px] uppercase tracking-widest px-2 py-0.5;
+    @apply font-mono uppercase;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    padding: 2px 5px;
     border: 1px solid currentColor;
     opacity: 0.7;
   }
 
-  /* ── Stat strip — horizontal KV row ── */
+  /* ── Stat strip ── */
   .stat-strip {
-    @apply flex items-center justify-between px-4 py-2;
+    @apply flex items-center justify-between;
+    padding: 6px 12px;
     border-top: 1px solid rgba(255, 255, 255, 0.04);
   }
   .stat-strip:first-child {

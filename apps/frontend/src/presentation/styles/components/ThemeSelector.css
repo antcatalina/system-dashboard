@@ -30,7 +30,7 @@
 }
 
 .theme-selector__trigger-icon {
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1;
 }
 
@@ -133,7 +133,7 @@ body.theme-rainbow .theme-selector__menu {
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 10px 12px;
+  padding: 2px 4px;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -211,7 +211,7 @@ body.theme-rainbow .theme-selector__option--active {
 
 /* ── Option internals ── */
 .theme-selector__option-icon {
-  font-size: 15px;
+  font-size: 8px;
   line-height: 1;
   flex-shrink: 0;
 }
@@ -219,12 +219,11 @@ body.theme-rainbow .theme-selector__option--active {
 .theme-selector__option-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
   flex: 1;
 }
 
 .theme-selector__option-title {
-  font-size: 11px;
+  font-size: 8px;
   font-weight: 700;
   letter-spacing: 0.1em;
   /* inherit color from parent button's --option-color */

@@ -1,6 +1,6 @@
 import { MetricsResponse } from './contracts/metrics';
 
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = `http://${window.location.hostname}:3001`;
 
 export class ApiClient {
   static async getMetrics(): Promise<MetricsResponse> {
