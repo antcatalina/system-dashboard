@@ -1,18 +1,21 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import type { Monitor, FPS } from "../../domain";
 import { getFpsColor } from "../../shared/utils/colors";
 import { useTheme } from "../context/ThemeContext";
 import { getThemeColors } from "../../shared/utils/themeColors";
+import { resolveGameTitle } from "../../shared/utils/gameTitles";
+import { Monitor } from "../../domain/entities/Monitor";
+import type { FPSMetrics } from "@system-dashboard/shared";
 
 interface MonitorCardProps {
-  monitors: Monitor[];
-  fps: FPS | null;
+  monitors: Array<Monitor>;
+  fps: FPSMetrics | null;
+  processIcon?: string | null;
 }
 
-const SPARKLINE_WIDTH = 300;
+const SPARKLINE_WIDTH = 600;
 const SPARKLINE_HEIGHT = 48;
-const MAX_HISTORY = 60;
+const MAX_HISTORY = 180; // 3 minutes at 1s intervals
 
 function FpsSparkline({ history }: { history: number[] }) {
   if (history.length < 2) return null;
@@ -76,7 +79,222 @@ function FpsSparkline({ history }: { history: number[] }) {
   );
 }
 
-export function MonitorCard({ monitors, fps }: MonitorCardProps) {
+function NowPlayingSection({
+  fps,
+  processIcon,
+  fpsColor,
+  tc,
+  fpsHistory,
+  currentFps,
+}: {
+  fps: FPSMetrics;
+  processIcon: string | null | undefined;
+  fpsColor: string;
+  tc: ReturnType<typeof getThemeColors>;
+  fpsHistory: number[];
+  currentFps: number | null;
+}) {
+  const gameTitle = resolveGameTitle(fps.processName);
+
+  return (
+    <motion.div
+      className="monitor-card__now-playing"
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      style={{
+        borderTop: `1px solid ${tc.border}`,
+        background: `linear-gradient(135deg, ${tc.bg} 0%, rgba(0,0,0,0.15) 100%)`,
+        overflow: "hidden",
+      }}
+    >
+      {/* Section header */}
+      <div
+        className="flex items-center justify-between px-5 py-3"
+        style={{ borderBottom: `1px solid ${tc.borderFaint}` }}
+      >
+        <div className="flex items-center gap-2">
+          {/* Pulsing active dot */}
+          <span
+            style={{
+              display: "inline-block",
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              backgroundColor: fpsColor,
+              boxShadow: `0 0 6px ${fpsColor}`,
+              animation: "livePulse 2s ease-in-out infinite",
+            }}
+          />
+          <span
+            className="label-text"
+            style={{ fontSize: 11, letterSpacing: "0.2em" }}
+          >
+            NOW PLAYING
+          </span>
+        </div>
+        <span
+          className="font-mono"
+          style={{
+            fontSize: 10,
+            color: tc.secondary,
+            opacity: 0.5,
+            letterSpacing: "0.1em",
+          }}
+        >
+          {fps.processName.toUpperCase()}
+        </span>
+      </div>
+
+      {/* Main content: icon + title left, FPS right */}
+      <div className="flex items-center gap-4 px-5 py-3">
+        {/* Game icon — large */}
+        <div
+          className="flex-shrink-0 flex items-center justify-center"
+          style={{
+            width: 56,
+            height: 56,
+            border: `1px solid ${tc.borderFaint}`,
+            background: `rgba(0,0,0,0.25)`,
+            position: "relative",
+          }}
+        >
+          {/* Corner accents */}
+          {[
+            {
+              top: 2,
+              left: 2,
+              borderTop: "1px solid",
+              borderLeft: "1px solid",
+            },
+            {
+              top: 2,
+              right: 2,
+              borderTop: "1px solid",
+              borderRight: "1px solid",
+            },
+            {
+              bottom: 2,
+              left: 2,
+              borderBottom: "1px solid",
+              borderLeft: "1px solid",
+            },
+            {
+              bottom: 2,
+              right: 2,
+              borderBottom: "1px solid",
+              borderRight: "1px solid",
+            },
+          ].map((style, i) => (
+            <span
+              key={i}
+              style={{
+                position: "absolute",
+                width: 8,
+                height: 8,
+                borderColor: fpsColor,
+                opacity: 0.6,
+                ...style,
+              }}
+            />
+          ))}
+
+          <AnimatePresence mode="wait">
+            {processIcon ? (
+              <motion.img
+                key={fps.processName}
+                src={processIcon}
+                alt={gameTitle}
+                width={40}
+                height={40}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+                style={{ imageRendering: "pixelated" }}
+              />
+            ) : (
+              <motion.svg
+                key="fallback"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={tc.primary}
+                strokeWidth="1"
+                opacity={0.3}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.3 }}
+              >
+                <rect x="2" y="6" width="20" height="12" rx="2" />
+                <path d="M8 12h2M9 11v2M14 12h2M15 11" />
+                <circle cx="15.5" cy="12" r="0.5" fill={tc.primary} />
+              </motion.svg>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Game title + sparkline */}
+        <div className="flex-1 min-w-0 flex flex-col gap-2 py-2">
+          <motion.span
+            key={gameTitle}
+            className="font-mono font-bold truncate"
+            style={{
+              fontSize: 15,
+              color: "var(--stat-value-color)",
+              letterSpacing: "0.04em",
+            }}
+            initial={{ opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            {gameTitle}
+          </motion.span>
+          {currentFps !== null && fpsHistory.length > 1 && (
+            <FpsSparkline history={fpsHistory} />
+          )}
+        </div>
+
+        {/* FPS readout */}
+        <div className="flex-shrink-0 flex flex-col items-end">
+          <span className="label-text" style={{ fontSize: 14 }}>
+            FPS
+          </span>
+          <motion.span
+            key={Math.round(currentFps ?? 0)}
+            className="font-mono font-bold leading-none"
+            style={{
+              fontSize: 48,
+              color: fpsColor,
+              textShadow: `0 0 16px ${fpsColor}50`,
+              fontVariantNumeric: "tabular-nums",
+            }}
+            initial={{ opacity: 0.4, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.15 }}
+          >
+            {currentFps !== null ? Math.round(currentFps) : "—"}
+          </motion.span>
+          {fps.avg1Percent && (
+            <span
+              className="font-mono"
+              style={{
+                fontSize: 12,
+                color: "var(--muted-text-color)",
+                marginTop: 1,
+              }}
+            >
+              1% LOW {Math.round(fps.avg1Percent)}
+            </span>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export function MonitorCard({ monitors, fps, processIcon }: MonitorCardProps) {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
   const [fpsHistory, setFpsHistory] = useState<number[]>([]);
@@ -92,8 +310,8 @@ export function MonitorCard({ monitors, fps }: MonitorCardProps) {
     }
   }, [fps]);
 
-  const currentFps = fps?.fps ?? null;
-  const fpsColor = getFpsColor(currentFps);
+  const primaryFps = fps?.fps ?? null;
+  const fpsColor = getFpsColor(primaryFps);
 
   return (
     <motion.div
@@ -136,7 +354,6 @@ export function MonitorCard({ monitors, fps }: MonitorCardProps) {
             }}
           >
             <div className="flex items-center gap-4 px-5 py-3">
-              {/* Mini monitor SVG — uses theme colors */}
               <svg
                 width="36"
                 height="28"
@@ -258,58 +475,55 @@ export function MonitorCard({ monitors, fps }: MonitorCardProps) {
                 </div>
               )}
 
-              {/* Primary: FPS + sparkline */}
+              {/* Primary: refresh rate only — FPS moves to Now Playing section */}
               {isPrimary && (
-                <div className="mt-3 flex items-center gap-3 flex-shrink-0">
-                  <div className="mt-5">
-                    {currentFps !== null && (
-                      <FpsSparkline history={fpsHistory} />
-                    )}
-                  </div>
-                  <div className="flex flex-col items-end">
-                    <span className="label-text" style={{ fontSize: 16 }}>
-                      FPS
-                    </span>
-                    <motion.span
-                      key={Math.round(currentFps ?? 0)}
-                      className="font-mono font-bold leading-none"
+                <div
+                  className="flex-shrink-0 flex flex-col items-end gap-1"
+                  style={{ width: 48 }}
+                >
+                  <span className="label-text" style={{ fontSize: 12 }}>
+                    HZ
+                  </span>
+                  <div
+                    className="w-full h-1.5"
+                    style={{ background: "rgba(128,128,128,0.12)" }}
+                  >
+                    <div
+                      className="h-full"
                       style={{
-                        fontSize: 56,
-                        color: fpsColor,
-                        textShadow: `0 0 12px ${fpsColor}60`,
+                        width: `${primaryFps ? (primaryFps / 240) * 100 : 100}%`,
+                        backgroundColor: getFpsColor(primaryFps ?? 240),
+                        boxShadow: `0 0 6px ${getFpsColor(primaryFps ?? 240)}60`,
                       }}
-                      initial={{ opacity: 0.4, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.15 }}
-                    >
-                      {currentFps !== null ? Math.round(currentFps) : 240}
-                    </motion.span>
+                    />
                   </div>
+                  <span
+                    className="font-mono text-xl"
+                    style={{ color: "var(--label-text-color)" }}
+                  >
+                    {primaryFps?.toFixed(0) ?? "240"}
+                  </span>
                 </div>
               )}
             </div>
-
-            {/* Primary strip */}
-            {isPrimary && fps && (
-              <div className="flex items-center gap-4 px-5 pb-3">
-                <div style={{ width: 36 }} />
-                <span
-                  className="font-mono"
-                  style={{
-                    fontSize: 16,
-                    marginTop: "-1rem",
-                    color: "var(--muted-text-color)",
-                  }}
-                >
-                  <span style={{ color: "var(--label-text-color)" }}>
-                    {fps.processName.replace(".exe", "")}
-                  </span>
-                </span>
-              </div>
-            )}
           </div>
         );
       })}
+
+      {/* ── Now Playing ── */}
+      <AnimatePresence>
+        {fps && (
+          <NowPlayingSection
+            key={fps.processName}
+            fps={fps}
+            processIcon={processIcon}
+            fpsColor={fpsColor}
+            tc={tc}
+            fpsHistory={fpsHistory}
+            currentFps={fps.fps}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

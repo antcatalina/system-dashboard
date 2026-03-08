@@ -47,7 +47,7 @@ export type NetworkMetricsResponse = {
   downloadTotal: number;
   uploadTotal: number;
   latency: number;
-  adapters: NetworkAdapterResponse[];
+  adapters: Array<NetworkAdapterResponse>;
   primaryAdapter: string;
 };
 
@@ -63,6 +63,7 @@ export type MonitorInfoResponse = {
 export type FPSMetricsResponse = {
   fps: number;
   processName: string;
+  avg1Percent: number;
 };
 
 export type MetricsResponse = {
@@ -71,6 +72,6 @@ export type MetricsResponse = {
   gpu: GPUMetricsResponse;
   ram: RAMMetricsResponse;
   network: NetworkMetricsResponse;
-  monitors: MonitorInfoResponse[];
+  monitors: Array<MonitorInfoResponse>;
   fps: FPSMetricsResponse | null;
 };

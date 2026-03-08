@@ -158,3 +158,139 @@ body.theme-light .monitor-card__monitor--primary {
     transform: scale(0.8);
   }
 }
+
+/* Thumbnail wrapper — animated open/close */
+.monitor-card__thumbnail {
+  overflow: hidden;
+}
+
+.monitor-card__thumbnail-inner {
+  padding: 10px 20px 16px;
+}
+
+/* "NOW RENDERING / PROCESS" label row */
+.monitor-card__thumbnail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+/* The framed image area */
+.monitor-card__thumbnail-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid; /* color set inline via tc.borderFaint */
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Scanline overlay for CRT flavour */
+.monitor-card__thumbnail-scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.06) 3px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+}
+
+/* Corner bracket accents */
+.monitor-card__thumbnail-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-style: solid;
+  border-color: inherit; /* overridden inline with fpsColor */
+  opacity: 0.7;
+  z-index: 3;
+  pointer-events: none;
+}
+.monitor-card__thumbnail-corner--tl {
+  top: 4px;
+  left: 4px;
+  border-width: 1.5px 0 0 1.5px;
+}
+.monitor-card__thumbnail-corner--tr {
+  top: 4px;
+  right: 4px;
+  border-width: 1.5px 1.5px 0 0;
+}
+.monitor-card__thumbnail-corner--bl {
+  bottom: 4px;
+  left: 4px;
+  border-width: 0 0 1.5px 1.5px;
+}
+.monitor-card__thumbnail-corner--br {
+  bottom: 4px;
+  right: 4px;
+  border-width: 0 1.5px 1.5px 0;
+}
+
+/* The actual thumbnail image */
+.monitor-card__thumbnail-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Fallback when image errors */
+.monitor-card__thumbnail-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Loading shimmer */
+.monitor-card__thumbnail-shimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--color-amber-rgb), 0.06) 40%,
+    rgba(var(--color-amber-rgb), 0.12) 50%,
+    rgba(var(--color-amber-rgb), 0.06) 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: thumbnailShimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes thumbnailShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Light theme adjustments */
+body.theme-light .monitor-card__thumbnail-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.03) 3px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+}

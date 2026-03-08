@@ -8,7 +8,7 @@ import { getMemoryColor } from "../../shared/utils/colors";
 
 interface RAMCardProps {
   ram: RAM;
-  history: MetricHistory[];
+  history: Array<MetricHistory>;
 }
 
 export function RAMCard({ ram, history }: RAMCardProps) {
@@ -147,7 +147,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
           </span>
         </div>
         <div className="ram-card__sparkline-chart">
-          <Sparkline data={ramHistory} color={tc.secondary} height={164} />
+          <Sparkline data={ramHistory} color={tc.secondary} height={132} />
         </div>
       </div>
     </motion.div>

@@ -9,7 +9,7 @@ import { getThemeColors } from '../../shared/utils/themeColors';
 
 interface NetworkCardProps {
   network: Network;
-  history: MetricHistory[];
+  history: Array<MetricHistory>;
 }
 
 function latencyLabel(ms: number) {

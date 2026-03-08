@@ -1,4 +1,4 @@
-import { MonitorInfoResponse, FPSMetricsResponse } from '../../api/contracts/metrics';
+import { FPSMetricsResponse, MonitorInfoResponse } from '../../api/contracts/metrics';
 
 export class Monitor {
   readonly id: string;

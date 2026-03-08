@@ -6,7 +6,8 @@ import { RAMCard } from "../components/RAMCard";
 import { MonitorCard } from "../components/MonitorCard";
 import { NetworkCard } from "../components/NetworkCard";
 import { motion } from "framer-motion";
-import { CPU, GPU, RAM, Monitor, FPS, Network } from "../../domain";
+import { CPU, GPU, RAM, Monitor, Network } from "../../domain";
+import { FPSMetrics } from "@system-dashboard/shared";
 
 const PLACEHOLDER = {
   cpu: new CPU({
@@ -40,7 +41,7 @@ const PLACEHOLDER = {
     swapTotal: 0,
     swapUsed: 0,
   }),
-  monitors: [] as Monitor[],
+  monitors: [] as Array<Monitor>,
   network: new Network({
     downloadSpeed: 0,
     uploadSpeed: 0,
@@ -50,19 +51,19 @@ const PLACEHOLDER = {
     adapters: [],
     primaryAdapter: "",
   }),
-  fps: null as FPS | null,
+  fps: null as FPSMetrics | null,
   timestamp: 0,
 };
 
 export function DashboardPage() {
-  const { metrics, history, connected } = useMetrics();
+  const { metrics, history, connected, processIcon } = useMetrics();
   const data = {
     cpu: metrics?.cpu ?? PLACEHOLDER.cpu,
     gpu: metrics?.gpu ?? PLACEHOLDER.gpu,
     ram: (metrics?.ram ?? PLACEHOLDER.ram) as RAM,
-    monitors: (metrics?.monitors ?? PLACEHOLDER.monitors) as Monitor[],
+    monitors: metrics?.monitors ?? PLACEHOLDER.monitors, // already Array<Monitor> from hook
     network: (metrics?.network ?? PLACEHOLDER.network) as Network,
-    fps: (metrics?.fps ?? PLACEHOLDER.fps) as FPS | null,
+    fps: metrics?.fps ?? PLACEHOLDER.fps, // already FPS | null from hook
     timestamp: metrics?.timestamp ?? PLACEHOLDER.timestamp,
   };
 
@@ -123,7 +124,11 @@ export function DashboardPage() {
             </div>
             {data.monitors.length > 0 && (
               <div>
-                <MonitorCard monitors={data.monitors} fps={data.fps} />
+                <MonitorCard
+                  monitors={data.monitors}
+                  fps={data.fps}
+                  processIcon={processIcon}
+                />
               </div>
             )}
           </div>

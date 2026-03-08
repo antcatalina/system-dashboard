@@ -1,9 +1,9 @@
 import { ResponsiveContainer, AreaChart, Area, Tooltip } from 'recharts';
 
 interface SparklineProps {
-  data: number[];
+  data: Array<number>;
   color?: string;
-  height?: number;
+  height?: number | string;
 }
 
 export function Sparkline({ data, color = '#00e5ff', height = 48 }: SparklineProps) {

@@ -12,8 +12,8 @@ import type {
   MonitorInfo,
   NetworkMetrics,
   NetworkAdapter,
-  FPSMetrics,
   WSMessage,
+  FPSMetrics,
 } from "@system-dashboard/shared";
 import { join } from "path";
 
@@ -29,8 +29,8 @@ const POLL_INTERVAL_MS = 1000;
 
 // ─── CPU load smoothing ───────────────────────────────────────────────────────
 const CPU_LOAD_HISTORY_SIZE = 10; // 10 seconds of history at 1s intervals
-let _cpuLoadHistory: number[] = [];
-let _perCoreLoadHistory: Map<number, number[]> = new Map();
+let _cpuLoadHistory: Array<number> = [];
+let _perCoreLoadHistory: Map<number, Array<number>> = new Map();
 
 function addCpuLoad(load: number) {
   _cpuLoadHistory.push(load);
@@ -173,7 +173,7 @@ async function getNetworkMetrics(): Promise<NetworkMetrics> {
     (i) => i.ip4 && i.ip4 !== "127.0.0.1" && !i.internal,
   );
 
-  const adapters: NetworkAdapter[] = activeIfaces.map((iface) => ({
+  const adapters: Array<NetworkAdapter> = activeIfaces.map((iface) => ({
     name: iface.iface,
     type:
       iface.type?.toLowerCase().includes("wireless") ||
@@ -247,18 +247,15 @@ async function getNetworkMetrics(): Promise<NetworkMetrics> {
 
 // ─── PresentMon FPS polling ───────────────────────────────────────────────────
 import { spawn, ChildProcess } from "child_process";
+const FPS_WINDOW_MS = 1000; // Only use frames from the last 1 second
+const FPS_MIN_SAMPLES = 5;
 
-interface FPSState {
-  fps: number;
-  avg1Percent: number;
-  avg01Percent: number;
-  processName: string;
-}
-
-let _fpsState: FPSState | null = null;
+let _fpsState: FPSMetrics | null = null;
 let _presentMonProc: ChildProcess | null = null;
-const _frameTimingsMap: Map<string, number[]> = new Map();
-const FRAME_WINDOW = 300; // keep last 300 frames (~5s at 60fps)
+const _frameTimingsMap: Map<
+  string,
+  Array<{ ms: number; t: number }>
+> = new Map();
 
 function startPresentMon() {
   // Kill any existing instance
@@ -287,7 +284,7 @@ function startPresentMon() {
     });
 
     let buffer = "";
-    let headers: string[] = [];
+    let headers: Array<string> = [];
 
     _presentMonProc.stdout?.on("data", (chunk: Buffer) => {
       buffer += chunk.toString();
@@ -330,33 +327,47 @@ function startPresentMon() {
         if (processName === "Unknown") continue;
 
         const msBetweenPresents = parseFloat(row["MsBetweenPresents"] ?? "0");
-        if (!isNaN(msBetweenPresents) && msBetweenPresents > 0) {
+        if (
+          !isNaN(msBetweenPresents) &&
+          msBetweenPresents > 0 &&
+          msBetweenPresents < 500
+        ) {
+          // Ignore any single frame time > 500ms (these are stalls/minimizes, not real frames)
           if (!_frameTimingsMap.has(processName)) {
             _frameTimingsMap.set(processName, []);
           }
+          const now = Date.now();
           const timings = _frameTimingsMap.get(processName)!;
-          timings.push(msBetweenPresents);
-          if (timings.length > FRAME_WINDOW) timings.shift();
+          timings.push({ ms: msBetweenPresents, t: now });
 
-          if (timings.length > 10) {
-            const sorted = [...timings].sort((a, b) => (b > a ? 1 : 0));
-            const fps =
-              1000 / (sorted.reduce((a, b) => a + b, 0) / sorted.length);
+          // Evict frames older than FPS_WINDOW_MS
+          const cutoff = now - FPS_WINDOW_MS;
+          while (timings.length > 0 && timings[0].t < cutoff) {
+            timings.shift();
+          }
+
+          if (timings.length >= FPS_MIN_SAMPLES) {
+            const frameTimes = timings.map((f) => f.ms);
+            const sorted = [...frameTimes].sort((a, b) => b - a); // worst first
+
+            const meanMs =
+              frameTimes.reduce((a, b) => a + b, 0) / frameTimes.length;
+            const fps = 1000 / meanMs;
+
             const pct1Count = Math.max(1, Math.floor(sorted.length * 0.01));
             const avg1Percent =
               1000 /
               (sorted.slice(0, pct1Count).reduce((a, b) => a + b, 0) /
                 pct1Count);
+
             const pct01Count = Math.max(1, Math.floor(sorted.length * 0.001));
             const avg01Percent =
               1000 /
               (sorted.slice(0, pct01Count).reduce((a, b) => a + b, 0) /
                 pct01Count);
 
-            // Only update _fpsState if this process has the most recent frame activity
-            // (i.e. it's the last thing that presented — which is what we just received)
             _fpsState = {
-              fps: avg1Percent,
+              fps: Math.round(fps * 10) / 10,
               avg1Percent: Math.round(avg1Percent * 10) / 10,
               avg01Percent: Math.round(avg01Percent * 10) / 10,
               processName,
@@ -570,4 +581,43 @@ app.get("/health", (_req, res) => res.json({ status: "ok" }));
 server.listen(PORT, () => {
   console.log(`[Server] Running on http://localhost:${PORT}`);
   console.log(`[WS]     WebSocket on ws://localhost:${PORT}`);
+});
+
+app.get("/api/icon", (req, res) => {
+  const processName = String(req.query.process ?? "").trim();
+  if (!processName) {
+    return res.status(400).json({ error: "Missing ?process= query param" });
+  }
+
+  try {
+    // Find the full exe path from the running process, then extract its icon
+    // as a base64 PNG — all in one PS expression, no temp files.
+    const psScript = `
+      Add-Type -AssemblyName System.Drawing
+      $proc = Get-Process -Name '${processName.replace(/\.exe$/i, "")}' -ErrorAction SilentlyContinue | Select-Object -First 1
+      if (-not $proc) { exit 1 }
+      $path = $proc.MainModule.FileName
+      $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path)
+      $bmp  = $icon.ToBitmap()
+      $ms   = New-Object System.IO.MemoryStream
+      $bmp.Save($ms, [System.Drawing.Imaging.ImageFormat]::Png)
+      [Convert]::ToBase64String($ms.ToArray())
+    `
+      .trim()
+      .replace(/\n\s+/g, "; ");
+
+    const base64 = execSync(
+      `powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "${psScript}"`,
+      { timeout: 5000, stdio: "pipe" },
+    )
+      .toString()
+      .trim();
+
+    if (!base64) return res.status(404).json({ error: "Icon not found" });
+
+    res.setHeader("Cache-Control", "max-age=3600"); // icons don't change
+    res.json({ icon: `data:image/png;base64,${base64}` });
+  } catch {
+    res.status(404).json({ error: "Could not extract icon" });
+  }
 });

@@ -12,7 +12,7 @@ export interface CPUMetrics {
   temperature: number; // °C
   frequency: number; // MHz current
   maxFrequency: number; // MHz max
-  perCore: CPUCore[];
+  perCore: Array<CPUCore>;
 }
 
 export interface GPUMetrics {
@@ -70,7 +70,7 @@ export interface NetworkMetrics {
   downloadTotal: number; // GB since boot
   uploadTotal: number; // GB since boot
   latency: number; // ms ping to gateway
-  adapters: NetworkAdapter[];
+  adapters: Array<NetworkAdapter>;
   primaryAdapter: string;
 }
 
@@ -79,7 +79,7 @@ export interface DashboardPayload {
   cpu: CPUMetrics;
   gpu: GPUMetrics;
   ram: RAMMetrics;
-  monitors: MonitorInfo[];
+  monitors: Array<MonitorInfo>;
   network: NetworkMetrics;
   fps: FPSMetrics | null;
 }

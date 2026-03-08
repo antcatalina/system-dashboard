@@ -11,7 +11,7 @@ export interface MetricsSnapshot {
   gpu: GPU;
   ram: RAM;
   network: Network;
-  monitors: Monitor[];
+  monitors: Array<Monitor>;
   fps: FPS | null;
 }
 

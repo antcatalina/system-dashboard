@@ -20,7 +20,7 @@ export class Network {
   readonly downloadTotal: number; // GB
   readonly uploadTotal: number; // GB
   readonly latency: number; // ms
-  readonly adapters: NetworkAdapter[];
+  readonly adapters: Array<NetworkAdapter>;
   readonly primaryAdapter: string;
 
   constructor(data: NetworkMetricsResponse) {
