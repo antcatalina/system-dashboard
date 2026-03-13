@@ -322,6 +322,7 @@ function startPresentMon() {
           "steamwebhelper.exe",
           "msedgewebview2.exe",
           "crs-video.exe",
+          "conhost.exe",
         ];
         if (skipList.some((p) => processName.toLowerCase() === p.toLowerCase()))
           continue;
@@ -579,9 +580,8 @@ app.get("/api/metrics", async (_req, res) => {
 
 app.get("/health", (_req, res) => res.json({ status: "ok" }));
 
-server.listen(PORT, () => {
-  console.log(`[Server] Running on http://localhost:${PORT}`);
-  console.log(`[WS]     WebSocket on ws://localhost:${PORT}`);
+server.listen(PORT, "0.0.0.0", () => {
+  console.log("Server running on port 3001");
 });
 
 app.get("/api/icon", (req, res) => {

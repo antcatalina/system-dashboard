@@ -16,6 +16,7 @@ interface MonitorCardProps {
 const SPARKLINE_WIDTH = 300;
 const SPARKLINE_HEIGHT = 36;
 const MAX_HISTORY = 60;
+const STALE_TIMEOUT_MS = 30_000;
 
 // ─── FPS sparkline ────────────────────────────────────────────────────────────
 
@@ -161,7 +162,10 @@ function DisplaysSection({
       >
         <div className="flex items-center gap-2 mb-2">
           <div className="live-dot" style={{ backgroundColor: tc.primary }} />
-          <span className="label-text" style={{ color: tc.primary, fontSize: 9 }}>
+          <span
+            className="label-text"
+            style={{ color: tc.primary, fontSize: 9 }}
+          >
             DISPLAYS
           </span>
         </div>
@@ -185,10 +189,13 @@ function DisplaysSection({
       {/* One column per monitor */}
       {monitors.map((m, idx) => {
         const isPrimary = m.primary;
-        const hz = isPrimary && primaryFps ? primaryFps : isPrimary ? 240 : m.refreshRate;
-        const hzColor = isPrimary
-          ? getFpsColor(hz)
-          : "var(--color-green)";
+        const hz =
+          isPrimary && primaryFps
+            ? primaryFps
+            : isPrimary
+              ? 240
+              : m.refreshRate;
+        const hzColor = isPrimary ? getFpsColor(hz) : "var(--color-green)";
         const isLast = idx === monitors.length - 1;
         return (
           <div
@@ -267,7 +274,9 @@ function DisplaysSection({
                     backgroundColor: hzColor,
                     boxShadow: `0 0 6px ${hzColor}60`,
                   }}
-                  animate={{ width: `${Math.min((hz / (isPrimary ? 240 : 60)) * 100, 100)}%` }}
+                  animate={{
+                    width: `${Math.min((hz / (isPrimary ? 240 : 60)) * 100, 100)}%`,
+                  }}
                   transition={{ duration: 0.5 }}
                 />
               </div>
@@ -562,19 +571,38 @@ export function MonitorCard({ monitors, fps, processIcon }: MonitorCardProps) {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
   const [fpsHistory, setFpsHistory] = useState<number[]>([]);
+  const [displayedFps, setDisplayedFps] = useState<FPSMetrics | null>(null);
   const prevFps = useRef<number | null>(null);
+  const staleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (fps && fps.fps !== prevFps.current) {
       prevFps.current = fps.fps;
+
+      // New reading arrived — show it and reset the stale timer
+      setDisplayedFps(fps);
       setFpsHistory((h) => {
         const next = [...h, fps.fps];
         return next.length > MAX_HISTORY ? next.slice(-MAX_HISTORY) : next;
       });
+
+      if (staleTimer.current) clearTimeout(staleTimer.current);
+      staleTimer.current = setTimeout(() => {
+        setDisplayedFps(null);
+        setFpsHistory([]);
+      }, STALE_TIMEOUT_MS);
     }
   }, [fps]);
 
-  const primaryFps = fps?.fps ?? null;
+  // Clean up on unmount
+  useEffect(
+    () => () => {
+      if (staleTimer.current) clearTimeout(staleTimer.current);
+    },
+    [],
+  );
+
+  const primaryFps = displayedFps?.fps ?? null;
   const fpsColor = getFpsColor(primaryFps);
 
   return (
@@ -586,7 +614,7 @@ export function MonitorCard({ monitors, fps, processIcon }: MonitorCardProps) {
     >
       <DisplaysSection monitors={monitors} tc={tc} primaryFps={primaryFps} />
       <NowPlayingSection
-        fps={fps}
+        fps={displayedFps}
         processIcon={processIcon}
         fpsColor={fpsColor}
         tc={tc}
