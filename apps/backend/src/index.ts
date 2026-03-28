@@ -323,6 +323,9 @@ function startPresentMon() {
           "msedgewebview2.exe",
           "crs-video.exe",
           "conhost.exe",
+          "powershell.exe",
+          "SocialClubHelper.exe",
+          "TFCInstaller.exe",
         ];
         if (skipList.some((p) => processName.toLowerCase() === p.toLowerCase()))
           continue;
@@ -418,11 +421,6 @@ async function collectCPU(): Promise<CPUMetrics> {
   const cpuFreq = getCurrentCpuFrequency();
   addCpuLoad(cpuLoad.currentLoad);
   const smoothedLoad = getSmoothedCpuLoad();
-  if (Math.random() < 0.1) {
-    console.log(
-      `[CPU] Raw: ${Math.round(cpuLoad.currentLoad * 10) / 10}% → Smoothed: ${smoothedLoad}%`,
-    );
-  }
   cpuLoad.cpus.forEach((c, i) => addPerCoreLoad(i, c.load));
   const cpuTemperature: number =
     graphics.controllers?.find(

@@ -4,13 +4,16 @@
   display: flex;
   align-items: stretch;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-primary-rgb), var(--border-opacity-med));
+  border-bottom-color: rgba(
+    var(--color-primary-rgb),
+    var(--border-opacity-med)
+  );
   background: linear-gradient(
     180deg,
     rgba(var(--color-primary-rgb), var(--bg-opacity-max)) 0%,
     rgba(var(--color-primary-rgb), var(--bg-opacity-min)) 100%
   );
-  min-height: 24px;
+  min-height: 16px;
   position: relative;
   overflow: visible;
   padding: 2px;
@@ -28,13 +31,23 @@
   right: 0;
   height: 1px;
   pointer-events: none;
-  background: linear-gradient(90deg, transparent 0%, var(--color-primary) 50%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-primary) 50%,
+    transparent 100%
+  );
   animation: scan-pulse 3s ease-in-out infinite;
 }
 
 @keyframes scan-pulse {
-  0%, 100% { opacity: 0.2; }
-  50%       { opacity: 0.8; }
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 /* ── All flex children: no position/z-index — avoids stacking context traps ── */
@@ -70,7 +83,7 @@
 }
 
 .status-bar__title {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -78,12 +91,13 @@
 
 .status-bar__title-highlight {
   color: var(--color-primary);
-  text-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.8),
-               0 0 40px rgba(var(--color-primary-rgb), 0.4);
+  text-shadow:
+    0 0 20px rgba(var(--color-primary-rgb), 0.8),
+    0 0 40px rgba(var(--color-primary-rgb), 0.4);
 }
 
 .status-bar__subtitle {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
@@ -107,19 +121,27 @@
   flex-shrink: 0;
 }
 
-.status-bar__dot--live    { background-color: var(--color-green); }
-.status-bar__dot--offline { background-color: var(--color-red); }
+.status-bar__dot--live {
+  background-color: var(--color-green);
+}
+.status-bar__dot--offline {
+  background-color: var(--color-red);
+}
 
 .status-bar__label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 10px;
 }
 
-.status-bar__label--live    { color: var(--color-green); }
-.status-bar__label--offline { color: var(--color-red); }
+.status-bar__label--live {
+  color: var(--color-green);
+}
+.status-bar__label--offline {
+  color: var(--color-red);
+}
 
 .status-bar__refresh {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 9px;
   color: rgba(255, 255, 255, 0.2);
 }
@@ -155,30 +177,42 @@
 
 .status-bar__time {
   display: flex;
-  flex-direction: column;
+  align-items: baseline;
+  gap: 6px;
 }
 
 .status-bar__date {
-  font-family: 'JetBrains Mono', monospace;
-  font-size:9px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
   letter-spacing: 0.15em;
+  white-space: nowrap;
+}
+
+.status-bar__date--divider {
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 10px;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .status-bar__timevalue {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.05em;
   color: var(--color-primary);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  min-width: 7ch;
+  display: inline-block;
 }
 
 .status-bar__theme-selector {
   display: flex;
   align-items: center;
-  padding: 0 12px;
+  padding: 2px 12px;
   border-left: 1px solid;
   border-left-color: rgba(var(--color-primary-rgb), 0.1);
 }

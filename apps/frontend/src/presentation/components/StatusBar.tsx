@@ -1,7 +1,7 @@
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import '../styles/components/StatusBar.css';
-import { ThemeSelector } from './ThemeSelector';
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import "../styles/components/StatusBar.css";
+import { ThemeSelector } from "./ThemeSelector";
 
 export function StatusBar({ connected }: { connected: boolean }) {
   const [time, setTime] = useState(new Date());
@@ -11,12 +11,15 @@ export function StatusBar({ connected }: { connected: boolean }) {
     return () => clearInterval(t);
   }, []);
 
-  const timeStr = time.toLocaleTimeString('en-US', { hour12: false });
-  const dateStr = time.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  const timeStr = time.toLocaleTimeString("en-US", { hour12: false });
+  const dateStr = time.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
 
   return (
     <div className="status-bar">
-
       {/*
         Scan line rendered LAST so it's on top visually but isolated from flex layout.
         Using CSS animation instead of Framer Motion to avoid will-change/transform
@@ -27,17 +30,22 @@ export function StatusBar({ connected }: { connected: boolean }) {
       {/* Status block */}
       <div className="status-bar__status">
         <div className="relative">
-          <div className={`status-bar__dot ${connected ? 'status-bar__dot--live' : 'status-bar__dot--offline'}`} />
+          <div
+            className={`status-bar__dot ${connected ? "status-bar__dot--live" : "status-bar__dot--offline"}`}
+          />
           {connected && (
-            <motion.div className="absolute inset-0 rounded-full"
-              style={{ backgroundColor: 'var(--color-green)' }}
+            <motion.div
+              className="absolute inset-0 rounded-full"
+              style={{ backgroundColor: "var(--color-green)" }}
               animate={{ scale: [1, 3], opacity: [0.5, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             />
           )}
         </div>
-        <span className={`status-bar__label ${connected ? 'status-bar__label--live' : 'status-bar__label--offline'}`}>
-          {connected ? 'LIVE' : 'OFFLINE'}
+        <span
+          className={`status-bar__label ${connected ? "status-bar__label--live" : "status-bar__label--offline"}`}
+        >
+          {connected ? "LIVE" : "OFFLINE"}
         </span>
         {connected && <span className="status-bar__refresh">1s REFRESH</span>}
       </div>
@@ -46,12 +54,14 @@ export function StatusBar({ connected }: { connected: boolean }) {
       <div className="status-bar__center">
         <div className="status-bar__ruler">
           {Array.from({ length: 40 }).map((_, i) => (
-            <motion.div key={i} className="status-bar__tick"
+            <motion.div
+              key={i}
+              className="status-bar__tick"
               style={{
                 height: i % 10 === 0 ? 20 : i % 5 === 0 ? 14 : 8,
                 backgroundColor: connected
                   ? `rgba(0,229,255,${0.08 + (i % 10 === 0 ? 0.35 : i % 5 === 0 ? 0.15 : 0)})`
-                  : 'rgba(255,255,255,0.06)',
+                  : "rgba(255,255,255,0.06)",
               }}
               animate={connected ? { opacity: [0.5, 1, 0.5] } : {}}
               transition={{ duration: 2, repeat: Infinity, delay: i * 0.03 }}
@@ -63,8 +73,9 @@ export function StatusBar({ connected }: { connected: boolean }) {
       {/* Clock block */}
       <div className="status-bar__clock">
         <div className="status-bar__time">
-          <p className="status-bar__date">{dateStr}</p>
-          <p className="status-bar__timevalue">{timeStr}</p>
+          <span className="status-bar__date">{dateStr}</span>
+          <span className="status-bar__date status-bar__date--divider">·</span>
+          <span className="status-bar__timevalue">{timeStr}</span>
         </div>
       </div>
 
@@ -72,7 +83,6 @@ export function StatusBar({ connected }: { connected: boolean }) {
       <div className="status-bar__theme-selector">
         <ThemeSelector />
       </div>
-
     </div>
   );
 }

@@ -124,7 +124,6 @@ export function DashboardPage() {
         {data.monitors.length > 0 && (
           <div
             className="min-w-0 overflow-hidden"
-            style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
           >
             <MonitorCard
               monitors={data.monitors}

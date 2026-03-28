@@ -399,7 +399,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
           </span>
         </div>
         <div className="ram-card__sparkline-chart">
-          <Sparkline data={ramHistory} color={tc.secondary} height={48} />
+          <Sparkline data={ramHistory} color={tc.secondary} height={46} />
         </div>
       </div>
     </motion.div>

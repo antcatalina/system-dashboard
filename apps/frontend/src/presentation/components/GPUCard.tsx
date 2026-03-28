@@ -146,7 +146,7 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
           </span>
         </div>
         <div className="gpu-card__sparkline-chart">
-          <Sparkline data={gpuHistory} color={tc.primary} height={48} />
+          <Sparkline data={gpuHistory} color={tc.primary} height={46} />
         </div>
       </div>
     </motion.div>

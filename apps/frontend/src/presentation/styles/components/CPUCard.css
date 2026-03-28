@@ -6,7 +6,10 @@
   justify-content: space-between;
   padding: 4px 12px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-secondary-rgb), var(--border-opacity-med));
+  border-bottom-color: rgba(
+    var(--color-secondary-rgb),
+    var(--border-opacity-med)
+  );
   background: rgba(var(--color-secondary-rgb), var(--bg-opacity-med));
 }
 
@@ -27,14 +30,14 @@
 }
 
 .cpu-card__label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
 }
 
 .cpu-card__badge {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -46,7 +49,7 @@
 }
 
 .cpu-card__model {
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-size: 11px;
   margin-left: 2px;
   min-width: 0;
@@ -63,16 +66,17 @@
 }
 
 .cpu-card__value {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: var(--color-secondary);
-  text-shadow: 0 0 20px rgba(var(--color-secondary-rgb), 0.8),
-               0 0 40px rgba(var(--color-secondary-rgb), 0.4);
+  text-shadow:
+    0 0 20px rgba(var(--color-secondary-rgb), 0.8),
+    0 0 40px rgba(var(--color-secondary-rgb), 0.4);
 }
 
 .cpu-card__value-unit {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   margin-left: 2px;
   opacity: 0.6;
@@ -84,13 +88,19 @@
   align-items: center;
   padding: 10px 8px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-secondary-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(
+    var(--color-secondary-rgb),
+    var(--border-opacity-min)
+  );
 }
 
 .cpu-card__activity {
   padding: 10px 12px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-secondary-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(
+    var(--color-secondary-rgb),
+    var(--border-opacity-min)
+  );
 }
 
 .cpu-card__activity-label {
@@ -101,7 +111,7 @@
 }
 
 .cpu-card__activity-value {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 13px;
 }
 
@@ -130,12 +140,16 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    transparent 50%
+  );
   pointer-events: none;
 }
 
 .cpu-card__heatmap-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 7px;
   color: rgba(255, 255, 255, 0.45);
   line-height: 1;
@@ -147,11 +161,14 @@
 .cpu-card__frequency {
   padding: 7px 12px;
   border-bottom: 1px solid;
-  border-bottom-color: rgba(var(--color-secondary-rgb), var(--border-opacity-min));
+  border-bottom-color: rgba(
+    var(--color-secondary-rgb),
+    var(--border-opacity-min)
+  );
 }
 
 .cpu-card__frequency-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   display: flex;
@@ -161,7 +178,7 @@
 }
 
 .cpu-card__frequency-value {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 13px;
   font-variant-numeric: tabular-nums;
 }
@@ -172,13 +189,15 @@
   background-color: rgba(255, 255, 255, 0.04);
 }
 
-.cpu-card__bar-fill { height: 100%; }
+.cpu-card__bar-fill {
+  height: 100%;
+}
 
 .cpu-card__sparkline {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 10px 12px;
+  padding: 10px 12px 0;
 }
 
 .cpu-card__sparkline-header {
@@ -189,7 +208,7 @@
 }
 
 .cpu-card__sparkline-value {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 13px;
   font-variant-numeric: tabular-nums;
 }
@@ -200,6 +219,13 @@
 }
 
 @keyframes livePulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.5; transform: scale(0.8); }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
 }

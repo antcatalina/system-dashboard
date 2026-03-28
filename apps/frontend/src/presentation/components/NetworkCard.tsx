@@ -71,14 +71,14 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
 
       {/* ── Sparklines ── */}
       <div className="flex-1 flex flex-col" style={{ borderRight: `1px solid ${tc.border}` }}>
-        <div className="flex-1 px-5 py-3" style={{ borderBottom: `1px solid ${tc.borderFaint}` }}>
+        <div className="flex-1 px-3 py-1" style={{ borderBottom: `1px solid ${tc.borderFaint}` }}>
           <div className="flex justify-between items-center mb-2">
             <span className="label-text">↓ DOWNLOAD</span>
             <span className="font-mono text-md" style={{ color: tc.primary }}>
               {formatSpeed(network.downloadSpeed).value} {formatSpeed(network.downloadSpeed).unit}
             </span>
           </div>
-          <Sparkline data={dlHistory} color={tc.primary} height={54} />
+          <Sparkline data={dlHistory} color={tc.primary} height={52} />
         </div>
         <div className="flex-1 px-5 py-3">
           <div className="flex justify-between items-center mb-2">
@@ -87,13 +87,13 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
               {formatSpeed(network.uploadSpeed).value} {formatSpeed(network.uploadSpeed).unit}
             </span>
           </div>
-          <Sparkline data={ulHistory} color={tc.secondary} height={54} />
+          <Sparkline data={ulHistory} color={tc.secondary} height={52} />
         </div>
       </div>
 
       {/* ── Stats column ── */}
       <div className="flex flex-col" style={{ minWidth: 180, borderRight: `1px solid ${tc.border}` }}>
-        <div className="px-2 flex flex-col items-center justify-center flex-1"
+        <div className="p-2 flex flex-col items-center justify-center flex-1"
           style={{ borderBottom: `1px solid ${tc.borderFaint}`, background: `${lc}08` }}>
           <span className="label-text">LATENCY</span>
           <div className="flex items-baseline gap-1.5">

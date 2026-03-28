@@ -13,6 +13,7 @@ interface MonitorCardProps {
   processIcon?: string | null;
 }
 
+const PRIMARY_HZ_OVERRIDE = 240;
 const SPARKLINE_WIDTH = 300;
 const SPARKLINE_HEIGHT = 36;
 const MAX_HISTORY = 60;
@@ -193,7 +194,7 @@ function DisplaysSection({
           isPrimary && primaryFps
             ? primaryFps
             : isPrimary
-              ? 240
+              ? PRIMARY_HZ_OVERRIDE
               : m.refreshRate;
         const hzColor = isPrimary ? getFpsColor(hz) : "var(--color-green)";
         const isLast = idx === monitors.length - 1;
@@ -275,7 +276,7 @@ function DisplaysSection({
                     boxShadow: `0 0 6px ${hzColor}60`,
                   }}
                   animate={{
-                    width: `${Math.min((hz / (isPrimary ? 240 : 60)) * 100, 100)}%`,
+                    width: `${Math.min((hz / (isPrimary ? PRIMARY_HZ_OVERRIDE : 60)) * 100, 100)}%`,
                   }}
                   transition={{ duration: 0.5 }}
                 />
@@ -297,7 +298,7 @@ function DisplaysSection({
                     fontFamily: "JetBrains Mono, monospace",
                   }}
                 >
-                  {m.refreshRate}Hz MAX
+                  {isPrimary ? PRIMARY_HZ_OVERRIDE : m.refreshRate}Hz MAX
                 </span>
               </div>
             </div>

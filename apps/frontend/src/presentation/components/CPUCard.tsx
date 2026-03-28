@@ -156,7 +156,7 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
           </span>
         </div>
         <div className="cpu-card__sparkline-chart">
-          <Sparkline data={cpuHistory} color={tc.tertiary} height={48} />
+          <Sparkline data={cpuHistory} color={tc.tertiary} height={46} />
         </div>
       </div>
     </motion.div>
