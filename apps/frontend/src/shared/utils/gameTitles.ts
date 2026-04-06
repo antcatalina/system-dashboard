@@ -5,7 +5,6 @@
  * For any unrecognized process, the fallback strips .exe and title-cases the name.
  */
 export const GAME_TITLE_MAP: Record<string, string> = {
-
   // ── 0–9 ────────────────────────────────────────────────────────────────────
   "7daystodie.exe": "7 Days to Die",
   "7dtd.exe": "7 Days to Die",
@@ -23,7 +22,7 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "acrogue.exe": "Assassin's Creed Rogue",
   "acs.exe": "Assetto Corsa",
   "acshadows.exe": "Assassin's Creed Shadows",
-  "acstellarblade.exe": "Stellar Blade",            // alias guard
+  "acstellarblade.exe": "Stellar Blade", // alias guard
   "acsyndicate.exe": "Assassin's Creed Syndicate",
   "acu.exe": "Assassin's Creed Unity",
   "acvalhalla.exe": "Assassin's Creed Valhalla",
@@ -66,7 +65,8 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "batmanarkhamknight.exe": "Batman: Arkham Knight",
   "batmanarkhamknightlauncher.exe": "Batman: Arkham Knight",
   "batmanarkhamorigins.exe": "Batman: Arkham Origins",
-  "batmanarkhamoriginscoldcoldh.exe": "Batman: Arkham Origins — Cold, Cold Heart",
+  "batmanarkhamoriginscoldcoldh.exe":
+    "Batman: Arkham Origins — Cold, Cold Heart",
   "bf1.exe": "Battlefield 1",
   "bf1942.exe": "Battlefield 1942",
   "bf2.exe": "Battlefield 2",
@@ -95,7 +95,7 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "borderlands2.exe": "Borderlands 2",
   "borderlands3.exe": "Borderlands 3",
   "borderlandsgotye.exe": "Borderlands: Game of the Year Edition",
-  "buldersgate3.exe": "Baldur's Gate 3",             // common typo exe seen in logs
+  "buldersgate3.exe": "Baldur's Gate 3", // common typo exe seen in logs
 
   // ── C ──────────────────────────────────────────────────────────────────────
   "callofcthulhu.exe": "Call of Cthulhu",
@@ -120,14 +120,17 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "codmw.exe": "Call of Duty: Modern Warfare",
   "codwaw.exe": "Call of Duty: World at War",
   "concord.exe": "Concord",
-  "consoleapp.exe": "Halo 2 Project Cartographer",   // H2PC legacy console wrapper
+  "consoleapp.exe": "Halo 2 Project Cartographer", // H2PC legacy console wrapper
   "control_dx11.exe": "Control",
   "control_dx12.exe": "Control",
   "craftopia.exe": "Craftopia",
-  "crysis.exe": "Crysis Remastered",
-  "crysis2.exe": "Crysis 2 Remastered",
+  "crysis.exe": "Crysis [Remastered]",
+  "crysisremastered.exe": "Crysis [Remastered]",
+  "crysis2.exe": "Crysis 2 [Remastered]",
+  "crysis2remastered.exe": "Crysis 2 [Remastered]",
   "crysis2maxeditionlauncher.exe": "Crysis 2 Maximum Edition",
-  "crysis3.exe": "Crysis 3 Remastered",
+  "crysis3.exe": "Crysis 3 [Remastered]",
+  "crysis3remastered.exe": "Crysis 3 [Remastered]",
   "crysiswars.exe": "Crysis Wars",
   "crysiswarsanticheat.exe": "Crysis Wars",
   "crysiswarsserver.exe": "Crysis Wars (Server)",
@@ -185,6 +188,7 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "divinityoriginalsin2.exe": "Divinity: Original Sin 2",
   "division.exe": "Tom Clancy's The Division",
   "division2.exe": "Tom Clancy's The Division 2",
+  "thedivision2.exe": "Tom Clancy's The Division 2",
   "doom.exe": "DOOM (2016)",
   "doom1.exe": "DOOM (Classic)",
   "doom2.exe": "DOOM II (Classic)",
@@ -244,7 +248,7 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "farcryneward.exe": "Far Cry New Dawn",
   "farcrynewdawn.exe": "Far Cry New Dawn",
   "farcryprimal.exe": "Far Cry Primal",
-  "fatshark.exe": "Warhammer: Vermintide 2",      // Fatshark launcher seen in logs
+  "fatshark.exe": "Warhammer: Vermintide 2", // Fatshark launcher seen in logs
   "fatshark2.exe": "Warhammer: Vermintide 2",
   "ff16.exe": "Final Fantasy XVI",
   "ff7.exe": "Final Fantasy VII Remake",
@@ -332,7 +336,7 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   // ── I ──────────────────────────────────────────────────────────────────────
   "icarus-win64-shipping.exe": "Icarus",
   "icarus.exe": "Icarus",
-  "infinity.exe": "Halo 4 (MCC)",           // internal name seen in some MCC builds
+  "infinity.exe": "Halo 4 (MCC)", // internal name seen in some MCC builds
   "insomnia.exe": "InSomnia: The Ark",
 
   // ── J ──────────────────────────────────────────────────────────────────────
@@ -451,7 +455,7 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "planetcoaster2.exe": "Planet Coaster 2",
   "planetcrafter.exe": "The Planet Crafter",
   "planetcrafter-win64-shipping.exe": "The Planet Crafter",
-  "plunkbat.exe": "PUBG: Battlegrounds",             // legacy debug name
+  "plunkbat.exe": "PUBG: Battlegrounds", // legacy debug name
   "prey.exe": "Prey",
   "prey2.exe": "Prey (2006)",
   "pubg.exe": "PUBG: Battlegrounds",
@@ -564,7 +568,7 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "thewalkingdeads2.exe": "The Walking Dead: Season Two",
   "thewalkingdeadseason3.exe": "The Walking Dead: A New Frontier",
   "thewalkingdeadseason4.exe": "The Walking Dead: The Final Season",
-  "ticwatch.exe": "Returnal",   // rare crash log alias
+  "ticwatch.exe": "Returnal", // rare crash log alias
   "tld.exe": "The Long Dark",
   "tlou1.exe": "The Last of Us Part I",
   "tlou2.exe": "The Last of Us Part II Remastered",
@@ -632,14 +636,22 @@ export const GAME_TITLE_MAP: Record<string, string> = {
 /**
  * Returns a properly formatted display name for a process.
  * Falls back to a cleaned-up version of the exe name if not in the map.
+ * Handles camelCase splitting while preserving ALL_CAPS substrings.
  */
 export function resolveGameTitle(processName: string): string {
   const key = processName.toLowerCase();
   if (GAME_TITLE_MAP[key]) return GAME_TITLE_MAP[key];
 
-  return processName
-    .replace(/\.exe$/i, "")
-    .replace(/[-_.]+/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase())
-    .trim();
+  return (
+    processName
+      .replace(/\.exe$/i, "")
+      // Split camelCase boundaries: lowercase/digit followed by uppercase,
+      // but only when the uppercase starts a new word (not inside an all-caps run)
+      .replace(/([a-z\d])([A-Z][a-z])/g, "$1 $2")
+      // Also split when transitioning out of an all-caps run into a capitalized word
+      .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+      .replace(/[-_.]+/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase())
+      .trim()
+  );
 }

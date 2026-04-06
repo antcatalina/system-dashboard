@@ -150,13 +150,13 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
           <span className="cpu-card__label">LOAD HISTORY</span>
           <span
             className="cpu-card__sparkline-value"
-            style={{ color: tc.tertiary, marginLeft: "auto" }}
+            style={{ color: tc.secondary, marginLeft: "auto" }}
           >
             {cpu.load.toFixed(1)}%
           </span>
         </div>
         <div className="cpu-card__sparkline-chart">
-          <Sparkline data={cpuHistory} color={tc.tertiary} height={46} />
+          <Sparkline data={cpuHistory} color={tc.secondary} height={46} />
         </div>
       </div>
     </motion.div>

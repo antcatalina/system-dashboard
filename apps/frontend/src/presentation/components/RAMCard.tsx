@@ -377,7 +377,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
         <div className="ram-card__waveform-header">
           <span className="ram-card__label">SIGNAL</span>
         </div>
-        <Waveform usedPercent={ram.usedPercent} color={tc.tertiary} />
+        <Waveform usedPercent={ram.usedPercent} color={tc.secondary} />
         <div className="ram-card__waveform-footer">
           <span className="ram-card__scale-label">0%</span>
           <span className="ram-card__scale-label">
@@ -393,13 +393,13 @@ export function RAMCard({ ram, history }: RAMCardProps) {
           <span className="ram-card__label">USAGE HISTORY</span>
           <span
             className="ram-card__sparkline-value"
-            style={{ color: tc.secondary }}
+            style={{ color: tc.tertiary }}
           >
             {ram.usedPercent.toFixed(1)}%
           </span>
         </div>
         <div className="ram-card__sparkline-chart">
-          <Sparkline data={ramHistory} color={tc.secondary} height={46} />
+          <Sparkline data={ramHistory} color={tc.tertiary} height={46} />
         </div>
       </div>
     </motion.div>

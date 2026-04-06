@@ -6,23 +6,23 @@ export type Theme =
   | "pink"
   | "red"
   | "yellow"
-  | "aurora"
-  | "ocean"
   | "matrix"
-  | "neon"
   | "obsidian"
   | "midnight"
-  | "forest"
-  | "cyberpunk"
+  | "ocean"
   | "winxp"
-  | "aqua"
   | "ubuntu"
   | "solarized"
   | "dracula"
-  | "nord"
   | "gruvbox"
   | "tokyonight"
-  | "catppuccin";
+  | "void"
+  | "hc"
+  | "cyber"
+  | "aurora"
+  | "inferno"
+  | "toxic"
+  | "cobalt";
 
 interface ThemeContextType {
   theme: Theme;
@@ -37,23 +37,23 @@ const VALID_THEMES: Array<Theme> = [
   "pink",
   "red",
   "yellow",
-  "aurora",
-  "ocean",
   "matrix",
-  "neon",
   "obsidian",
   "midnight",
-  "forest",
-  "cyberpunk",
+  "ocean",
   "winxp",
-  "aqua",
   "ubuntu",
   "solarized",
   "dracula",
-  "nord",
   "gruvbox",
   "tokyonight",
-  "catppuccin",
+  "void",
+  "hc",
+  "cyber",
+  "aurora",
+  "inferno",
+  "toxic",
+  "cobalt",
 ];
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -71,7 +71,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    // Remove all possible theme classes
     document.body.classList.remove(...VALID_THEMES.map((t) => `theme-${t}`));
     document.body.classList.add(`theme-${theme}`);
     localStorage.setItem("app-theme", theme);

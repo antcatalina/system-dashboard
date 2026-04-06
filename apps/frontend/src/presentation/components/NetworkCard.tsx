@@ -65,8 +65,8 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
 
       {/* ── Speed readouts ── */}
       <div className="flex" style={{ borderRight: `1px solid ${tc.border}`, minWidth: 120 }}>
-        <SpeedBlock label="DOWNLOAD" speed={network.downloadSpeed} color={tc.primary} arrow="↓" borderColor={tc.borderFaint} />
-        <SpeedBlock label="UPLOAD"   speed={network.uploadSpeed}   color={tc.secondary} arrow="↑" borderColor={tc.borderFaint} />
+        <SpeedBlock label="DOWNLOAD" speed={network.downloadSpeed} color={tc.secondary} arrow="↓" borderColor={tc.borderFaint} />
+        <SpeedBlock label="UPLOAD"   speed={network.uploadSpeed}   color={tc.tertiary} arrow="↑" borderColor={tc.borderFaint} />
       </div>
 
       {/* ── Sparklines ── */}
@@ -74,20 +74,20 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
         <div className="flex-1 px-3 py-1" style={{ borderBottom: `1px solid ${tc.borderFaint}` }}>
           <div className="flex justify-between items-center mb-2">
             <span className="label-text">↓ DOWNLOAD</span>
-            <span className="font-mono text-md" style={{ color: tc.primary }}>
+            <span className="font-mono text-md" style={{ color: tc.secondary }}>
               {formatSpeed(network.downloadSpeed).value} {formatSpeed(network.downloadSpeed).unit}
             </span>
           </div>
-          <Sparkline data={dlHistory} color={tc.primary} height={52} />
+          <Sparkline data={dlHistory} color={tc.secondary} height={52} />
         </div>
         <div className="flex-1 px-5 py-3">
           <div className="flex justify-between items-center mb-2">
             <span className="label-text">↑ UPLOAD</span>
-            <span className="font-mono text-md" style={{ color: tc.secondary }}>
+            <span className="font-mono text-md" style={{ color: tc.tertiary }}>
               {formatSpeed(network.uploadSpeed).value} {formatSpeed(network.uploadSpeed).unit}
             </span>
           </div>
-          <Sparkline data={ulHistory} color={tc.secondary} height={52} />
+          <Sparkline data={ulHistory} color={tc.tertiary} height={52} />
         </div>
       </div>
 
@@ -107,13 +107,13 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
         </div>
         <div className="px-5 py-1" style={{ borderBottom: `1px solid ${tc.borderFaint}` }}>
           <span className="label-text block mb-1">↓ SESSION</span>
-          <span className="font-display text-lg font-bold" style={{ color: tc.primary, textShadow: `0 0 12px ${tc.primary}60` }}>
+          <span className="font-display text-lg font-bold" style={{ color: tc.secondary, textShadow: `0 0 12px ${tc.secondary}60` }}>
             {formatBytes(network.downloadTotal)}
           </span>
         </div>
         <div className="px-5 py-1">
           <span className="label-text block mb-1">↑ SESSION</span>
-          <span className="font-display text-lg font-bold" style={{ color: tc.secondary, textShadow: `0 0 12px ${tc.secondary}60` }}>
+          <span className="font-display text-lg font-bold" style={{ color: tc.tertiary, textShadow: `0 0 12px ${tc.tertiary}60` }}>
             {formatBytes(network.uploadTotal)}
           </span>
         </div>

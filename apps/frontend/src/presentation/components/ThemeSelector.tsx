@@ -47,33 +47,11 @@ const THEMES: {
     description: "Phosphor green",
   },
   {
-    id: "neon",
-    label: "NEON",
-    icon: "◈",
-    color: "#bf5af2",
-    description: "Purple & electric yellow",
-  },
-  {
-    id: "cyberpunk",
-    label: "CYBERPUNK",
-    icon: "◈",
-    color: "#f9e900",
-    description: "Yellow, magenta & electric blue",
-  },
-  // ── Atmospheric ──────────────────────────────────────────────────────────
-  {
-    id: "aurora",
-    label: "AURORA",
-    icon: "◈",
-    color: "#00e5cc",
-    description: "Teal & violet drift",
-  },
-  {
     id: "ocean",
     label: "OCEAN",
     icon: "◈",
     color: "#0096ff",
-    description: "Deep blue & primary",
+    description: "Deep blue & teal",
   },
   {
     id: "obsidian",
@@ -89,12 +67,56 @@ const THEMES: {
     color: "#4d9fff",
     description: "Deep navy & violet",
   },
+  // ── Colorful ─────────────────────────────────────────────────────────
   {
-    id: "forest",
-    label: "FOREST",
-    icon: "◈",
-    color: "#4ade80",
-    description: "Dark green & warm wood",
+    id: "cyber",
+    label: "CYBER",
+    icon: "◆",
+    color: "#00f0ff",
+    description: "Electric cyan on black",
+  },
+  {
+    id: "aurora",
+    label: "AURORA",
+    icon: "◆",
+    color: "#c060ff",
+    description: "Violet & magenta",
+  },
+  {
+    id: "inferno",
+    label: "INFERNO",
+    icon: "◆",
+    color: "#ff8c00",
+    description: "Burning orange & amber",
+  },
+  {
+    id: "toxic",
+    label: "TOXIC",
+    icon: "◆",
+    color: "#50ff00",
+    description: "Radioactive lime",
+  },
+  {
+    id: "cobalt",
+    label: "COBALT",
+    icon: "◆",
+    color: "#3d7eff",
+    description: "Deep electric blue",
+  },
+  // ── Black / high contrast ────────────────────────────────────────────────
+  {
+    id: "void",
+    label: "VOID",
+    icon: "◉",
+    color: "#ffffff",
+    description: "Pure black & white",
+  },
+  {
+    id: "hc",
+    label: "HIGH CONTRAST",
+    icon: "◉",
+    color: "#ffff00",
+    description: "Maximum legibility",
   },
   // ── Light ────────────────────────────────────────────────────────────────
   {
@@ -125,20 +147,6 @@ const THEMES: {
     icon: "◈",
     color: "#7aa2f7",
     description: "Tokyo Night deep navy",
-  },
-  {
-    id: "catppuccin",
-    label: "CATPPUCCIN",
-    icon: "◈",
-    color: "#cba6f7",
-    description: "Catppuccin Mocha pastels",
-  },
-  {
-    id: "nord",
-    label: "NORD",
-    icon: "◈",
-    color: "#88c0d0",
-    description: "Arctic blue-grey",
   },
   {
     id: "gruvbox",

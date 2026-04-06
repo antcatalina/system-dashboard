@@ -141,7 +141,9 @@ body.theme-rainbow .theme-selector__menu {
   font-family: inherit;
   text-align: left;
   color: var(--option-color);
-  transition: background 0.12s ease, border-color 0.12s ease;
+  transition:
+    background 0.12s ease,
+    border-color 0.12s ease;
 }
 
 .theme-selector__option:hover {
@@ -328,4 +330,473 @@ body.theme-light .theme-selector__footer-text {
   width: 5px;
   height: 5px;
   border-radius: 50%;
+}
+
+/* ── Void ── */
+body.theme-void .theme-selector__menu {
+  background: #000000;
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 1),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+body.theme-void .theme-selector__option:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+body.theme-void .theme-selector__option--active {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+body.theme-void .theme-selector__footer {
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+body.theme-void .theme-selector__option-description {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ── High Contrast ── */
+body.theme-hc .theme-selector__menu {
+  background: #000000;
+  border-color: #ffffff;
+  box-shadow:
+    0 0 0 2px #000,
+    0 16px 48px rgba(0, 0, 0, 1);
+}
+body.theme-hc .theme-selector__option:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #ffffff;
+}
+body.theme-hc .theme-selector__option--active {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffff00;
+}
+body.theme-hc .theme-selector__option-title {
+  text-shadow: none;
+}
+body.theme-hc .theme-selector__footer {
+  border-top-color: rgba(255, 255, 255, 0.3);
+}
+body.theme-hc .theme-selector__option-description {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ── Cyber ── */
+body.theme-cyber .theme-selector__menu {
+  background: #000d1a;
+  border-color: rgba(0, 240, 255, 0.45);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.95),
+    0 0 28px rgba(0, 240, 255, 0.15);
+}
+body.theme-cyber .theme-selector__option:hover {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: rgba(0, 240, 255, 0.25);
+}
+body.theme-cyber .theme-selector__option--active {
+  background: rgba(0, 240, 255, 0.08);
+  border-color: rgba(0, 240, 255, 0.35);
+}
+body.theme-cyber .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-cyber .theme-selector__footer {
+  border-top-color: rgba(0, 240, 255, 0.2);
+}
+body.theme-cyber .theme-selector__option-description {
+  color: rgba(100, 220, 255, 0.5);
+}
+
+/* ── Aurora ── */
+body.theme-aurora .theme-selector__menu {
+  background: #0d0018;
+  border-color: rgba(180, 0, 255, 0.45);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.95),
+    0 0 28px rgba(180, 0, 255, 0.18);
+}
+body.theme-aurora .theme-selector__option:hover {
+  background: rgba(180, 0, 255, 0.1);
+  border-color: rgba(180, 0, 255, 0.25);
+}
+body.theme-aurora .theme-selector__option--active {
+  background: rgba(180, 0, 255, 0.08);
+  border-color: rgba(180, 0, 255, 0.35);
+}
+body.theme-aurora .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-aurora .theme-selector__footer {
+  border-top-color: rgba(180, 0, 255, 0.2);
+}
+body.theme-aurora .theme-selector__option-description {
+  color: rgba(220, 160, 255, 0.55);
+}
+
+/* ── Inferno ── */
+body.theme-inferno .theme-selector__menu {
+  background: #0f0800;
+  border-color: rgba(255, 120, 0, 0.45);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.95),
+    0 0 28px rgba(255, 100, 0, 0.18);
+}
+body.theme-inferno .theme-selector__option:hover {
+  background: rgba(255, 120, 0, 0.1);
+  border-color: rgba(255, 120, 0, 0.25);
+}
+body.theme-inferno .theme-selector__option--active {
+  background: rgba(255, 120, 0, 0.08);
+  border-color: rgba(255, 120, 0, 0.35);
+}
+body.theme-inferno .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-inferno .theme-selector__footer {
+  border-top-color: rgba(255, 120, 0, 0.2);
+}
+body.theme-inferno .theme-selector__option-description {
+  color: rgba(255, 190, 100, 0.55);
+}
+
+/* ── Toxic ── */
+body.theme-toxic .theme-selector__menu {
+  background: #020f00;
+  border-color: rgba(80, 255, 0, 0.45);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.95),
+    0 0 28px rgba(80, 255, 0, 0.15);
+}
+body.theme-toxic .theme-selector__option:hover {
+  background: rgba(80, 255, 0, 0.1);
+  border-color: rgba(80, 255, 0, 0.25);
+}
+body.theme-toxic .theme-selector__option--active {
+  background: rgba(80, 255, 0, 0.08);
+  border-color: rgba(80, 255, 0, 0.35);
+}
+body.theme-toxic .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-toxic .theme-selector__footer {
+  border-top-color: rgba(80, 255, 0, 0.2);
+}
+body.theme-toxic .theme-selector__option-description {
+  color: rgba(160, 255, 100, 0.55);
+}
+
+/* ── Cobalt ── */
+body.theme-cobalt .theme-selector__menu {
+  background: #00050f;
+  border-color: rgba(30, 100, 255, 0.5);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.95),
+    0 0 28px rgba(30, 100, 255, 0.18);
+}
+body.theme-cobalt .theme-selector__option:hover {
+  background: rgba(30, 100, 255, 0.1);
+  border-color: rgba(30, 100, 255, 0.28);
+}
+body.theme-cobalt .theme-selector__option--active {
+  background: rgba(30, 100, 255, 0.08);
+  border-color: rgba(30, 100, 255, 0.38);
+}
+body.theme-cobalt .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-cobalt .theme-selector__footer {
+  border-top-color: rgba(30, 100, 255, 0.22);
+}
+body.theme-cobalt .theme-selector__option-description {
+  color: rgba(130, 175, 255, 0.55);
+}
+
+/* ── Matrix ── */
+body.theme-matrix .theme-selector__menu {
+  background: #001a0a;
+  border-color: rgba(0, 255, 157, 0.4);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(0, 255, 157, 0.2);
+}
+body.theme-matrix .theme-selector__option:hover {
+  background: rgba(0, 255, 157, 0.12);
+  border-color: rgba(0, 255, 157, 0.2);
+}
+body.theme-matrix .theme-selector__option--active {
+  background: rgba(0, 255, 157, 0.08);
+  border-color: rgba(0, 255, 157, 0.25);
+}
+body.theme-matrix .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-matrix .theme-selector__footer {
+  border-top-color: rgba(0, 255, 157, 0.2);
+}
+body.theme-matrix .theme-selector__option-description {
+  color: rgba(95, 255, 201, 0.55);
+}
+
+/* ── Obsidian ── */
+body.theme-obsidian .theme-selector__menu {
+  background: #0e0e12;
+  border-color: rgba(160, 140, 255, 0.3);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(160, 140, 255, 0.1);
+}
+body.theme-obsidian .theme-selector__option:hover {
+  background: rgba(160, 140, 255, 0.08);
+  border-color: rgba(160, 140, 255, 0.18);
+}
+body.theme-obsidian .theme-selector__option--active {
+  background: rgba(160, 140, 255, 0.06);
+  border-color: rgba(160, 140, 255, 0.22);
+}
+body.theme-obsidian .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-obsidian .theme-selector__footer {
+  border-top-color: rgba(160, 140, 255, 0.15);
+}
+body.theme-obsidian .theme-selector__option-description {
+  color: rgba(190, 180, 255, 0.5);
+}
+
+/* ── Midnight ── */
+body.theme-midnight .theme-selector__menu {
+  background: #080c18;
+  border-color: rgba(100, 140, 255, 0.3);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(100, 140, 255, 0.1);
+}
+body.theme-midnight .theme-selector__option:hover {
+  background: rgba(100, 140, 255, 0.08);
+  border-color: rgba(100, 140, 255, 0.18);
+}
+body.theme-midnight .theme-selector__option--active {
+  background: rgba(100, 140, 255, 0.06);
+  border-color: rgba(100, 140, 255, 0.22);
+}
+body.theme-midnight .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-midnight .theme-selector__footer {
+  border-top-color: rgba(100, 140, 255, 0.15);
+}
+body.theme-midnight .theme-selector__option-description {
+  color: rgba(160, 185, 255, 0.5);
+}
+
+/* ── Ocean ── */
+body.theme-ocean .theme-selector__menu {
+  background: #00080f;
+  border-color: rgba(0, 200, 220, 0.35);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(0, 200, 220, 0.15);
+}
+body.theme-ocean .theme-selector__option:hover {
+  background: rgba(0, 200, 220, 0.1);
+  border-color: rgba(0, 200, 220, 0.2);
+}
+body.theme-ocean .theme-selector__option--active {
+  background: rgba(0, 200, 220, 0.08);
+  border-color: rgba(0, 200, 220, 0.25);
+}
+body.theme-ocean .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-ocean .theme-selector__footer {
+  border-top-color: rgba(0, 200, 220, 0.18);
+}
+body.theme-ocean .theme-selector__option-description {
+  color: rgba(100, 220, 235, 0.55);
+}
+
+/* ── WinXP ── */
+body.theme-winxp .theme-selector__menu {
+  background: #001030;
+  border-color: rgba(80, 160, 255, 0.45);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(80, 160, 255, 0.15);
+}
+body.theme-winxp .theme-selector__option:hover {
+  background: rgba(80, 160, 255, 0.12);
+  border-color: rgba(80, 160, 255, 0.22);
+}
+body.theme-winxp .theme-selector__option--active {
+  background: rgba(80, 160, 255, 0.09);
+  border-color: rgba(80, 160, 255, 0.3);
+}
+body.theme-winxp .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-winxp .theme-selector__footer {
+  border-top-color: rgba(80, 160, 255, 0.2);
+}
+body.theme-winxp .theme-selector__option-description {
+  color: rgba(160, 200, 255, 0.55);
+}
+
+/* ── Ubuntu ── */
+body.theme-ubuntu .theme-selector__menu {
+  background: #1a0a00;
+  border-color: rgba(233, 84, 32, 0.45);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(233, 84, 32, 0.18);
+}
+body.theme-ubuntu .theme-selector__option:hover {
+  background: rgba(233, 84, 32, 0.12);
+  border-color: rgba(233, 84, 32, 0.22);
+}
+body.theme-ubuntu .theme-selector__option--active {
+  background: rgba(233, 84, 32, 0.09);
+  border-color: rgba(233, 84, 32, 0.3);
+}
+body.theme-ubuntu .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-ubuntu .theme-selector__footer {
+  border-top-color: rgba(233, 84, 32, 0.2);
+}
+body.theme-ubuntu .theme-selector__option-description {
+  color: rgba(255, 170, 130, 0.55);
+}
+
+/* ── Solarized ── */
+body.theme-solarized .theme-selector__menu {
+  background: #001820;
+  border-color: rgba(38, 139, 210, 0.4);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.85),
+    0 0 24px rgba(38, 139, 210, 0.12);
+}
+body.theme-solarized .theme-selector__option:hover {
+  background: rgba(38, 139, 210, 0.1);
+  border-color: rgba(38, 139, 210, 0.2);
+}
+body.theme-solarized .theme-selector__option--active {
+  background: rgba(38, 139, 210, 0.08);
+  border-color: rgba(38, 139, 210, 0.28);
+}
+body.theme-solarized .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-solarized .theme-selector__footer {
+  border-top-color: rgba(38, 139, 210, 0.18);
+}
+body.theme-solarized .theme-selector__option-description {
+  color: rgba(147, 161, 161, 0.65);
+}
+
+/* ── Dracula ── */
+body.theme-dracula .theme-selector__menu {
+  background: #0d0d1a;
+  border-color: rgba(189, 147, 249, 0.4);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(189, 147, 249, 0.15);
+}
+body.theme-dracula .theme-selector__option:hover {
+  background: rgba(189, 147, 249, 0.1);
+  border-color: rgba(189, 147, 249, 0.22);
+}
+body.theme-dracula .theme-selector__option--active {
+  background: rgba(189, 147, 249, 0.08);
+  border-color: rgba(189, 147, 249, 0.3);
+}
+body.theme-dracula .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-dracula .theme-selector__footer {
+  border-top-color: rgba(189, 147, 249, 0.18);
+}
+body.theme-dracula .theme-selector__option-description {
+  color: rgba(220, 200, 255, 0.55);
+}
+
+/* ── Gruvbox ── */
+body.theme-gruvbox .theme-selector__menu {
+  background: #1a1208;
+  border-color: rgba(215, 153, 33, 0.4);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(215, 153, 33, 0.12);
+}
+body.theme-gruvbox .theme-selector__option:hover {
+  background: rgba(215, 153, 33, 0.1);
+  border-color: rgba(215, 153, 33, 0.22);
+}
+body.theme-gruvbox .theme-selector__option--active {
+  background: rgba(215, 153, 33, 0.08);
+  border-color: rgba(215, 153, 33, 0.28);
+}
+body.theme-gruvbox .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-gruvbox .theme-selector__footer {
+  border-top-color: rgba(215, 153, 33, 0.18);
+}
+body.theme-gruvbox .theme-selector__option-description {
+  color: rgba(235, 200, 120, 0.55);
+}
+
+/* ── Tokyo Night ── */
+body.theme-tokyonight .theme-selector__menu {
+  background: #060a18;
+  border-color: rgba(122, 162, 247, 0.35);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(122, 162, 247, 0.12);
+}
+body.theme-tokyonight .theme-selector__option:hover {
+  background: rgba(122, 162, 247, 0.09);
+  border-color: rgba(122, 162, 247, 0.2);
+}
+body.theme-tokyonight .theme-selector__option--active {
+  background: rgba(122, 162, 247, 0.07);
+  border-color: rgba(122, 162, 247, 0.25);
+}
+body.theme-tokyonight .theme-selector__option-title {
+  text-shadow:
+    0 0 8px var(--option-color),
+    0 0 20px var(--option-color);
+}
+body.theme-tokyonight .theme-selector__footer {
+  border-top-color: rgba(122, 162, 247, 0.15);
+}
+body.theme-tokyonight .theme-selector__option-description {
+  color: rgba(170, 190, 255, 0.5);
 }
