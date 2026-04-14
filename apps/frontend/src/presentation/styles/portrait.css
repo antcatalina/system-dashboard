@@ -1,0 +1,212 @@
+/* Portrait Mode Responsive Styles */
+
+/* ─── Tablet/iPad Portrait (portrait orientation) ─── */
+@media (orientation: portrait) {
+  /* Main dashboard layout: flex column */
+  .dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+  }
+
+  /* Top section: 2x2 grid (GPU, CPU, RAM, Now Playing) */
+  .dashboard-grid__top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+  }
+
+  .dashboard-grid__top > div {
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* Remove right border from right column */
+  .dashboard-grid__top > div:nth-child(2n) {
+    border-right: none;
+  }
+
+  /* Remove bottom border from bottom row */
+  .dashboard-grid__top > div:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
+
+  /* Monitor and Network sections stay full width */
+  .dashboard-grid__monitor {
+    min-width: 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    flex: 0 0 auto;
+    min-height: 100px;
+  }
+
+  .dashboard-grid__network {
+    min-width: 0;
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* StatusBar portrait adjustments */
+  .status-bar {
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .status-bar__center {
+    order: 3;
+    width: 100%;
+    flex: 1;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 2px 0;
+  }
+
+  .status-bar__ruler {
+    gap: 2px;
+    padding: 4px 8px;
+  }
+
+  .status-bar__tick {
+    flex: 1;
+    max-width: 8px;
+  }
+
+  .status-bar__status {
+    order: 1;
+    flex: 0 0 auto;
+    padding: 4px 12px;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .status-bar__clock {
+    order: 2;
+    flex: 1;
+    padding: 4px 12px;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .status-bar__time {
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .status-bar__theme-selector {
+    order: 4;
+    width: 100%;
+    padding: 4px 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Cards in portrait */
+  .card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+
+  .card > * {
+    flex-shrink: 0;
+  }
+
+  .card > *:not(:first-child) {
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Hide MonitorCard's Now Playing section in portrait — NowPlayingCard handles it */
+  .monitor-card__now-playing {
+    display: none;
+  }
+
+  /* Card headers */
+  .cpu-card__header,
+  .gpu-card__header,
+  .ram-card__header,
+  .now-playing-card__header,
+  .network-card__header,
+  .monitor-card__header {
+    flex-wrap: nowrap;
+  }
+
+  /* Sparklines */
+  .sparkline {
+    height: 80px;
+  }
+
+  /* Gauges in portrait */
+  .radial-gauge {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+  }
+
+  .cpu-card__gauges,
+  .gpu-card__gauges {
+    flex-direction: row;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  /* Network card grid */
+  .network-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .network-card__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    flex: 1;
+  }
+}
+
+/* ─── Landscape Mode ─── */
+@media (orientation: landscape) {
+  /* Landscape keeps default flex layout */
+  .dashboard-grid__top {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .dashboard-grid__top > div {
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .dashboard-grid__top > div:last-child {
+    border-right: none;
+  }
+
+  /* Hide NowPlayingCard (4th grid item) in landscape — MonitorCard handles it */
+  .dashboard-grid__top > div:nth-child(4) {
+    display: none;
+  }
+
+  /* Show MonitorCard's Now Playing section in landscape */
+  .monitor-card__now-playing {
+    display: flex;
+  }
+
+  /* Ensure gauges display in rows in landscape */
+  .cpu-card__gauges {
+    flex-direction: row !important;
+  }
+
+  .gpu-card__gauges {
+    flex-direction: row !important;
+  }
+}
+

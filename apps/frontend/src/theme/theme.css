@@ -443,14 +443,13 @@ body.theme-matrix {
   --color-secondary-rgb: 0, 255, 179;
   --color-tertiary: #5fffc9;
   --color-tertiary-rgb: 95, 255, 201;
+
   --color-green: #00ff9d;
   --color-green-rgb: 0, 255, 157;
-
-  --color-amber: #33ffbb;
-  --color-amber-rgb: 51, 255, 187;
-
-  --color-red: #009966;
-  --color-red-rgb: 0, 153, 102;
+  --color-amber: #ffd400;
+  --color-amber-rgb: 255, 212, 0;
+  --color-red: #ff3b3b;
+  --color-red-rgb: 255, 59, 59;
 
   --glow-intensity: 2;
   --border-opacity-max: 0.5;

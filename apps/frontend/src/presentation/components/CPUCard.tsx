@@ -72,7 +72,7 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
 
   return (
     <motion.div
-      className="cpu-card h-full flex flex-col"
+      className="cpu-card h-full"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3, delay: 0.06 }}

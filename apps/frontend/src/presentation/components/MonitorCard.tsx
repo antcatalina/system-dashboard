@@ -330,7 +330,7 @@ function NowPlayingSection({
 
   return (
     <div
-      className="flex flex-col"
+      className="monitor-card__now-playing flex flex-col"
       style={{
         width: 500,
         flexShrink: 0,

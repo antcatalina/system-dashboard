@@ -5,6 +5,7 @@ import { CPUCard } from "../components/CPUCard";
 import { RAMCard } from "../components/RAMCard";
 import { MonitorCard } from "../components/MonitorCard";
 import { NetworkCard } from "../components/NetworkCard";
+import { NowPlayingCard } from "../components/NowPlayingCard";
 import { motion } from "framer-motion";
 import { CPU, GPU, RAM, Monitor, Network } from "../../domain";
 import { FPSMetrics } from "@system-dashboard/shared";
@@ -71,7 +72,7 @@ export function DashboardPage() {
     <div className="min-h-screen bg-surface flex flex-col overflow-hidden">
       <StatusBar connected={connected} />
 
-      <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <main className="flex-1 flex flex-col min-w-0 overflow-hidden dashboard-grid">
         {!connected && (
           <motion.div
             className="px-5 py-2 font-mono text-sm flex items-center gap-3 flex-shrink-0"
@@ -98,33 +99,25 @@ export function DashboardPage() {
           </motion.div>
         )}
 
-        {/* Top row: GPU | CPU | RAM — three equal columns */}
-        <div
-          className="flex flex-1 min-h-0 min-w-0"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
-        >
-          <div
-            className="flex-1 min-w-0 overflow-hidden"
-            style={{ borderRight: "1px solid rgba(255,255,255,0.06)" }}
-          >
+        {/* Top row: 2x2 grid — GPU | CPU | RAM | Now Playing */}
+        <div className="dashboard-grid__top flex flex-1 min-h-0 min-w-0">
+          <div className="flex-1 min-w-0 overflow-hidden" style={{ borderRight: "1px solid rgba(255,255,255,0.06)" }}>
             <GPUCard gpu={data.gpu} history={history} />
           </div>
-          <div
-            className="flex-1 min-w-0 overflow-hidden"
-            style={{ borderRight: "1px solid rgba(255,255,255,0.06)" }}
-          >
+          <div className="flex-1 min-w-0 overflow-hidden" style={{ borderRight: "1px solid rgba(255,255,255,0.06)" }}>
             <CPUCard cpu={data.cpu} history={history} />
           </div>
-          <div className="flex-1 min-w-0 overflow-hidden">
+          <div className="flex-1 min-w-0 overflow-hidden" style={{ borderRight: "1px solid rgba(255,255,255,0.06)" }}>
             <RAMCard ram={data.ram} history={history} />
+          </div>
+          <div className="flex-1 min-w-0 overflow-hidden">
+            <NowPlayingCard fps={data.fps} processIcon={processIcon} />
           </div>
         </div>
 
         {/* Monitor row — full width, only rendered when monitors are present */}
         {data.monitors.length > 0 && (
-          <div
-            className="min-w-0 overflow-hidden"
-          >
+          <div className="dashboard-grid__monitor min-w-0 overflow-hidden">
             <MonitorCard
               monitors={data.monitors}
               fps={data.fps}
@@ -134,7 +127,7 @@ export function DashboardPage() {
         )}
 
         {/* Network row — full width */}
-        <div className="min-w-0 overflow-hidden">
+        <div className="dashboard-grid__network min-w-0 overflow-hidden">
           <NetworkCard network={data.network} history={history} />
         </div>
       </main>
