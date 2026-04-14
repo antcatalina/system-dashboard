@@ -6,6 +6,7 @@ import { getThemeColors } from "../../shared/utils/themeColors";
 import { resolveGameTitle } from "../../shared/utils/gameTitles";
 import type { FPSMetrics } from "@system-dashboard/shared";
 import "../styles/components/NowPlayingCard.css";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 interface NowPlayingCardProps {
   fps: FPSMetrics | null;
@@ -104,14 +105,27 @@ export function NowPlayingCard({ fps, processIcon }: NowPlayingCardProps) {
 
   const currentFps = displayedFps?.fps ?? null;
   const fpsColor = getFpsColor(currentFps ?? 0);
-  const gameTitle = displayedFps ? resolveGameTitle(displayedFps.processName) : null;
+  const gameTitle = displayedFps
+    ? resolveGameTitle(displayedFps.processName)
+    : null;
+
+  const isPortrait = useMediaQuery("(orientation: portrait)");
+  const iconSize = isPortrait ? 32 : 20;
+  const fallbackSize = isPortrait ? 28 : 16;
 
   return (
     <div className="card card-primary now-playing-card h-full flex flex-col">
       {/* Header */}
       <div className="now-playing-card__header">
         <div className="now-playing-card__header-left">
-          <div className="now-playing-card__dot" style={{ backgroundColor: displayedFps ? fpsColor : "rgba(128,128,128,0.3)" }} />
+          <div
+            className="now-playing-card__dot"
+            style={{
+              backgroundColor: displayedFps
+                ? fpsColor
+                : "rgba(128,128,128,0.3)",
+            }}
+          />
           <span className="now-playing-card__label">NOW PLAYING</span>
         </div>
         {displayedFps && (
@@ -141,8 +155,8 @@ export function NowPlayingCard({ fps, processIcon }: NowPlayingCardProps) {
                       key="icon"
                       src={processIcon}
                       alt={gameTitle ?? ""}
-                      width="20"
-                      height="20"
+                      width={iconSize}
+                      height={iconSize}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0 }}
@@ -152,8 +166,8 @@ export function NowPlayingCard({ fps, processIcon }: NowPlayingCardProps) {
                   ) : (
                     <motion.svg
                       key="fallback"
-                      width="16"
-                      height="16"
+                      width={fallbackSize}
+                      height={fallbackSize}
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke={tc.primary}
