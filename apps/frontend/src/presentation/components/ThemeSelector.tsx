@@ -181,9 +181,15 @@ export function ThemeSelector() {
   useEffect(() => {
     if (isOpen && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
+      const MENU_WIDTH = 220;
+      const margin = 8;
+
+      // Clamp right so the menu never overflows off the left edge
+      const desiredRight = window.innerWidth - rect.right;
+      const maxRight = window.innerWidth - MENU_WIDTH - margin;
       setMenuPos({
         top: rect.bottom + 8,
-        right: window.innerWidth - rect.right,
+        right: Math.min(desiredRight, maxRight),
       });
     }
   }, [isOpen]);
@@ -229,6 +235,7 @@ export function ThemeSelector() {
                 top: menuPos.top,
                 right: menuPos.right,
                 zIndex: 9999,
+                maxWidth: `calc(100vw - 16px)`,
               }}
             >
               <div className="theme-selector__options">
