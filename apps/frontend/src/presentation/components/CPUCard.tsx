@@ -7,6 +7,7 @@ import { useTheme } from "../context/ThemeContext";
 import "../styles/components/CPUCard.css";
 import { getThemeColors } from "../../shared/utils/themeColors";
 import { CPUMetrics } from "@system-dashboard/shared";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 interface CPUCardProps {
   cpu: CPUMetrics;
@@ -70,6 +71,9 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
     cpu.maxFrequency > 0 ? (cpu.frequency / cpu.maxFrequency) * 100 : 0;
   const ghz = (cpu.frequency / 1000).toFixed(2);
 
+  const isPortrait = useMediaQuery("(orientation: portrait)");
+  const gaugeSize = isPortrait ? 162 : 128;
+
   return (
     <motion.div
       className="cpu-card h-full"
@@ -82,9 +86,7 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
         <div className="cpu-card__header-left">
           <div className="cpu-card__dot" />
           <span className="cpu-card__label">CPU</span>
-          <span className="cpu-card__badge">
-            {cpu.model.split(" ")[0]}
-          </span>
+          <span className="cpu-card__badge">{cpu.model.split(" ")[0]}</span>
           <span className="cpu-card__model">{cpu.model}</span>
         </div>
         <div className="cpu-card__header-right">
@@ -98,14 +100,19 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
 
       {/* ── Gauges ── */}
       <div className="cpu-card__gauges">
-        <RadialGauge value={cpu.load} color={lc} label="LOAD" size={128} />
+        <RadialGauge
+          value={cpu.load}
+          color={lc}
+          label="LOAD"
+          size={gaugeSize}
+        />
         <RadialGauge
           value={freqPct}
           color={tc.secondary}
           label="BOOST"
           unit={`${ghz}G`}
           decimals={0}
-          size={128}
+          size={gaugeSize}
         />
       </div>
 

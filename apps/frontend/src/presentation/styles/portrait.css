@@ -87,6 +87,15 @@
     flex: 0 0 auto;
     padding: 4px 12px;
     border-right: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 16px;
+  }
+
+  .status-bar__label--live {
+    font-size: 16px;
+  }
+
+  .status-bar__refresh {
+    font-size: 12px;
   }
 
   .status-bar__clock {
@@ -96,9 +105,12 @@
     border-right: 1px solid rgba(255, 255, 255, 0.06);
   }
 
-  .status-bar__time {
-    font-size: 11px;
-    gap: 4px;
+  .status-bar__timevalue {
+    font-size: 24px;
+  }
+
+  .status-bar__date {
+    font-size: 16px;
   }
 
   .status-bar__theme-selector {
@@ -106,6 +118,12 @@
     width: 100%;
     padding: 4px 8px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .theme-selector {
+    display: flex;
+    width: 100%;
+    justify-content: center;
   }
 
   /* Cards in portrait */
@@ -143,13 +161,6 @@
   /* Sparklines */
   .sparkline {
     height: 80px;
-  }
-
-  /* Gauges in portrait */
-  .radial-gauge {
-    width: 80px;
-    height: 80px;
-    flex-shrink: 0;
   }
 
   .cpu-card__gauges,
@@ -208,4 +219,25 @@
   .gpu-card__gauges {
     flex-direction: row !important;
   }
+}
+
+.gpu-card__badge,
+.cpu-card__badge,
+.ram-card__badge {
+  font-size: 12px;
+}
+
+.gpu-card__label,
+.cpu-card__label,
+.ram-card__label {
+  font-size: 14px;
+}
+
+.gpu-card__model,
+.cpu-card__model {
+  font-size: 14px;
+}
+
+.label-text {
+  font-size: 14px;
 }

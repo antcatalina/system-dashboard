@@ -535,6 +535,7 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "stalker2-win64-shipping.exe": "S.T.A.L.K.E.R. 2: Heart of Chornobyl",
   "stalker2.exe": "S.T.A.L.K.E.R. 2: Heart of Chornobyl",
   "stalkeranomaly.exe": "S.T.A.L.K.E.R. Anomaly",
+  "xrengine.exe": "S.T.A.L.K.E.R. Legends of the Zone Trilogy",
   "starfield.exe": "Starfield",
   "starfieldlauncher.exe": "Starfield",
   "stars.exe": "Stellaris",

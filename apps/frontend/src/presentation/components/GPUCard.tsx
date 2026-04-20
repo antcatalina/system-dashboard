@@ -7,6 +7,8 @@ import { useTheme } from "../context/ThemeContext";
 import "../styles/components/GPUCard.css";
 import { getThemeColors } from "../../shared/utils/themeColors";
 import { GPUMetrics } from "@system-dashboard/shared";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+
 
 interface GPUCardProps {
   gpu: GPUMetrics;
@@ -22,6 +24,8 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
     gpu.powerLimit > 0 ? (gpu.powerDraw / gpu.powerLimit) * 100 : 0;
   const tempColor = getTemperatureColor(gpu.temperature);
   const gpuHistory = history.map((h) => h.gpuUtil);
+  const isPortrait = useMediaQuery("(orientation: portrait)");
+  const gaugeSize = isPortrait ? 162 : 128;
 
   return (
     <motion.div
@@ -50,7 +54,7 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
           value={gpu.utilization}
           color={tc.primary}
           label="UTILIZATION"
-          size={128}
+          size={gaugeSize}
         />
         <RadialGauge
           value={gpu.temperature}
@@ -58,13 +62,13 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
           label="TEMP"
           unit="°C"
           max={110}
-          size={128}
+          size={gaugeSize}
         />
         <RadialGauge
           value={gpu.fanSpeed}
           color={tc.secondary}
           label="FAN SPEED"
-          size={128}
+          size={gaugeSize}
         />
       </div>
 
