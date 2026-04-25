@@ -195,7 +195,7 @@ function DisplaysSection({
             ? primaryFps
             : isPrimary
               ? PRIMARY_HZ_OVERRIDE
-              : m.refreshRate;
+              : 60;
         const hzColor = isPrimary ? getFpsColor(hz) : "var(--color-green)";
         const isLast = idx === monitors.length - 1;
         return (
@@ -276,7 +276,7 @@ function DisplaysSection({
                     boxShadow: `0 0 6px ${hzColor}60`,
                   }}
                   animate={{
-                    width: `${Math.min((hz / (isPrimary ? PRIMARY_HZ_OVERRIDE : 60)) * 100, 100)}%`,
+                    width: `${Math.min((hz / hz) * 100, 100)}%`,
                   }}
                   transition={{ duration: 0.5 }}
                 />
@@ -298,7 +298,7 @@ function DisplaysSection({
                     fontFamily: "JetBrains Mono, monospace",
                   }}
                 >
-                  {isPrimary ? PRIMARY_HZ_OVERRIDE : m.refreshRate}Hz MAX
+                  {hz}Hz MAX
                 </span>
               </div>
             </div>

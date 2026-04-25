@@ -183,6 +183,27 @@
     gap: 8px;
     flex: 1;
   }
+
+  .gpu-card__badge,
+  .cpu-card__badge,
+  .ram-card__badge {
+    font-size: 12px;
+  }
+
+  .gpu-card__label,
+  .cpu-card__label,
+  .ram-card__label {
+    font-size: 14px;
+  }
+
+  .gpu-card__model,
+  .cpu-card__model {
+    font-size: 14px;
+  }
+
+  .label-text {
+    font-size: 14px;
+  }
 }
 
 /* ─── Landscape Mode ─── */
@@ -219,25 +240,4 @@
   .gpu-card__gauges {
     flex-direction: row !important;
   }
-}
-
-.gpu-card__badge,
-.cpu-card__badge,
-.ram-card__badge {
-  font-size: 12px;
-}
-
-.gpu-card__label,
-.cpu-card__label,
-.ram-card__label {
-  font-size: 14px;
-}
-
-.gpu-card__model,
-.cpu-card__model {
-  font-size: 14px;
-}
-
-.label-text {
-  font-size: 14px;
 }

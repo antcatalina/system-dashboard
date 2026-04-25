@@ -2216,14 +2216,14 @@ body.theme-inferno {
   --color-secondary-rgb: 255, 69, 0;
   --color-tertiary: #ffcc66;
   --color-tertiary-rgb: 255, 204, 102;
-  --color-green: #ffd166;
-  --color-green-rgb: 255, 209, 102;
+  --color-green: #e0ff66;
+  --color-green-rgb: 224, 255, 102;
 
-  --color-amber: #ff9e3d;
-  --color-amber-rgb: 255, 158, 61;
+  --color-amber: #ff761f;
+  --color-amber-rgb: 255, 118, 31;
 
-  --color-red: #ff4500;
-  --color-red-rgb: 255, 69, 0;
+  --color-red: #ff2600;
+  --color-red-rgb: 255, 38, 0;
 
   --glow-intensity: 2;
   --border-opacity-max: 0.5;
