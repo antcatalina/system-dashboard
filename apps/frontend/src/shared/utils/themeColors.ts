@@ -23,214 +23,75 @@ export type ThemeColorPalette = {
   statusHot: string;
 };
 
-// A single shared palette object whose primary/secondary/tertiary fields
-// always point to the active CSS variables. There is no need for per-theme
-// entries for these three fields — the CSS themes file owns those values.
+// primary/secondary/tertiary are always CSS variable references —
+// the CSS themes file owns their resolved values.
 const CSS_VAR_BASE = {
   primary: "var(--color-primary)",
   secondary: "var(--color-secondary)",
   tertiary: "var(--color-tertiary)",
 } as const;
 
+// Border/bg opacity presets — (border, borderFaint, bg)
+function borders(b: number, f: number, bg: number) {
+  const p = "var(--color-primary-rgb)";
+  return {
+    border: `rgba(${p}, ${b})`,
+    borderFaint: `rgba(${p}, ${f})`,
+    bg: `rgba(${p}, ${bg})`,
+  };
+}
+
+// Status color presets
+const STATUS_COLORS = {
+  statusGood: "rgb(var(--color-green-rgb))",
+  statusWarn: "rgb(var(--color-amber-rgb))",
+  statusHot: "rgb(var(--color-red-rgb))",
+} as const;
+
 export const THEME_COLORS: Record<string, ThemeColorPalette> = {
+  // Unique status colors
   default: {
     ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.12)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.08)",
-    bg: "rgba(var(--color-primary-rgb), 0.04)",
+    ...borders(0.12, 0.08, 0.04),
     statusGood: "#00ff9d",
     statusWarn: "#ffb300",
     statusHot: "#ff3d57",
   },
   light: {
     ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.18)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.10)",
-    bg: "rgba(var(--color-primary-rgb), 0.04)",
+    ...borders(0.18, 0.1, 0.04),
     statusGood: "#16a34a",
     statusWarn: "#b45309",
     statusHot: "#b91c1c",
   },
   pink: {
     ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.35)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.15)",
-    bg: "rgba(var(--color-primary-rgb), 0.06)",
+    ...borders(0.35, 0.15, 0.06),
     statusGood: "#00e5b0",
     statusWarn: "#ffe066",
     statusHot: "#ff4444",
   },
-  red: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.35)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.15)",
-    bg: "rgba(var(--color-primary-rgb), 0.06)",
-    statusGood: "#4dffb0",
-    statusWarn: "#ffd166",
-    statusHot: "#ff6b35",
-  },
-  yellow: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.35)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.15)",
-    bg: "rgba(var(--color-primary-rgb), 0.06)",
-    statusGood: "#39ff88",
-    statusWarn: "#ff9900",
-    statusHot: "#ff3d3d",
-  },
-  matrix: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.35)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.15)",
-    bg: "rgba(var(--color-primary-rgb), 0.06)",
-    statusGood: "#00e5ff",
-    statusWarn: "#ffdd00",
-    statusHot: "#ff4444",
-  },
-  obsidian: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.30)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.12)",
-    bg: "rgba(var(--color-primary-rgb), 0.05)",
-    statusGood: "#86efac",
-    statusWarn: "#fcd34d",
-    statusHot: "#f87171",
-  },
-  midnight: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.25)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.10)",
-    bg: "rgba(var(--color-primary-rgb), 0.04)",
-    statusGood: "#34d399",
-    statusWarn: "#fbbf24",
-    statusHot: "#f87171",
-  },
-  ocean: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.25)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.10)",
-    bg: "rgba(var(--color-primary-rgb), 0.04)",
-    statusGood: "#00ffcc",
-    statusWarn: "#f0c040",
-    statusHot: "#ff5a5a",
-  },
-  winxp: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.40)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.18)",
-    bg: "rgba(var(--color-primary-rgb), 0.07)",
-    statusGood: "#5abf2a",
-    statusWarn: "#e8a000",
-    statusHot: "#d93030",
-  },
-  ubuntu: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.35)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.15)",
-    bg: "rgba(var(--color-primary-rgb), 0.06)",
-    statusGood: "#0e8420",
-    statusWarn: "#f5a623",
-    statusHot: "#e95420",
-  },
-  solarized: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.30)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.12)",
-    bg: "rgba(var(--color-primary-rgb), 0.05)",
-    statusGood: "#859900",
-    statusWarn: "#b58900",
-    statusHot: "#dc322f",
-  },
-  dracula: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.30)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.12)",
-    bg: "rgba(var(--color-primary-rgb), 0.05)",
-    statusGood: "#50fa7b",
-    statusWarn: "#f1fa8c",
-    statusHot: "#ff5555",
-  },
-  gruvbox: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.30)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.12)",
-    bg: "rgba(var(--color-primary-rgb), 0.05)",
-    statusGood: "#b8bb26",
-    statusWarn: "#fabd2f",
-    statusHot: "#fb4934",
-  },
-  tokyonight: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.25)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.10)",
-    bg: "rgba(var(--color-primary-rgb), 0.04)",
-    statusGood: "#9ece6a",
-    statusWarn: "#e0af68",
-    statusHot: "#f7768e",
-  },
-  void: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.35)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.15)",
-    bg: "rgba(var(--color-primary-rgb), 0.05)",
-    statusGood: "#00ff9d",
-    statusWarn: "#ffb300",
-    statusHot: "#ff3d57",
-  },
-  hc: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.8)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.4)",
-    bg: "rgba(var(--color-primary-rgb), 0.08)",
-    statusGood: "#00ff00",
-    statusWarn: "#ffff00",
-    statusHot: "#ff0000",
-  },
-  cyber: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.40)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.18)",
-    bg: "rgba(var(--color-primary-rgb), 0.07)",
-    statusGood: "#00f0ff",
-    statusWarn: "#ffe040",
-    statusHot: "#ff4444",
-  },
-  aurora: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.40)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.18)",
-    bg: "rgba(var(--color-primary-rgb), 0.07)",
-    statusGood: "#40ffcc",
-    statusWarn: "#ffaa00",
-    statusHot: "#ff3366",
-  },
-  inferno: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.40)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.18)",
-    bg: "rgba(var(--color-primary-rgb), 0.07)",
-    statusGood: "#ffcc00",
-    statusWarn: "#ff8800",
-    statusHot: "#ff2200",
-  },
-  toxic: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.40)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.18)",
-    bg: "rgba(var(--color-primary-rgb), 0.07)",
-    statusGood: "#50ff00",
-    statusWarn: "#ffee00",
-    statusHot: "#ff4400",
-  },
-  cobalt: {
-    ...CSS_VAR_BASE,
-    border: "rgba(var(--color-primary-rgb), 0.40)",
-    borderFaint: "rgba(var(--color-primary-rgb), 0.18)",
-    bg: "rgba(var(--color-primary-rgb), 0.07)",
-    statusGood: "#00ddff",
-    statusWarn: "#ffcc00",
-    statusHot: "#ff4444",
-  },
+
+  // Standard green/amber/red
+  red: { ...CSS_VAR_BASE, ...borders(0.35, 0.15, 0.06), ...STATUS_COLORS },
+  yellow: { ...CSS_VAR_BASE, ...borders(0.35, 0.15, 0.06), ...STATUS_COLORS },
+  obsidian: { ...CSS_VAR_BASE, ...borders(0.3, 0.12, 0.05), ...STATUS_COLORS },
+  solarized: { ...CSS_VAR_BASE, ...borders(0.3, 0.12, 0.05), ...STATUS_COLORS },
+  dracula: { ...CSS_VAR_BASE, ...borders(0.3, 0.12, 0.05), ...STATUS_COLORS },
+  gruvbox: { ...CSS_VAR_BASE, ...borders(0.3, 0.12, 0.05), ...STATUS_COLORS },
+  midnight: { ...CSS_VAR_BASE, ...borders(0.25, 0.1, 0.04), ...STATUS_COLORS },
+  tokyonight: { ...CSS_VAR_BASE, ...borders(0.25, 0.1, 0.04), ...STATUS_COLORS },
+  ubuntu: { ...CSS_VAR_BASE, ...borders(0.35, 0.15, 0.06), ...STATUS_COLORS },
+  void: { ...CSS_VAR_BASE, ...borders(0.35, 0.15, 0.05), ...STATUS_COLORS },
+  winxp: { ...CSS_VAR_BASE, ...borders(0.4, 0.18, 0.07), ...STATUS_COLORS },
+  cyber: { ...CSS_VAR_BASE, ...borders(0.4, 0.18, 0.07), ...STATUS_COLORS },
+  aurora: { ...CSS_VAR_BASE, ...borders(0.4, 0.18, 0.07), ...STATUS_COLORS },
+  inferno: { ...CSS_VAR_BASE, ...borders(0.4, 0.18, 0.07), ...STATUS_COLORS },
+  toxic: { ...CSS_VAR_BASE, ...borders(0.4, 0.18, 0.07), ...STATUS_COLORS },
+  cobalt: { ...CSS_VAR_BASE, ...borders(0.4, 0.18, 0.07), ...STATUS_COLORS },
+  hc: { ...CSS_VAR_BASE, ...borders(0.8, 0.4, 0.08), ...STATUS_COLORS },
+  matrix: { ...CSS_VAR_BASE, ...borders(0.35, 0.15, 0.06), ...STATUS_COLORS },
+  ocean: { ...CSS_VAR_BASE, ...borders(0.25, 0.1, 0.04), ...STATUS_COLORS },
 };
 
 export function getThemeColors(theme: string): ThemeColorPalette {
@@ -239,8 +100,8 @@ export function getThemeColors(theme: string): ThemeColorPalette {
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Status color utilities
-   These return hardcoded hex (from statusGood/Warn/Hot) because they are used
-   in contexts that need a resolved value: SVG stroke, canvas fill, box-shadow.
+   These return resolved values from statusGood/Warn/Hot because they are used
+   in contexts that need a concrete color: SVG stroke, canvas fill, box-shadow.
    For plain text/border coloring in JSX, prefer var(--color-green) etc. directly.
    ───────────────────────────────────────────────────────────────────────── */
 
@@ -278,8 +139,7 @@ export function getMemoryColor(percentUsed: number, theme = "default"): string {
 
 export function getFpsColor(fps: number | null, theme = "default"): string {
   const { statusGood, statusWarn, statusHot } = getThemeColors(theme);
-  if (fps === null) return statusGood;
-  if (fps >= 120) return statusGood;
+  if (fps === null || fps >= 120) return statusGood;
   if (fps >= 60) return statusWarn;
   return statusHot;
 }

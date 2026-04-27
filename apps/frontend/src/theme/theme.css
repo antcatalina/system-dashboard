@@ -335,12 +335,11 @@ body.theme-red {
   --color-secondary-rgb: 255, 107, 107;
   --color-tertiary: #ffb3b3;
   --color-tertiary-rgb: 255, 179, 179;
-  --color-green: #ff8a8a;
-  --color-green-rgb: 255, 138, 138;
-
+  
+  --color-green: #e8ff8a;
+  --color-green-rgb: 232, 255, 138;
   --color-amber: #ffb36b;
   --color-amber-rgb: 255, 179, 107;
-
   --color-red: #ff3d3d;
   --color-red-rgb: 255, 61, 61;
 
@@ -823,8 +822,8 @@ body.theme-obsidian {
   --color-secondary-rgb: 233, 213, 255;
   --color-tertiary: #f5f0e8;
   --color-tertiary-rgb: 245, 240, 232;
-  --color-green: #9fffd4;
-  --color-green-rgb: 159, 255, 212;
+  --color-green: #7effc3;
+  --color-green-rgb: 126, 255, 195;
 
   --color-amber: #e6c15a;
   --color-amber-rgb: 230, 193, 90;
@@ -945,14 +944,13 @@ body.theme-midnight {
   --color-secondary-rgb: 167, 139, 250;
   --color-tertiary: #c0d8ff;
   --color-tertiary-rgb: 192, 216, 255;
+ 
   --color-green: #7fffd4;
   --color-green-rgb: 127, 255, 212;
-
   --color-amber: #a8c8ff;
   --color-amber-rgb: 168, 200, 255;
-
-  --color-red: #6aa2ff;
-  --color-red-rgb: 106, 162, 255;
+  --color-red: #d56aff;
+  --color-red-rgb: 213, 106, 255;
 
   --glow-intensity: 1.5;
   --border-opacity-max: 0.35;
@@ -1067,12 +1065,11 @@ body.theme-winxp {
   --color-secondary-rgb: 78, 161, 255;
   --color-tertiary: #46cec0;
   --color-tertiary-rgb: 70, 206, 192;
+
   --color-green: #4cd964;
   --color-green-rgb: 76, 217, 100;
-
   --color-amber: #ffcc00;
   --color-amber-rgb: 255, 204, 0;
-
   --color-red: #ff3b30;
   --color-red-rgb: 255, 59, 48;
 
@@ -1168,12 +1165,11 @@ body.theme-ubuntu {
   --color-secondary-rgb: 119, 33, 111;
   --color-tertiary: #fdca01;
   --color-tertiary-rgb: 253, 202, 1;
+
   --color-green: #6ee7b7;
   --color-green-rgb: 110, 231, 183;
-
   --color-amber: #ff9f43;
   --color-amber-rgb: 255, 159, 67;
-
   --color-red: #ff5c3a;
   --color-red-rgb: 255, 92, 58;
 
@@ -1264,12 +1260,11 @@ body.theme-solarized {
   --color-secondary-rgb: 42, 161, 152;
   --color-tertiary: #6c71c4;
   --color-tertiary-rgb: 108, 113, 196;
+
   --color-green: #859900;
   --color-green-rgb: 133, 153, 0;
-
   --color-amber: #b58900;
   --color-amber-rgb: 181, 137, 0;
-
   --color-red: #dc322f;
   --color-red-rgb: 220, 50, 47;
 
@@ -1352,12 +1347,11 @@ body.theme-dracula {
   --color-secondary-rgb: 255, 121, 198;
   --color-tertiary: #8be9fd;
   --color-tertiary-rgb: 139, 233, 253;
+
   --color-green: #50fa7b;
   --color-green-rgb: 80, 250, 123;
-
   --color-amber: #f1fa8c;
   --color-amber-rgb: 241, 250, 140;
-
   --color-red: #ff6e6e;
   --color-red-rgb: 255, 110, 110;
 
@@ -1459,12 +1453,11 @@ body.theme-gruvbox {
   --color-secondary-rgb: 254, 128, 25;
   --color-tertiary: #b8bb26;
   --color-tertiary-rgb: 184, 187, 38;
+
   --color-green: #b8bb26;
   --color-green-rgb: 184, 187, 38;
-
   --color-amber: #fabd2f;
   --color-amber-rgb: 250, 189, 47;
-
   --color-red: #fb4934;
   --color-red-rgb: 251, 73, 52;
 
@@ -1554,6 +1547,7 @@ body.theme-tokyonight {
   --color-secondary-rgb: 187, 154, 247;
   --color-tertiary: #7dcfff;
   --color-tertiary-rgb: 125, 207, 255;
+
   --color-green: #9ece6a;
   --color-green-rgb: 158, 206, 106;
   --color-amber: #e0af68;
@@ -1659,14 +1653,13 @@ body.theme-ocean {
   --color-secondary-rgb: 0, 229, 255;
   --color-tertiary: #00ffcc;
   --color-tertiary-rgb: 0, 255, 204;
+
   --color-green: #00ffcc;
   --color-green-rgb: 0, 255, 204;
-
   --color-amber: #33d6ff;
   --color-amber-rgb: 51, 214, 255;
-
-  --color-red: #0096ff;
-  --color-red-rgb: 0, 150, 255;
+  --color-red: #A200FF;
+  --color-red-rgb: 162, 0, 255;
 
   --glow-intensity: 1.6;
   --border-opacity-max: 0.4;
@@ -1782,12 +1775,11 @@ body.theme-void {
   --color-secondary-rgb: 204, 204, 204;
   --color-tertiary: #888888;
   --color-tertiary-rgb: 136, 136, 136;
+
   --color-green: #8fffca;
   --color-green-rgb: 143, 255, 202;
-
   --color-amber: #ffe38a;
   --color-amber-rgb: 255, 227, 138;
-
   --color-red: #ff8a8a;
   --color-red-rgb: 255, 138, 138;
 
@@ -1869,12 +1861,11 @@ body.theme-hc {
   --color-secondary-rgb: 179, 136, 255;
   --color-tertiary: #00e5ff;
   --color-tertiary-rgb: 0, 229, 255;
+
   --color-green: #00ff00;
   --color-green-rgb: 0, 255, 0;
-
   --color-amber: #ffff00;
   --color-amber-rgb: 255, 255, 0;
-
   --color-red: #ff0000;
   --color-red-rgb: 255, 0, 0;
 
@@ -1968,6 +1959,7 @@ body.theme-cyber {
   --color-secondary-rgb: 0, 153, 204;
   --color-tertiary: #80f8ff;
   --color-tertiary-rgb: 128, 248, 255;
+  
   --color-green: #00ffb3;
   --color-green-rgb: 0, 255, 179;
   --color-amber: #ffe040;
