@@ -6,6 +6,7 @@ import { getThemeColors } from "../../shared/utils/themeColors";
 import { resolveGameTitle } from "../../shared/utils/gameTitles";
 import { Monitor } from "../../domain/entities/Monitor";
 import type { FPSMetrics } from "@system-dashboard/shared";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 interface MonitorCardProps {
   monitors: Array<Monitor>;
@@ -146,6 +147,7 @@ function DisplaysSection({
   tc: ReturnType<typeof getThemeColors>;
   primaryFps: number | null;
 }) {
+  const isPortrait = useMediaQuery("(orientation: portrait)");
   return (
     <div
       className="flex flex-row flex-1 min-w-0"
@@ -153,7 +155,7 @@ function DisplaysSection({
     >
       {/* Anchor label column */}
       <div
-        className="flex flex-col justify-center px-4 py-2"
+        className="crt-screen flex flex-col justify-center px-4 py-2"
         style={{
           borderRight: `1px solid ${tc.border}`,
           background: tc.bg,
@@ -165,24 +167,18 @@ function DisplaysSection({
           <div className="live-dot" style={{ backgroundColor: tc.primary }} />
           <span
             className="label-text"
-            style={{ color: tc.primary, fontSize: 9 }}
+            style={{ color: tc.primary, fontSize: 12 }}
           >
             DISPLAYS
           </span>
         </div>
         <span
-          className="font-display font-bold"
-          style={{
-            fontSize: 32,
-            color: tc.primary,
-            textShadow: `0 0 16px ${tc.primary}60`,
-            fontVariantNumeric: "tabular-nums",
-            lineHeight: 1,
-          }}
+          className="font-display font-bold glow-primary"
+          style={{ fontSize: isPortrait ? 56 : 42 }}
         >
           {monitors.length}
         </span>
-        <span className="label-text" style={{ fontSize: 8, marginTop: 4 }}>
+        <span className="label-text" style={{ fontSize: 12, marginTop: 4 }}>
           CONNECTED
         </span>
       </div>
@@ -217,7 +213,7 @@ function DisplaysSection({
                   <span
                     className="font-mono truncate"
                     style={{
-                      fontSize: 10,
+                      fontSize: 12,
                       color: isPrimary
                         ? "var(--stat-value-color)"
                         : "var(--label-text-color)",
@@ -257,13 +253,13 @@ function DisplaysSection({
                 <span
                   className="font-mono"
                   style={{
-                    fontSize: 11,
+                    fontSize: 12,
                     color: hzColor,
                     fontVariantNumeric: "tabular-nums",
                   }}
                 >
                   {typeof hz === "number" ? hz.toFixed(0) : hz}
-                  <span style={{ fontSize: 8, opacity: 0.5, marginLeft: 2 }}>
+                  <span style={{ fontSize: 9, opacity: 0.5, marginLeft: 2 }}>
                     Hz
                   </span>
                 </span>
@@ -284,7 +280,7 @@ function DisplaysSection({
               <div className="flex justify-between mt-1">
                 <span
                   style={{
-                    fontSize: 8,
+                    fontSize: 9,
                     color: "var(--muted-text-color)",
                     fontFamily: "JetBrains Mono, monospace",
                   }}
@@ -293,7 +289,7 @@ function DisplaysSection({
                 </span>
                 <span
                   style={{
-                    fontSize: 8,
+                    fontSize: 9,
                     color: "var(--muted-text-color)",
                     fontFamily: "JetBrains Mono, monospace",
                   }}
@@ -330,7 +326,7 @@ function NowPlayingSection({
 
   return (
     <div
-      className="monitor-card__now-playing flex flex-col"
+      className="monitor-card__now-playing flex flex-col crt-screen"
       style={{
         width: 500,
         flexShrink: 0,
@@ -506,7 +502,7 @@ function NowPlayingSection({
                 key={Math.round(currentFps ?? 0)}
                 className="font-mono font-bold leading-none"
                 style={{
-                  fontSize: 36,
+                  fontSize: 42,
                   color: fpsColor,
                   textShadow: `0 0 16px ${fpsColor}50`,
                   fontVariantNumeric: "tabular-nums",

@@ -115,7 +115,7 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
       </div>
 
       {/* ── Clock tiles ── */}
-      <div className="gpu-card__clocks">
+      <div className="gpu-card__clocks crt-screen">
         <div className="gpu-card__clock gpu-card__clock--left">
           <span className="gpu-card__label">CORE CLOCK</span>
           <span

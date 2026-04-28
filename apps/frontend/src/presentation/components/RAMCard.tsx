@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import type { RAM } from "../../domain";
 import type { MetricHistory } from "../../hooks/useMetrics";
-import { Sparkline } from "./Sparkline";
+// import { Sparkline } from "./Sparkline";
 import { getThemeColors } from "../../shared/utils/themeColors";
 import { useTheme } from "../context/ThemeContext";
 import { getMemoryColor } from "../../shared/utils/colors";
@@ -50,7 +50,7 @@ function Waveform({ usedPercent, color }: WaveformProps) {
       const pct = state.currentPercent / 100; // 0–1
 
       // Advance phase — faster & more chaotic at high pressure
-      state.phase += 0.018 + pct * 0.028;
+      state.phase += 0.01 + pct * 0.014;
 
       ctx.clearRect(0, 0, W, H);
 
@@ -152,8 +152,6 @@ function Waveform({ usedPercent, color }: WaveformProps) {
       ctx.stroke();
       ctx.shadowBlur = 0;
 
-      // ── Ghost wave — slightly offset phase, lower opacity ──
-      // Gives depth, like a CRT afterimage
       const ghostPhase = state.phase - 0.35;
       ctx.beginPath();
       for (let x = 0; x <= W; x += 2) {
@@ -207,7 +205,7 @@ function Waveform({ usedPercent, color }: WaveformProps) {
     <canvas
       ref={canvasRef}
       className="ram-card__waveform-canvas"
-      style={{ height: 52 }}
+      style={{ height: 116 }}
     />
   );
 }
@@ -220,9 +218,11 @@ const TOTAL_DOTS = COLS * ROWS;
 function DotMatrix({
   usedPercent,
   color,
+  colorRgb, // e.g. "var(--color-green-rgb)"
 }: {
   usedPercent: number;
   color: string;
+  colorRgb: string;
 }) {
   const activeDots = Math.round((usedPercent / 100) * TOTAL_DOTS);
 
@@ -233,10 +233,17 @@ function DotMatrix({
     >
       {Array.from({ length: TOTAL_DOTS }).map((_, i) => {
         const active = i < activeDots;
-        // Dots near the fill boundary get a brighter glow — heat effect
         const distFromEdge = activeDots - i;
-        const isEdge = active && distFromEdge <= 4;
-        const edgeIntensity = isEdge ? 1 - (distFromEdge - 1) / 4 : 0;
+        const isEdge = active && distFromEdge <= 16;
+        const edgeIntensity = isEdge ? 1 - (distFromEdge - 1) / 6 : 0;
+
+        const c = (alpha: number) => `rgba(${colorRgb}, ${alpha})`;
+
+        const baseGlow = `0 0 3px 1px ${c(0.4)}, 0 0 6px 2px ${c(0.15)}`;
+        const edgeGlow = isEdge
+          ? `0 0 ${4 + edgeIntensity * 4}px ${1 + edgeIntensity}px ${c(0.8)},` +
+            `0 0 ${8 + edgeIntensity * 6}px 2px ${c(0.3)}`
+          : "";
 
         return (
           <motion.div
@@ -244,12 +251,12 @@ function DotMatrix({
             className="ram-card__dot-cell"
             animate={{
               backgroundColor: active ? color : "rgba(255,255,255,0.07)",
-              opacity: active ? 0.35 + 0.65 * Math.min(1, i / activeDots) : 1,
-              boxShadow: isEdge
-                ? `0 0 ${4 + edgeIntensity * 6}px ${color}, 0 0 ${2 + edgeIntensity * 3}px ${color}`
-                : active
-                  ? `0 0 3px ${color}60`
-                  : "none",
+              opacity: active ? 0.75 + 0.25 * Math.min(1, i / activeDots) : 1,
+              boxShadow: active
+                ? isEdge
+                  ? `${edgeGlow}, ${baseGlow}`
+                  : baseGlow
+                : "none",
             }}
             transition={{ duration: 0.5, delay: active ? i * 0.003 : 0 }}
           />
@@ -263,6 +270,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
   const ramHistory = history.map((h) => h.ramUsed);
+  console.debug(ramHistory); // used in sparkline which is currently commented out, to prevent "defined but never used" warning
   const glowClass =
     ram.usedPercent > 85
       ? "glow-red"
@@ -270,6 +278,8 @@ export function RAMCard({ ram, history }: RAMCardProps) {
         ? "glow-amber"
         : "glow-green";
   const mc = getMemoryColor(ram.usedPercent);
+  const colorName =
+    ram.usedPercent > 85 ? "red" : ram.usedPercent > 65 ? "amber" : "green";
 
   return (
     <motion.div
@@ -296,24 +306,28 @@ export function RAMCard({ ram, history }: RAMCardProps) {
         <div className="flex items-center gap-3">
           <span className="ram-card__label">PRESSURE</span>
           <span
-            className="ram-card__pressure glow-tertiary"
+            className="ram-card__value glow-tertiary"
             style={{ color: tc.tertiary }}
           >
             {ram.usedPercent.toFixed(1)}
-            <span className="ram-card__pressure-unit">%</span>
+            <span className="ram-card__value-unit">%</span>
           </span>
         </div>
       </div>
 
       {/* ── Dot matrix ── */}
-      <div className="ram-card__dotmatrix">
+      <div className="ram-card__dotmatrix crt-screen">
         <div className="ram-card__dotmatrix-header">
           <span className="ram-card__label">ALLOCATION MAP</span>
           <span className="ram-card__label" style={{ color: mc }}>
             {ram.used.toFixed(1)} / {ram.total.toFixed(0)} GB
           </span>
         </div>
-        <DotMatrix usedPercent={ram.usedPercent} color={mc} />
+        <DotMatrix
+          usedPercent={ram.usedPercent}
+          color={mc}
+          colorRgb={`var(--color-${colorName}-rgb)`}
+        />
         <div className="ram-card__dotmatrix-scale">
           <span className="ram-card__scale-label">0</span>
           <span className="ram-card__scale-label">
@@ -326,7 +340,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
       </div>
 
       {/* ── Used / Free ── */}
-      <div className="ram-card__stats">
+      <div className="ram-card__stats crt-screen">
         <div className="ram-card__stat ram-card__stat--used">
           <span className="ram-card__label">USED</span>
           <span
@@ -373,7 +387,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
       )}
 
       {/* ── Oscilloscope waveform ── */}
-      <div className="ram-card__waveform">
+      <div className="ram-card__waveform crt-screen">
         <div className="ram-card__waveform-header">
           <span className="ram-card__label">SIGNAL</span>
         </div>
@@ -387,7 +401,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
         </div>
       </div>
 
-      {/* ── Sparkline ── */}
+      {/* ── Sparkline ──
       <div className="ram-card__sparkline">
         <div className="flex justify-between items-center mb-3">
           <span className="ram-card__label">USAGE HISTORY</span>
@@ -402,6 +416,7 @@ export function RAMCard({ ram, history }: RAMCardProps) {
           <Sparkline data={ramHistory} color={tc.tertiary} height={46} />
         </div>
       </div>
+      */}
     </motion.div>
   );
 }

@@ -201,8 +201,23 @@
     font-size: 14px;
   }
 
+  .gpu-card__clock-value,
+  .ram-card__stat-value {
+    font-size: 28px;
+  }
+
+  .cpu-card__value,
+  .gpu-card__value,
+  .ram-card__value {
+    font-size: 26px;
+  }
+
   .label-text {
     font-size: 14px;
+  }
+
+  .font-display {
+    font-size: 24px;
   }
 }
 

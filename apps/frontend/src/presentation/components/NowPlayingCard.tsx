@@ -75,6 +75,38 @@ function FpsSparkline({ history }: { history: number[] }) {
   );
 }
 
+function FpsDisplay({
+  currentFps,
+  fpsColor,
+  avg1Percent,
+}: {
+  currentFps: number;
+  fpsColor: string;
+  avg1Percent?: number;
+}) {
+  return (
+    <div className="now-playing-card__fps">
+      <span className="now-playing-card__fps-label">FPS</span>
+      <motion.span
+        key={Math.round(currentFps)}
+        className="now-playing-card__fps-value"
+        style={{ color: fpsColor }}
+        initial={{ opacity: 0.4, y: -4 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.15 }}
+      >
+        {Math.round(currentFps)}
+        <span className="now-playing-card__fps-scanline" />
+      </motion.span>
+      {avg1Percent && (
+        <span className="now-playing-card__fps-low">
+          1% LOW {Math.round(avg1Percent)}
+        </span>
+      )}
+    </div>
+  );
+}
+
 export function NowPlayingCard({ fps, processIcon }: NowPlayingCardProps) {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
@@ -183,7 +215,6 @@ export function NowPlayingCard({ fps, processIcon }: NowPlayingCardProps) {
                 </AnimatePresence>
               </div>
 
-              {/* Title and sparkline */}
               <div className="now-playing-card__info">
                 <motion.span
                   key={gameTitle}
@@ -194,32 +225,29 @@ export function NowPlayingCard({ fps, processIcon }: NowPlayingCardProps) {
                 >
                   {gameTitle}
                 </motion.span>
+
+                {isPortrait && currentFps !== null && (
+                  <FpsDisplay
+                    currentFps={currentFps}
+                    fpsColor={fpsColor}
+                    avg1Percent={displayedFps.avg1Percent}
+                  />
+                )}
+
                 {currentFps !== null && fpsHistory.length > 1 && (
-                  <div className="now-playing-card__sparkline">
+                  <div className="now-playing-card__sparkline crt-screen">
                     <FpsSparkline history={fpsHistory} />
                   </div>
                 )}
               </div>
 
-              {/* FPS number */}
-              <div className="now-playing-card__fps">
-                <span className="now-playing-card__fps-label">FPS</span>
-                <motion.span
-                  key={Math.round(currentFps ?? 0)}
-                  className="now-playing-card__fps-value"
-                  style={{ color: fpsColor }}
-                  initial={{ opacity: 0.4, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.15 }}
-                >
-                  {currentFps !== null ? Math.round(currentFps) : "—"}
-                </motion.span>
-                {displayedFps.avg1Percent && (
-                  <span className="now-playing-card__fps-low">
-                    1% {Math.round(displayedFps.avg1Percent)}
-                  </span>
-                )}
-              </div>
+              {!isPortrait && currentFps !== null && (
+                <FpsDisplay
+                  currentFps={currentFps}
+                  fpsColor={fpsColor}
+                  avg1Percent={displayedFps.avg1Percent}
+                />
+              )}
             </motion.div>
           ) : (
             <motion.div

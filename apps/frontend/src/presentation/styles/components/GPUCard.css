@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 12px;
+  padding: 2px 8px;
   border-bottom: 1px solid;
   border-bottom-color: rgba(
     var(--color-primary-rgb),
@@ -50,7 +50,7 @@
 
 .gpu-card__model {
   font-family: "DM Sans", sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   margin-left: 2px;
   min-width: 0;
   overflow: hidden;
@@ -67,7 +67,7 @@
 
 .gpu-card__value {
   font-family: "Orbitron", sans-serif;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--color-primary);
   text-shadow:
@@ -144,7 +144,7 @@
 }
 
 .gpu-card__clock {
-  padding: 10px 12px;
+  padding: 6px 8px 2px;
   display: flex;
   flex-direction: column;
 }
@@ -161,7 +161,7 @@
 
 .gpu-card__clock-value {
   font-family: "Orbitron", sans-serif;
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
@@ -182,7 +182,7 @@
 
 .gpu-card__clock-unit {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9px;
+  font-size: 14px;
   margin-left: 3px;
   opacity: 0.6;
 }
@@ -191,7 +191,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 10px 12px 0;
+  padding: 10px 12px 4px;
 }
 
 .gpu-card__sparkline-header {

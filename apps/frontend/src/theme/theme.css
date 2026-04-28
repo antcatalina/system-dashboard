@@ -335,7 +335,7 @@ body.theme-red {
   --color-secondary-rgb: 255, 107, 107;
   --color-tertiary: #ffb3b3;
   --color-tertiary-rgb: 255, 179, 179;
-  
+
   --color-green: #e8ff8a;
   --color-green-rgb: 232, 255, 138;
   --color-amber: #ffb36b;
@@ -944,7 +944,7 @@ body.theme-midnight {
   --color-secondary-rgb: 167, 139, 250;
   --color-tertiary: #c0d8ff;
   --color-tertiary-rgb: 192, 216, 255;
- 
+
   --color-green: #7fffd4;
   --color-green-rgb: 127, 255, 212;
   --color-amber: #a8c8ff;
@@ -1654,11 +1654,11 @@ body.theme-ocean {
   --color-tertiary: #00ffcc;
   --color-tertiary-rgb: 0, 255, 204;
 
-  --color-green: #00ffcc;
-  --color-green-rgb: 0, 255, 204;
-  --color-amber: #33d6ff;
-  --color-amber-rgb: 51, 214, 255;
-  --color-red: #A200FF;
+  --color-green: #00FF7B;
+  --color-green-rgb: 0, 255, 123;
+  --color-amber: #fcff33;
+  --color-amber-rgb: 252, 255, 51;
+  --color-red: #a200ff;
   --color-red-rgb: 162, 0, 255;
 
   --glow-intensity: 1.6;
@@ -1959,7 +1959,7 @@ body.theme-cyber {
   --color-secondary-rgb: 0, 153, 204;
   --color-tertiary: #80f8ff;
   --color-tertiary-rgb: 128, 248, 255;
-  
+
   --color-green: #00ffb3;
   --color-green-rgb: 0, 255, 179;
   --color-amber: #ffe040;

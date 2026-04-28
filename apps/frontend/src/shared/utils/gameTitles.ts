@@ -615,6 +615,7 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "witcher4-win64-shipping.exe": "The Witcher 4",
   "wo_long.exe": "Wo Long: Fallen Dynasty",
   "wolftng.exe": "Wolfenstein: The New Order",
+  "wolfneworder_x64.exe": "Wolfenstein: The New Order",
   "wolfenstein.exe": "Wolfenstein: The New Order",
   "wonderlands.exe": "Tiny Tina's Wonderlands",
   "wr.exe": "EA Sports WRC",

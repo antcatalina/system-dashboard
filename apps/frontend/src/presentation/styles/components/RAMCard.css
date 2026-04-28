@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 12px;
+  padding: 2px 8px;
   border-bottom: 1px solid;
   border-bottom-color: rgba(
     var(--color-tertiary-rgb),
@@ -29,7 +29,7 @@
 
 .ram-card__label {
   font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
 }
@@ -50,22 +50,23 @@
   gap: 8px;
 }
 
-.ram-card__pressure {
+.ram-card__value {
   font-family: "Orbitron", sans-serif;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
-.ram-card__pressure-unit {
+.ram-card__value-unit {
   font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
+  font-size: 14px;
   margin-left: 2px;
   opacity: 0.6;
 }
 
 .ram-card__dotmatrix {
   padding: 10px 12px;
+  overflow: visible;
   border-bottom: 1px solid;
   border-bottom-color: rgba(
     var(--color-tertiary-rgb),
@@ -82,15 +83,17 @@
 
 .ram-card__dotmatrix-grid {
   display: grid;
+  overflow: visible;
   gap: 3px;
 }
 
 .ram-card__dot-cell {
+  overflow: visible;
   aspect-ratio: 1;
   border-radius: 50%;
   transition:
     background-color 0.4s ease,
-    box-shadow 0.4s ease,
+    box-shadow 0.5s ease,
     opacity 0.4s ease;
 }
 
@@ -117,7 +120,7 @@
 }
 
 .ram-card__stat {
-  padding: 10px 12px;
+  padding: 6px 8px 2px;
   display: flex;
   flex-direction: column;
 }
@@ -142,14 +145,14 @@
 
 .ram-card__stat-value {
   font-family: "Orbitron", sans-serif;
-  font-size: 22px;
+  font-size: 32px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
 .ram-card__stat-unit {
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 16px;
   margin-left: 3px;
   opacity: 0.6;
 }
@@ -191,7 +194,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 10px 12px 0;
+  padding: 10px 12px 4px;
 }
 
 .ram-card__sparkline-header {
@@ -243,7 +246,7 @@
 .ram-card__waveform-canvas {
   display: block;
   width: 100%;
-  height: 72px;
+  height: 134px;
   /* crisp pixel rendering */
   image-rendering: pixelated;
 }

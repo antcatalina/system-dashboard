@@ -13,8 +13,8 @@ export function StatusBar({ connected }: { connected: boolean }) {
 
   const timeStr = time.toLocaleTimeString("en-US", { hour12: false });
   const dateStr = time.toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "short",
+    weekday: "long",
+    month: "long",
     day: "numeric",
   });
 

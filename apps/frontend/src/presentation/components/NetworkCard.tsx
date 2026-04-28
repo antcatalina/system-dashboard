@@ -6,6 +6,7 @@ import { formatSpeed, formatBytes } from "../../shared/utils/formatters";
 import { getLatencyColor } from "../../shared/utils/colors";
 import { useTheme } from "../context/ThemeContext";
 import { getThemeColors } from "../../shared/utils/themeColors";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 interface NetworkCardProps {
   network: Network;
@@ -29,14 +30,16 @@ function SpeedBlock({
 }: {
   label: string;
   speed: number;
-  color: string;
+  color: "primary" | "secondary" | "tertiary";
   arrow: "↓" | "↑";
   borderColor: string;
 }) {
   const formatted = formatSpeed(speed);
+  const isPortrait = useMediaQuery("(orientation: portrait)");
+
   return (
     <div
-      className="flex-1 flex flex-col items-center justify-center py-3 px-6"
+      className="flex-1 flex flex-col items-center justify-center py-3 px-6 crt-screen"
       style={{
         borderRight: arrow === "↓" ? `1px solid ${borderColor}` : "none",
       }}
@@ -47,9 +50,9 @@ function SpeedBlock({
           <motion.div
             key={i}
             style={{
-              width: 18,
-              height: 3,
-              backgroundColor: color,
+              width: isPortrait ? 26 : 18,
+              height: isPortrait ? 6 : 3,
+              backgroundColor: `var(--color-${color})`,
               borderRadius: 2,
             }}
             animate={{ opacity: [0.15, 1, 0.15] }}
@@ -61,10 +64,15 @@ function SpeedBlock({
           />
         ))}
       </div>
-      <div className="flex flex-col items-center">
+      <div className={`flex flex-col items-center`}>
         <motion.span
-          className="font-display font-bold tabular-nums leading-none"
-          style={{ fontSize: 32, color, textShadow: `0 0 28px ${color}70` }}
+          className={`font-display font-bold tabular-nums leading-none ${
+            color === "secondary" ? "glow-secondary" : "glow-tertiary"
+          }`}
+          style={{
+            color: `var(--color-${color})`,
+            fontSize: isPortrait ? 64 : 32,
+          }}
           key={formatted.value}
           initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
@@ -74,7 +82,7 @@ function SpeedBlock({
         </motion.span>
         <span
           className="font-mono text-sm mt-1.5 uppercase tracking-widest"
-          style={{ color: `${color}99` }}
+          style={{ color: `var(--color-${color})` }}
         >
           {formatted.unit}
         </span>
@@ -89,6 +97,7 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
   const dlHistory = history.map((h) => h.networkDownload);
   const ulHistory = history.map((h) => h.networkUpload);
   const lc = getLatencyColor(network.latency);
+  const isPortrait = useMediaQuery("(orientation: portrait)");
 
   return (
     <motion.div
@@ -106,14 +115,14 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
         <SpeedBlock
           label="DOWNLOAD"
           speed={network.downloadSpeed}
-          color={tc.secondary}
+          color={"secondary"}
           arrow="↓"
           borderColor={tc.borderFaint}
         />
         <SpeedBlock
           label="UPLOAD"
           speed={network.uploadSpeed}
-          color={tc.tertiary}
+          color={"tertiary"}
           arrow="↑"
           borderColor={tc.borderFaint}
         />
@@ -161,7 +170,7 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
           <span className="label-text">LATENCY</span>
           <div className="flex items-baseline gap-1.5">
             <span
-              className="font-display text-2xl font-bold tabular-nums"
+              className={`font-bold tabular-nums ${isPortrait ? "text-5xl py-1" : "text-2xl"}`}
               style={{ color: lc, textShadow: `0 0 20px ${lc}60` }}
             >
               {network.latency > 0 ? network.latency : "—"}
