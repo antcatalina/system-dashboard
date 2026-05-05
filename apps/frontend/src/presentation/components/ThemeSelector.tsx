@@ -118,14 +118,6 @@ const THEMES: {
     color: "#ffff00",
     description: "Maximum legibility",
   },
-  // ── Light ────────────────────────────────────────────────────────────────
-  {
-    id: "light",
-    label: "LIGHT",
-    icon: "◯",
-    color: "#5b21b6",
-    description: "Professional light",
-  },
   {
     id: "winxp",
     label: "WIN XP",
@@ -169,6 +161,14 @@ const THEMES: {
     color: "#e95420",
     description: "Aubergine & orange",
   },
+  {
+    id: "premier-league",
+    label: "PREM",
+    icon: "◆",
+    color: "#00e5ff",
+    description: "Cyan, crimson & deep purple",
+  },
+  ,
 ];
 
 export function ThemeSelector() {

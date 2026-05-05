@@ -39,185 +39,6 @@
   --card-border: rgba(255, 255, 255, 0.08);
 }
 
-/* ── Light Mode ── */
-body.theme-light {
-  --color-primary: #5b21b6;
-  --color-primary-rgb: 91, 33, 182;
-  --color-secondary: #7c3aed;
-  --color-secondary-rgb: 124, 58, 237;
-  --color-tertiary: #a21caf;
-  --color-tertiary-rgb: 162, 28, 175;
-  --color-green: #7c3aed;
-  --color-green-rgb: 124, 58, 237;
-  --color-amber: #b45309;
-  --color-amber-rgb: 180, 83, 9;
-  --color-red: #b91c1c;
-  --color-red-rgb: 185, 28, 28;
-
-  --glow-intensity: 0;
-  --border-opacity-max: 0.25;
-  --border-opacity-med: 0.18;
-  --border-opacity-min: 0.1;
-  --bg-opacity-max: 0.08;
-  --bg-opacity-med: 0.05;
-  --bg-opacity-min: 0.03;
-  --shadow-blur: 12px;
-  --text-glow-blur: 0px;
-  --text-glow-spread: 0px;
-
-  --card-border-radius: 0px;
-  --card-backdrop-blur: 8px;
-  --card-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-
-  --label-text-color: rgba(0, 0, 0, 0.55);
-  --stat-value-color: rgba(0, 0, 0, 0.9);
-  --gauge-text-color: rgba(0, 0, 0, 0.75);
-  --body-text-color: rgba(0, 0, 0, 0.9);
-  --muted-text-color: rgba(0, 0, 0, 0.45);
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --card-border: rgba(0, 0, 0, 0.1);
-
-  background-color: #ede9fe;
-  color: #1e1b4b;
-}
-
-body.theme-light .bg-surface {
-  background-color: #e7e2ff !important;
-}
-body.theme-light .bg-surface-card {
-  background-color: #ffffff !important;
-}
-body.theme-light .border-surface-border {
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-body.theme-light {
-  background-image:
-    radial-gradient(
-      ellipse at 15% 40%,
-      rgba(91, 33, 182, 0.06) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse at 85% 15%,
-      rgba(124, 58, 237, 0.04) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at 50% 90%,
-      rgba(162, 28, 175, 0.03) 0%,
-      transparent 50%
-    );
-}
-
-body.theme-light .label-text,
-body.theme-light .metric-label,
-body.theme-light .status-label,
-body.theme-light .radial-label {
-  color: var(--label-text-color) !important;
-  text-shadow: none !important;
-}
-body.theme-light .stat-value {
-  color: var(--stat-value-color) !important;
-  text-shadow: none !important;
-}
-body.theme-light .gauge-text {
-  color: var(--gauge-text-color) !important;
-  text-shadow: none !important;
-}
-
-body.theme-light [style*="rgba(255,255,255,0.3)"],
-body.theme-light [style*="rgba(255, 255, 255, 0.3)"] {
-  color: rgba(0, 0, 0, 0.45) !important;
-}
-body.theme-light [style*="rgba(255,255,255,0.4)"],
-body.theme-light [style*="rgba(255, 255, 255, 0.4)"] {
-  color: rgba(0, 0, 0, 0.55) !important;
-}
-body.theme-light [style*="rgba(255,255,255,0.45)"],
-body.theme-light [style*="rgba(255, 255, 255, 0.45)"] {
-  color: rgba(0, 0, 0, 0.6) !important;
-}
-body.theme-light [style*="rgba(255,255,255,0.5)"],
-body.theme-light [style*="rgba(255, 255, 255, 0.5)"] {
-  color: rgba(0, 0, 0, 0.65) !important;
-}
-body.theme-light [style*="rgba(255,255,255,0.6)"],
-body.theme-light [style*="rgba(255, 255, 255, 0.6)"] {
-  color: rgba(0, 0, 0, 0.7) !important;
-}
-body.theme-light [style*="rgba(255,255,255,0.7)"],
-body.theme-light [style*="rgba(255, 255, 255, 0.7)"] {
-  color: rgba(0, 0, 0, 0.8) !important;
-}
-body.theme-light [style*="rgba(255,255,255,0.75)"],
-body.theme-light [style*="rgba(255, 255, 255, 0.75)"] {
-  color: rgba(0, 0, 0, 0.85) !important;
-}
-body.theme-light [style*="rgba(255,255,255,0.8)"],
-body.theme-light [style*="rgba(255, 255, 255, 0.8)"] {
-  color: rgba(0, 0, 0, 0.88) !important;
-}
-body.theme-light [style*="rgba(255,255,255,0.85)"],
-body.theme-light [style*="rgba(255, 255, 255, 0.85)"] {
-  color: rgba(0, 0, 0, 0.9) !important;
-}
-body.theme-light .text-white\/25 {
-  color: rgba(0, 0, 0, 0.4) !important;
-}
-body.theme-light .text-white\/30 {
-  color: rgba(0, 0, 0, 0.45) !important;
-}
-body.theme-light .text-white\/40 {
-  color: rgba(0, 0, 0, 0.55) !important;
-}
-body.theme-light .text-white\/50 {
-  color: rgba(0, 0, 0, 0.65) !important;
-}
-
-body.theme-light ::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    rgba(91, 33, 182, 0.4),
-    rgba(124, 58, 237, 0.4)
-  );
-}
-
-body.theme-light .card {
-  background-color: #ffffff;
-  border-color: rgba(0, 0, 0, 0.08);
-}
-body.theme-light .card-primary {
-  border-color: rgba(var(--color-primary-rgb), 0.3);
-  background-color: rgba(var(--color-primary-rgb), 0.03);
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(var(--color-primary-rgb), 0.2);
-}
-body.theme-light .card-green {
-  border-color: rgba(var(--color-green-rgb), 0.3);
-  background-color: rgba(var(--color-green-rgb), 0.03);
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(var(--color-green-rgb), 0.2);
-}
-body.theme-light .card-tertiary {
-  border-color: rgba(var(--color-tertiary-rgb), 0.3);
-  background-color: rgba(var(--color-tertiary-rgb), 0.03);
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(var(--color-tertiary-rgb), 0.2);
-}
-body.theme-light .card-amber {
-  border-color: rgba(var(--color-amber-rgb), 0.3);
-  background-color: rgba(var(--color-amber-rgb), 0.03);
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(var(--color-amber-rgb), 0.2);
-}
-
 /* ── Pink Mode ── */
 body.theme-pink {
   --color-primary: #ff006e;
@@ -1654,7 +1475,7 @@ body.theme-ocean {
   --color-tertiary: #00ffcc;
   --color-tertiary-rgb: 0, 255, 204;
 
-  --color-green: #00FF7B;
+  --color-green: #00ff7b;
   --color-green-rgb: 0, 255, 123;
   --color-amber: #fcff33;
   --color-amber-rgb: 252, 255, 51;
@@ -2568,5 +2389,128 @@ body.theme-cobalt .theme-indicator {
     box-shadow:
       0 0 calc(var(--text-glow-blur)) rgba(61, 126, 255, 1),
       0 0 calc(var(--text-glow-spread) * 0.6) rgba(153, 187, 255, 0.5);
+  }
+}
+
+/* ── Premier League (deep purple / cyan / crimson / mint) ── */
+body.theme-premier-league {
+  --color-primary: #04f9fc;
+  --color-primary-rgb: 4, 249, 252;
+  --color-secondary: #7573f7;
+  --color-secondary-rgb: 117, 115, 247;
+  --color-tertiary: #9A0DC5;
+  --color-tertiary-rgb: 154, 13, 197;
+
+  --color-green: #00ff87;
+  --color-green-rgb: 0, 255, 135;
+  --color-amber: #FFFF10;
+  --color-amber-rgb: 255, 255, 16;
+  --color-red: #FD1C36;
+  --color-red-rgb: 253, 28, 54;
+
+  --glow-intensity: 1.6;
+  --border-opacity-max: 0.45;
+  --border-opacity-med: 0.28;
+  --border-opacity-min: 0.14;
+  --bg-opacity-max: 0.12;
+  --bg-opacity-med: 0.07;
+  --bg-opacity-min: 0.04;
+  --shadow-blur: 32px;
+  --text-glow-blur: 20px;
+  --text-glow-spread: 40px;
+  --card-border-radius: 2px;
+  --card-backdrop-blur: 16px;
+  --card-shadow:
+    0 0 12px rgba(0, 229, 255, 0.15), inset 0 1px 0 rgba(0, 255, 135, 0.06),
+    0 0 24px rgba(229, 0, 61, 0.08);
+  --label-text-color: rgba(180, 210, 255, 0.7);
+  --stat-value-color: #ffffff;
+  --gauge-text-color: rgba(180, 210, 255, 0.85);
+  --body-text-color: #ffffff;
+  --muted-text-color: rgba(160, 130, 200, 0.45);
+  --card-bg: rgba(10, 0, 24, 0.92);
+  --card-border: rgba(0, 229, 255, 0.2);
+  background-color: #14001e;
+  color: #ffffff;
+}
+
+body.theme-premier-league .bg-surface {
+  background-color: #0e0020 !important;
+}
+body.theme-premier-league .bg-surface-card {
+  background-color: #150030 !important;
+}
+body.theme-premier-league .border-surface-border {
+  border-color: rgba(40, 0, 70, 1) !important;
+}
+body.theme-premier-league .label-text,
+body.theme-premier-league .metric-label,
+body.theme-premier-league .status-label,
+body.theme-premier-league .radial-label {
+  color: var(--label-text-color);
+  text-shadow:
+    0 0 8px rgba(0, 229, 255, 0.7),
+    0 0 16px rgba(0, 229, 255, 0.3);
+}
+body.theme-premier-league .stat-value {
+  color: var(--stat-value-color);
+  text-shadow:
+    0 0 10px rgba(0, 229, 255, 0.6),
+    0 0 20px rgba(0, 229, 255, 0.3),
+    0 0 40px rgba(229, 0, 61, 0.15);
+}
+body.theme-premier-league .gauge-text {
+  color: var(--gauge-text-color);
+  text-shadow:
+    0 0 8px rgba(0, 229, 255, 0.7),
+    0 0 20px rgba(0, 229, 255, 0.3);
+}
+body.theme-premier-league .card {
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+}
+body.theme-premier-league .card-primary {
+  border-color: rgba(0, 229, 255, 0.35);
+  background-color: rgba(0, 229, 255, 0.05);
+  box-shadow:
+    0 0 20px rgba(0, 229, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+body.theme-premier-league .card-green {
+  border-color: rgba(0, 255, 135, 0.35);
+  background-color: rgba(0, 255, 135, 0.05);
+  box-shadow:
+    0 0 20px rgba(0, 255, 135, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+body.theme-premier-league .card-tertiary {
+  border-color: rgba(0, 255, 135, 0.35);
+  background-color: rgba(0, 255, 135, 0.05);
+  box-shadow:
+    0 0 20px rgba(0, 255, 135, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+body.theme-premier-league .card-amber {
+  border-color: rgba(229, 0, 61, 0.35);
+  background-color: rgba(229, 0, 61, 0.05);
+  box-shadow:
+    0 0 20px rgba(229, 0, 61, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+body.theme-premier-league .theme-indicator {
+  background: #00e5ff;
+  animation: pl-pulse 1.5s ease-in-out infinite;
+}
+@keyframes pl-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 calc(var(--text-glow-blur) / 2) rgba(0, 229, 255, 1),
+      0 0 calc(var(--text-glow-blur)) rgba(0, 229, 255, 0.8);
+  }
+  50% {
+    box-shadow:
+      0 0 calc(var(--text-glow-blur)) rgba(0, 229, 255, 1),
+      0 0 calc(var(--text-glow-spread) * 0.6) rgba(0, 255, 135, 0.5);
   }
 }

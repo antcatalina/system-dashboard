@@ -50,8 +50,8 @@ function SpeedBlock({
           <motion.div
             key={i}
             style={{
-              width: isPortrait ? 26 : 18,
-              height: isPortrait ? 6 : 3,
+              width: isPortrait ? 24 : 18,
+              height: isPortrait ? 5 : 3,
               backgroundColor: `var(--color-${color})`,
               borderRadius: 2,
             }}
@@ -71,7 +71,7 @@ function SpeedBlock({
           }`}
           style={{
             color: `var(--color-${color})`,
-            fontSize: isPortrait ? 64 : 32,
+            fontSize: isPortrait ? 54 : 32,
           }}
           key={formatted.value}
           initial={{ opacity: 0.5 }}
@@ -181,7 +181,7 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
               </span>
             )}
           </div>
-          <span className="font-mono text-sm mt-1" style={{ color: lc }}>
+          <span className="font-mono text-sm mt-0.5" style={{ color: lc }}>
             {latencyLabel(network.latency)}
           </span>
         </div>

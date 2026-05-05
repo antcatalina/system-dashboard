@@ -22,7 +22,8 @@ export type Theme =
   | "aurora"
   | "inferno"
   | "toxic"
-  | "cobalt";
+  | "cobalt"
+  | "premier-league";
 
 interface ThemeContextType {
   theme: Theme;
@@ -54,6 +55,7 @@ const VALID_THEMES: Array<Theme> = [
   "inferno",
   "toxic",
   "cobalt",
+  "premier-league",
 ];
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);

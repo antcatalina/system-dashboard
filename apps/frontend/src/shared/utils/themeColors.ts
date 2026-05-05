@@ -57,13 +57,6 @@ export const THEME_COLORS: Record<string, ThemeColorPalette> = {
     statusWarn: "#ffb300",
     statusHot: "#ff3d57",
   },
-  light: {
-    ...CSS_VAR_BASE,
-    ...borders(0.18, 0.1, 0.04),
-    statusGood: "#16a34a",
-    statusWarn: "#b45309",
-    statusHot: "#b91c1c",
-  },
   pink: {
     ...CSS_VAR_BASE,
     ...borders(0.35, 0.15, 0.06),

@@ -203,7 +203,7 @@
 
   .gpu-card__clock-value,
   .ram-card__stat-value {
-    font-size: 28px;
+    font-size: 33px;
   }
 
   .cpu-card__value,

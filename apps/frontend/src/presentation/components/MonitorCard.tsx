@@ -163,7 +163,7 @@ function DisplaysSection({
           flexShrink: 0,
         }}
       >
-        <div className="flex items-center gap-2 mb-2">
+        <div className="flex items-center gap-2">
           <div className="live-dot" style={{ backgroundColor: tc.primary }} />
           <span
             className="label-text"
@@ -178,7 +178,7 @@ function DisplaysSection({
         >
           {monitors.length}
         </span>
-        <span className="label-text" style={{ fontSize: 12, marginTop: 4 }}>
+        <span className="label-text" style={{ fontSize: 12 }}>
           CONNECTED
         </span>
       </div>
