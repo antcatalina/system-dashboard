@@ -1160,109 +1160,109 @@ body.theme-solarized .theme-indicator {
   animation: none;
 }
 
-/* ── Dracula ── */
-body.theme-dracula {
-  --color-primary: #bd93f9;
-  --color-primary-rgb: 189, 147, 249;
-  --color-secondary: #ff79c6;
-  --color-secondary-rgb: 255, 121, 198;
-  --color-tertiary: #8be9fd;
-  --color-tertiary-rgb: 139, 233, 253;
+/* ── Skyrim Dark ── */
+body.theme-deardiary {
+  --color-primary: #d83b32;
+  --color-primary-rgb: 216, 59, 50;
+  --color-secondary: #e08a80;
+  --color-secondary-rgb: 224, 138, 128;
+  --color-tertiary: #e6c274;
+  --color-tertiary-rgb: 230, 194, 116;
 
-  --color-green: #50fa7b;
-  --color-green-rgb: 80, 250, 123;
-  --color-amber: #f1fa8c;
-  --color-amber-rgb: 241, 250, 140;
-  --color-red: #ff6e6e;
-  --color-red-rgb: 255, 110, 110;
+  --color-green: #7ec94f;
+  --color-green-rgb: 126, 201, 79;
+  --color-amber: #f0b62f;
+  --color-amber-rgb: 240, 182, 47;
+  --color-red: #f24438;
+  --color-red-rgb: 242, 68, 56;
 
   --glow-intensity: 1.2;
-  --border-opacity-max: 0.4;
-  --border-opacity-med: 0.25;
+  --border-opacity-max: 0.42;
+  --border-opacity-med: 0.24;
   --border-opacity-min: 0.12;
   --bg-opacity-max: 0.1;
   --bg-opacity-med: 0.06;
   --bg-opacity-min: 0.03;
-  --shadow-blur: 20px;
-  --text-glow-blur: 14px;
-  --text-glow-spread: 28px;
+  --shadow-blur: 22px;
+  --text-glow-blur: 12px;
+  --text-glow-spread: 24px;
   --card-border-radius: 0px;
   --card-backdrop-blur: 8px;
   --card-shadow:
-    0 0 8px rgba(189, 147, 249, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  --label-text-color: rgba(98, 114, 164, 1);
-  --stat-value-color: #f8f8f2;
-  --gauge-text-color: rgba(248, 248, 242, 0.8);
-  --body-text-color: #f8f8f2;
-  --muted-text-color: rgba(98, 114, 164, 0.7);
-  --card-bg: rgba(40, 42, 54, 0.9);
-  --card-border: rgba(189, 147, 249, 0.22);
-  background-color: #282a36;
-  color: #f8f8f2;
+    0 0 12px rgba(216, 59, 50, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --label-text-color: rgba(232, 122, 112, 1);
+  --stat-value-color: #f6e7bf;
+  --gauge-text-color: rgba(246, 231, 191, 0.85);
+  --body-text-color: #e4c690;
+  --muted-text-color: rgba(232, 122, 112, 0.6);
+  --card-bg: rgba(18, 14, 13, 0.92);
+  --card-border: rgba(216, 59, 50, 0.28);
+  background-color: #0d0b0b;
+  color: #e4c690;
 }
 
-body.theme-dracula .bg-surface {
-  background-color: #282a36 !important;
+body.theme-deardiary .bg-surface {
+  background-color: #0d0b0b !important;
 }
-body.theme-dracula .bg-surface-card {
-  background-color: #1e1f2b !important;
+body.theme-deardiary .bg-surface-card {
+  background-color: #14100f !important;
 }
-body.theme-dracula .border-surface-border {
-  border-color: rgba(68, 71, 90, 1) !important;
+body.theme-deardiary .border-surface-border {
+  border-color: rgba(58, 42, 40, 1) !important;
 }
-body.theme-dracula .label-text,
-body.theme-dracula .metric-label,
-body.theme-dracula .status-label,
-body.theme-dracula .radial-label {
+body.theme-deardiary .label-text,
+body.theme-deardiary .metric-label,
+body.theme-deardiary .status-label,
+body.theme-deardiary .radial-label {
   color: var(--label-text-color);
-  text-shadow: 0 0 8px rgba(189, 147, 249, 0.4);
+  text-shadow: 0 0 10px rgba(216, 59, 50, 0.45);
 }
-body.theme-dracula .stat-value {
+body.theme-deardiary .stat-value {
   color: var(--stat-value-color);
-  text-shadow: 0 0 10px rgba(189, 147, 249, 0.3);
+  text-shadow: 0 0 12px rgba(230, 194, 116, 0.35);
 }
-body.theme-dracula .gauge-text {
+body.theme-deardiary .gauge-text {
   color: var(--gauge-text-color);
 }
-body.theme-dracula .card {
+body.theme-deardiary .card {
   background-color: var(--card-bg);
   border-color: var(--card-border);
 }
-body.theme-dracula .card-primary {
-  border-color: rgba(139, 233, 253, 0.3);
-  background-color: rgba(139, 233, 253, 0.04);
-  box-shadow: 0 0 16px rgba(139, 233, 253, 0.08);
+body.theme-deardiary .card-primary {
+  border-color: rgba(216, 59, 50, 0.4);
+  background-color: rgba(216, 59, 50, 0.06);
+  box-shadow: 0 0 18px rgba(216, 59, 50, 0.12);
 }
-body.theme-dracula .card-green {
-  border-color: rgba(80, 250, 123, 0.3);
-  background-color: rgba(80, 250, 123, 0.04);
-  box-shadow: 0 0 16px rgba(80, 250, 123, 0.08);
+body.theme-deardiary .card-green {
+  border-color: rgba(126, 201, 79, 0.4);
+  background-color: rgba(126, 201, 79, 0.06);
+  box-shadow: 0 0 18px rgba(126, 201, 79, 0.12);
 }
-body.theme-dracula .card-tertiary {
-  border-color: rgba(189, 147, 249, 0.3);
-  background-color: rgba(189, 147, 249, 0.04);
-  box-shadow: 0 0 16px rgba(189, 147, 249, 0.08);
+body.theme-deardiary .card-tertiary {
+  border-color: rgba(230, 194, 116, 0.4);
+  background-color: rgba(230, 194, 116, 0.06);
+  box-shadow: 0 0 18px rgba(230, 194, 116, 0.12);
 }
-body.theme-dracula .card-amber {
-  border-color: rgba(241, 250, 140, 0.3);
-  background-color: rgba(241, 250, 140, 0.04);
-  box-shadow: 0 0 16px rgba(241, 250, 140, 0.08);
+body.theme-deardiary .card-amber {
+  border-color: rgba(240, 182, 47, 0.4);
+  background-color: rgba(240, 182, 47, 0.06);
+  box-shadow: 0 0 18px rgba(240, 182, 47, 0.12);
 }
-body.theme-dracula .theme-indicator {
-  background: #bd93f9;
-  animation: dracula-pulse 1.5s ease-in-out infinite;
+body.theme-deardiary .theme-indicator {
+  background: #d83b32;
+  animation: deardiary-pulse 1.5s ease-in-out infinite;
 }
-@keyframes dracula-pulse {
+@keyframes deardiary-pulse {
   0%,
   100% {
     box-shadow:
-      0 0 6px rgba(189, 147, 249, 1),
-      0 0 12px rgba(189, 147, 249, 0.7);
+      0 0 8px rgba(216, 59, 50, 1),
+      0 0 16px rgba(216, 59, 50, 0.7);
   }
   50% {
     box-shadow:
-      0 0 12px rgba(189, 147, 249, 1),
-      0 0 24px rgba(255, 121, 198, 0.5);
+      0 0 14px rgba(216, 59, 50, 1),
+      0 0 28px rgba(230, 194, 116, 0.6);
   }
 }
 

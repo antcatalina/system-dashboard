@@ -13,7 +13,7 @@ export type Theme =
   | "winxp"
   | "ubuntu"
   | "solarized"
-  | "dracula"
+  | "deardiary"
   | "gruvbox"
   | "tokyonight"
   | "void"
@@ -45,7 +45,7 @@ const VALID_THEMES: Array<Theme> = [
   "winxp",
   "ubuntu",
   "solarized",
-  "dracula",
+  "deardiary",
   "gruvbox",
   "tokyonight",
   "void",

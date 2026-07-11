@@ -688,32 +688,32 @@ body.theme-solarized .theme-selector__option-description {
   color: rgba(147, 161, 161, 0.65);
 }
 
-/* ── Dracula ── */
-body.theme-dracula .theme-selector__menu {
-  background: #0d0d1a;
-  border-color: rgba(189, 147, 249, 0.4);
+/* ── Skyrim Dark ── */
+body.theme-deardiary .theme-selector__menu {
+  background: #0d0b0b;
+  border-color: rgba(216, 59, 50, 0.45);
   box-shadow:
     0 16px 48px rgba(0, 0, 0, 0.9),
-    0 0 24px rgba(189, 147, 249, 0.15);
+    0 0 24px rgba(216, 59, 50, 0.2);
 }
-body.theme-dracula .theme-selector__option:hover {
-  background: rgba(189, 147, 249, 0.1);
-  border-color: rgba(189, 147, 249, 0.22);
+body.theme-deardiary .theme-selector__option:hover {
+  background: rgba(216, 59, 50, 0.12);
+  border-color: rgba(216, 59, 50, 0.28);
 }
-body.theme-dracula .theme-selector__option--active {
-  background: rgba(189, 147, 249, 0.08);
-  border-color: rgba(189, 147, 249, 0.3);
+body.theme-deardiary .theme-selector__option--active {
+  background: rgba(216, 59, 50, 0.1);
+  border-color: rgba(216, 59, 50, 0.38);
 }
-body.theme-dracula .theme-selector__option-title {
+body.theme-deardiary .theme-selector__option-title {
   text-shadow:
     0 0 8px var(--option-color),
     0 0 20px var(--option-color);
 }
-body.theme-dracula .theme-selector__footer {
-  border-top-color: rgba(189, 147, 249, 0.18);
+body.theme-deardiary .theme-selector__footer {
+  border-top-color: rgba(216, 59, 50, 0.2);
 }
-body.theme-dracula .theme-selector__option-description {
-  color: rgba(220, 200, 255, 0.55);
+body.theme-deardiary .theme-selector__option-description {
+  color: rgba(228, 198, 144, 0.65);
 }
 
 /* ── Gruvbox ── */

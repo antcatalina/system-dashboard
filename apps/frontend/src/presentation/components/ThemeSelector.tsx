@@ -127,11 +127,11 @@ const THEMES: {
   },
   // ── Editor / retro ───────────────────────────────────────────────────────
   {
-    id: "dracula",
-    label: "DRACULA",
+    id: "deardiary",
+    label: "SKYRIM",
     icon: "◈",
-    color: "#bd93f9",
-    description: "Purple, pink & primary",
+    color: "#d83b32",
+    description: "Dark leather, crimson & gold",
   },
   {
     id: "tokyonight",
@@ -168,7 +168,6 @@ const THEMES: {
     color: "#00e5ff",
     description: "Cyan, crimson & deep purple",
   },
-  ,
 ];
 
 export function ThemeSelector() {

@@ -258,6 +258,7 @@ export const GAME_TITLE_MAP: Record<string, string> = {
   "ffxiv_dx11.exe": "Final Fantasy XIV",
   "ffxivlauncher.exe": "Final Fantasy XIV",
   "ffxv.exe": "Final Fantasy XV",
+  "fifa19.exe": "FIFA 19",
   "finalfantasyxv.exe": "Final Fantasy XV",
   "firewatch.exe": "Firewatch",
   "firstclasstroubles.exe": "First Class Trouble",

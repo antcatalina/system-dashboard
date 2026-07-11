@@ -70,7 +70,7 @@ export const THEME_COLORS: Record<string, ThemeColorPalette> = {
   yellow: { ...CSS_VAR_BASE, ...borders(0.35, 0.15, 0.06), ...STATUS_COLORS },
   obsidian: { ...CSS_VAR_BASE, ...borders(0.3, 0.12, 0.05), ...STATUS_COLORS },
   solarized: { ...CSS_VAR_BASE, ...borders(0.3, 0.12, 0.05), ...STATUS_COLORS },
-  dracula: { ...CSS_VAR_BASE, ...borders(0.3, 0.12, 0.05), ...STATUS_COLORS },
+  deardiary: { ...CSS_VAR_BASE, ...borders(0.3, 0.12, 0.05), ...STATUS_COLORS },
   gruvbox: { ...CSS_VAR_BASE, ...borders(0.3, 0.12, 0.05), ...STATUS_COLORS },
   midnight: { ...CSS_VAR_BASE, ...borders(0.25, 0.1, 0.04), ...STATUS_COLORS },
   tokyonight: { ...CSS_VAR_BASE, ...borders(0.25, 0.1, 0.04), ...STATUS_COLORS },
