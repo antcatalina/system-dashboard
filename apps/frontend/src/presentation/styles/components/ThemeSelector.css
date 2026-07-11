@@ -689,30 +689,30 @@ body.theme-solarized .theme-selector__option-description {
 }
 
 /* ── Skyrim Dark ── */
-body.theme-deardiary .theme-selector__menu {
+body.theme-skyrim .theme-selector__menu {
   background: #0d0b0b;
   border-color: rgba(216, 59, 50, 0.45);
   box-shadow:
     0 16px 48px rgba(0, 0, 0, 0.9),
     0 0 24px rgba(216, 59, 50, 0.2);
 }
-body.theme-deardiary .theme-selector__option:hover {
+body.theme-skyrim .theme-selector__option:hover {
   background: rgba(216, 59, 50, 0.12);
   border-color: rgba(216, 59, 50, 0.28);
 }
-body.theme-deardiary .theme-selector__option--active {
+body.theme-skyrim .theme-selector__option--active {
   background: rgba(216, 59, 50, 0.1);
   border-color: rgba(216, 59, 50, 0.38);
 }
-body.theme-deardiary .theme-selector__option-title {
+body.theme-skyrim .theme-selector__option-title {
   text-shadow:
     0 0 8px var(--option-color),
     0 0 20px var(--option-color);
 }
-body.theme-deardiary .theme-selector__footer {
+body.theme-skyrim .theme-selector__footer {
   border-top-color: rgba(216, 59, 50, 0.2);
 }
-body.theme-deardiary .theme-selector__option-description {
+body.theme-skyrim .theme-selector__option-description {
   color: rgba(228, 198, 144, 0.65);
 }
 

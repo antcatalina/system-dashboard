@@ -25,7 +25,7 @@ export function GPUCard({ gpu, history }: GPUCardProps) {
   const tempColor = getTemperatureColor(gpu.temperature);
   const gpuHistory = history.map((h) => h.gpuUtil);
   const isPortrait = useMediaQuery("(orientation: portrait)");
-  const gaugeSize = isPortrait ? 162 : 128;
+  const gaugeSize = isPortrait ? 176 : 128;
 
   return (
     <motion.div

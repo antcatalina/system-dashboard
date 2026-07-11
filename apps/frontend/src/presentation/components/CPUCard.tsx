@@ -72,7 +72,7 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
   const ghz = (cpu.frequency / 1000).toFixed(2);
 
   const isPortrait = useMediaQuery("(orientation: portrait)");
-  const gaugeSize = isPortrait ? 162 : 128;
+  const gaugeSize = isPortrait ? 196 : 128;
 
   return (
     <motion.div

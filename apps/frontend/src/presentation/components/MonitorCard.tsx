@@ -500,7 +500,7 @@ function NowPlayingSection({
               </span>
               <motion.span
                 key={Math.round(currentFps ?? 0)}
-                className="font-mono font-bold leading-none"
+                className="font-mono font-bold leading-none monitor-card__fps-number"
                 style={{
                   fontSize: 42,
                   color: fpsColor,

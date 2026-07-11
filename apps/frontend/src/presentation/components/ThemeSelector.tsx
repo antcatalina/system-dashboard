@@ -127,7 +127,7 @@ const THEMES: {
   },
   // ── Editor / retro ───────────────────────────────────────────────────────
   {
-    id: "deardiary",
+    id: "skyrim",
     label: "SKYRIM",
     icon: "◈",
     color: "#d83b32",

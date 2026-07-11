@@ -1161,7 +1161,7 @@ body.theme-solarized .theme-indicator {
 }
 
 /* ── Skyrim Dark ── */
-body.theme-deardiary {
+body.theme-skyrim {
   --color-primary: #d83b32;
   --color-primary-rgb: 216, 59, 50;
   --color-secondary: #e08a80;
@@ -1190,69 +1190,69 @@ body.theme-deardiary {
   --card-backdrop-blur: 8px;
   --card-shadow:
     0 0 12px rgba(216, 59, 50, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  --label-text-color: rgba(232, 122, 112, 1);
+  --label-text-color: rgba(206, 142, 116, 0.82);
   --stat-value-color: #f6e7bf;
   --gauge-text-color: rgba(246, 231, 191, 0.85);
   --body-text-color: #e4c690;
-  --muted-text-color: rgba(232, 122, 112, 0.6);
+  --muted-text-color: rgba(200, 150, 128, 0.5);
   --card-bg: rgba(18, 14, 13, 0.92);
   --card-border: rgba(216, 59, 50, 0.28);
   background-color: #0d0b0b;
   color: #e4c690;
 }
 
-body.theme-deardiary .bg-surface {
+body.theme-skyrim .bg-surface {
   background-color: #0d0b0b !important;
 }
-body.theme-deardiary .bg-surface-card {
+body.theme-skyrim .bg-surface-card {
   background-color: #14100f !important;
 }
-body.theme-deardiary .border-surface-border {
+body.theme-skyrim .border-surface-border {
   border-color: rgba(58, 42, 40, 1) !important;
 }
-body.theme-deardiary .label-text,
-body.theme-deardiary .metric-label,
-body.theme-deardiary .status-label,
-body.theme-deardiary .radial-label {
+body.theme-skyrim .label-text,
+body.theme-skyrim .metric-label,
+body.theme-skyrim .status-label,
+body.theme-skyrim .radial-label {
   color: var(--label-text-color);
-  text-shadow: 0 0 10px rgba(216, 59, 50, 0.45);
+  text-shadow: 0 0 8px rgba(230, 194, 116, 0.22);
 }
-body.theme-deardiary .stat-value {
+body.theme-skyrim .stat-value {
   color: var(--stat-value-color);
   text-shadow: 0 0 12px rgba(230, 194, 116, 0.35);
 }
-body.theme-deardiary .gauge-text {
+body.theme-skyrim .gauge-text {
   color: var(--gauge-text-color);
 }
-body.theme-deardiary .card {
+body.theme-skyrim .card {
   background-color: var(--card-bg);
   border-color: var(--card-border);
 }
-body.theme-deardiary .card-primary {
+body.theme-skyrim .card-primary {
   border-color: rgba(216, 59, 50, 0.4);
   background-color: rgba(216, 59, 50, 0.06);
   box-shadow: 0 0 18px rgba(216, 59, 50, 0.12);
 }
-body.theme-deardiary .card-green {
+body.theme-skyrim .card-green {
   border-color: rgba(126, 201, 79, 0.4);
   background-color: rgba(126, 201, 79, 0.06);
   box-shadow: 0 0 18px rgba(126, 201, 79, 0.12);
 }
-body.theme-deardiary .card-tertiary {
+body.theme-skyrim .card-tertiary {
   border-color: rgba(230, 194, 116, 0.4);
   background-color: rgba(230, 194, 116, 0.06);
   box-shadow: 0 0 18px rgba(230, 194, 116, 0.12);
 }
-body.theme-deardiary .card-amber {
+body.theme-skyrim .card-amber {
   border-color: rgba(240, 182, 47, 0.4);
   background-color: rgba(240, 182, 47, 0.06);
   box-shadow: 0 0 18px rgba(240, 182, 47, 0.12);
 }
-body.theme-deardiary .theme-indicator {
+body.theme-skyrim .theme-indicator {
   background: #d83b32;
-  animation: deardiary-pulse 1.5s ease-in-out infinite;
+  animation: skyrim-pulse 1.5s ease-in-out infinite;
 }
-@keyframes deardiary-pulse {
+@keyframes skyrim-pulse {
   0%,
   100% {
     box-shadow:

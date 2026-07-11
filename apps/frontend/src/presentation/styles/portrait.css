@@ -106,7 +106,7 @@
   }
 
   .status-bar__timevalue {
-    font-size: 24px;
+    font-size: 34px;
   }
 
   .status-bar__date {
@@ -158,6 +158,11 @@
     flex-wrap: nowrap;
   }
 
+  /* Slightly smaller FPS number in portrait */
+  .monitor-card__fps-number {
+    font-size: 36px !important;
+  }
+
   /* Sparklines */
   .sparkline {
     height: 80px;
@@ -203,13 +208,13 @@
 
   .gpu-card__clock-value,
   .ram-card__stat-value {
-    font-size: 33px;
+    font-size: 46px;
   }
 
   .cpu-card__value,
   .gpu-card__value,
   .ram-card__value {
-    font-size: 26px;
+    font-size: 34px;
   }
 
   .label-text {
