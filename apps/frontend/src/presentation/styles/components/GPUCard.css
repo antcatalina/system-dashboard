@@ -166,20 +166,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.gpu-card__clock-value--primary {
-  color: var(--color-primary);
-  text-shadow:
-    0 0 20px rgba(var(--color-primary-rgb), 0.8),
-    0 0 40px rgba(var(--color-primary-rgb), 0.4);
-}
-
-.gpu-card__clock-value--tertiary {
-  color: var(--color-tertiary);
-  text-shadow:
-    0 0 20px rgba(var(--color-tertiary-rgb), 0.8),
-    0 0 40px rgba(var(--color-tertiary-rgb), 0.4);
-}
-
 .gpu-card__clock-unit {
   font-family: "JetBrains Mono", monospace;
   font-size: 14px;
@@ -211,16 +197,4 @@
 .gpu-card__sparkline-chart {
   flex: 1;
   min-height: 0;
-}
-
-@keyframes livePulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(0.8);
-  }
 }

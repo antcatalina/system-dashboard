@@ -1,15 +1,14 @@
 import { motion } from "framer-motion";
 import type { RAM } from "../../domain";
-import type { MetricHistory } from "../../hooks/useMetrics";
-// import { Sparkline } from "./Sparkline";
 import { getThemeColors } from "../../shared/utils/themeColors";
 import { useTheme } from "../context/ThemeContext";
 import { getMemoryColor } from "../../shared/utils/colors";
 import { useRef, useEffect } from "react";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+import "../styles/components/RAMCard.css";
 
 interface RAMCardProps {
   ram: RAM;
-  history: Array<MetricHistory>;
 }
 
 interface WaveformProps {
@@ -17,13 +16,15 @@ interface WaveformProps {
   color: string;
 }
 
-function Waveform({ usedPercent, color }: WaveformProps) {
+function Waveform({ usedPercent, color }: WaveformProps): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isPortrait = useMediaQuery("(orientation: portrait)");
   // Shared mutable state for the animation loop — no re-renders needed
   const stateRef = useRef({
     phase: 0,
     targetPercent: usedPercent,
     currentPercent: usedPercent,
+    speed: 1, // scales phase advance — slower in portrait
   });
 
   // Keep target in sync with props without restarting the loop
@@ -31,10 +32,52 @@ function Waveform({ usedPercent, color }: WaveformProps) {
     stateRef.current.targetPercent = usedPercent;
   }, [usedPercent]);
 
+  // Portrait runs the wave at half speed; landscape keeps full speed
+  useEffect(() => {
+    stateRef.current.speed = isPortrait ? 0.5 : 1;
+  }, [isPortrait]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     let raf: number;
+
+    // Convert "#rrggbb" / "#rgb" → "r,g,b". Defined once per effect run.
+    const hexToRgb = (hex: string) => {
+      const clean = hex.replace("#", "");
+      const full =
+        clean.length === 3
+          ? clean
+              .split("")
+              .map((c) => c + c)
+              .join("")
+          : clean;
+      const r = parseInt(full.slice(0, 2), 16);
+      const g = parseInt(full.slice(2, 4), 16);
+      const b = parseInt(full.slice(4, 6), 16);
+      return `${r},${g},${b}`;
+    };
+
+    // Resolve `color` to a concrete hex + rgb string. `color` may be a CSS var
+    // (e.g. var(--color-secondary)) whose value changes on theme switch without
+    // restarting this effect, so we resolve every frame — but only re-parse the
+    // rgb triple when the resolved value actually changes.
+    let cachedResolved = "";
+    let cachedRgb = "0,229,255";
+    const resolveColor = () => {
+      let resolved = color;
+      if (color.startsWith("var(")) {
+        const varName = color.slice(4, -1).trim(); // strip "var(" and ")"
+        resolved =
+          getComputedStyle(canvas).getPropertyValue(varName).trim() ||
+          "#00ff9d";
+      }
+      if (resolved !== cachedResolved) {
+        cachedResolved = resolved;
+        cachedRgb = resolved.startsWith("#") ? hexToRgb(resolved) : "0,229,255";
+      }
+      return { resolved, rgb: cachedRgb };
+    };
 
     const draw = () => {
       const ctx = canvas.getContext("2d");
@@ -49,8 +92,8 @@ function Waveform({ usedPercent, color }: WaveformProps) {
         (state.targetPercent - state.currentPercent) * 0.04;
       const pct = state.currentPercent / 100; // 0–1
 
-      // Advance phase — faster & more chaotic at high pressure
-      state.phase += 0.01 + pct * 0.014;
+      // Advance phase — faster & more chaotic at high pressure, scaled by speed
+      state.phase += (0.01 + pct * 0.014) * state.speed;
 
       ctx.clearRect(0, 0, W, H);
 
@@ -74,33 +117,7 @@ function Waveform({ usedPercent, color }: WaveformProps) {
       const maxAmp = (H / 2) * 0.9;
       const amp = maxAmp * (0.08 + pct * 0.92);
 
-      // Resolve the color — handles both hex (#00e5ff) and CSS vars (var(--color-green))
-      // by reading the computed value directly from the DOM at draw time.
-      let resolvedColor = color;
-      if (color.startsWith("var(")) {
-        const varName = color.slice(4, -1).trim(); // strip "var(" and ")"
-        resolvedColor =
-          getComputedStyle(canvas).getPropertyValue(varName).trim() ||
-          "#00ff9d";
-      }
-
-      const hexToRgb = (hex: string) => {
-        const clean = hex.replace("#", "");
-        const full =
-          clean.length === 3
-            ? clean
-                .split("")
-                .map((c) => c + c)
-                .join("")
-            : clean;
-        const r = parseInt(full.slice(0, 2), 16);
-        const g = parseInt(full.slice(2, 4), 16);
-        const b = parseInt(full.slice(4, 6), 16);
-        return `${r},${g},${b}`;
-      };
-      const rgb = resolvedColor.startsWith("#")
-        ? hexToRgb(resolvedColor)
-        : "0,229,255";
+      const { resolved: resolvedColor, rgb } = resolveColor();
 
       // ── Three harmonics composited together ──
       // h1: fundamental — slow, smooth
@@ -110,21 +127,22 @@ function Waveform({ usedPercent, color }: WaveformProps) {
       const h2Amp = amp * 0.3;
       const h3Amp = amp * 0.15 * pct; // 3rd harmonic only emerges under pressure
 
-      const buildPoints = (): [number, number][] => {
+      const buildPoints = (phase: number, ampScale = 1): [number, number][] => {
         const pts: [number, number][] = [];
         for (let x = 0; x <= W; x += 2) {
           const t = (x / W) * Math.PI * 2;
           const y =
             H / 2 -
-            (h1Amp * Math.sin(t * 1.5 + state.phase) +
-              h2Amp * Math.sin(t * 3.1 + state.phase * 1.7 + 0.8) +
-              h3Amp * Math.sin(t * 5.3 + state.phase * 2.3 + 1.6));
+            ampScale *
+              (h1Amp * Math.sin(t * 1.5 + phase) +
+                h2Amp * Math.sin(t * 3.1 + phase * 1.7 + 0.8) +
+                h3Amp * Math.sin(t * 5.3 + phase * 2.3 + 1.6));
           pts.push([x, y]);
         }
         return pts;
       };
 
-      const pts = buildPoints();
+      const pts = buildPoints(state.phase);
 
       // ── Filled area gradient under the wave ──
       const gradient = ctx.createLinearGradient(0, 0, 0, H);
@@ -152,17 +170,12 @@ function Waveform({ usedPercent, color }: WaveformProps) {
       ctx.stroke();
       ctx.shadowBlur = 0;
 
-      const ghostPhase = state.phase - 0.35;
+      // ── Ghost wave — a fainter, trailing echo of the main wave ──
+      const ghostPts = buildPoints(state.phase - 0.35, 0.7);
       ctx.beginPath();
-      for (let x = 0; x <= W; x += 2) {
-        const t = (x / W) * Math.PI * 2;
-        const y =
-          H / 2 -
-          (h1Amp * 0.7 * Math.sin(t * 1.5 + ghostPhase) +
-            h2Amp * 0.7 * Math.sin(t * 3.1 + ghostPhase * 1.7 + 0.8) +
-            h3Amp * 0.7 * Math.sin(t * 5.3 + ghostPhase * 2.3 + 1.6));
-        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-      }
+      ghostPts.forEach(([x, y], i) =>
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y),
+      );
       ctx.strokeStyle = `rgba(${rgb}, ${0.15 + pct * 0.1})`;
       ctx.lineWidth = 1;
       ctx.stroke();
@@ -223,7 +236,7 @@ function DotMatrix({
   usedPercent: number;
   color: string;
   colorRgb: string;
-}) {
+}): JSX.Element {
   const activeDots = Math.round((usedPercent / 100) * TOTAL_DOTS);
 
   return (
@@ -266,11 +279,9 @@ function DotMatrix({
   );
 }
 
-export function RAMCard({ ram, history }: RAMCardProps) {
+export function RAMCard({ ram }: RAMCardProps): JSX.Element {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
-  const ramHistory = history.map((h) => h.ramUsed);
-  console.debug(ramHistory); // used in sparkline which is currently commented out, to prevent "defined but never used" warning
   const glowClass =
     ram.usedPercent > 85
       ? "glow-red"
@@ -400,23 +411,6 @@ export function RAMCard({ ram, history }: RAMCardProps) {
           <span className="ram-card__scale-label">100%</span>
         </div>
       </div>
-
-      {/* ── Sparkline ──
-      <div className="ram-card__sparkline">
-        <div className="flex justify-between items-center mb-3">
-          <span className="ram-card__label">USAGE HISTORY</span>
-          <span
-            className="ram-card__sparkline-value"
-            style={{ color: tc.tertiary }}
-          >
-            {ram.usedPercent.toFixed(1)}%
-          </span>
-        </div>
-        <div className="ram-card__sparkline-chart">
-          <Sparkline data={ramHistory} color={tc.tertiary} height={46} />
-        </div>
-      </div>
-      */}
     </motion.div>
   );
 }

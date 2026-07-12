@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import type { DashboardPayload, FPSMetrics, WSMessage } from "@system-dashboard/shared";
 import { GPU } from "../domain/entities/GPU";
 import { CPU } from "../domain/entities/CPU";
-import {  Monitor } from "../domain/entities/Monitor";
+import { Monitor } from "../domain/entities/Monitor";
 
 const WS_URL = `ws://${window.location.hostname}:3001`;
 const API_URL = `http://${window.location.hostname}:3001`;
@@ -23,10 +23,17 @@ export type MetricHistory = {
 // Replaces raw shared types with domain classes where they exist
 type Metrics = Omit<Partial<DashboardPayload>, "monitors" | "fps"> & {
   monitors?: Array<Monitor>;
-  fps?: FPSMetrics | null; 
+  fps?: FPSMetrics | null;
 };
 
-export function useMetrics() {
+export type UseMetricsResult = {
+  metrics: Metrics | null;
+  history: MetricHistory[];
+  connected: boolean;
+  processIcon: string | null;
+};
+
+export function useMetrics(): UseMetricsResult {
   const [metrics, setMetrics] = useState<Metrics | null>(null);
   const [history, setHistory] = useState<MetricHistory[]>([]);
   const [connected, setConnected] = useState(false);

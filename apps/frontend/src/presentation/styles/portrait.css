@@ -58,72 +58,120 @@
     min-height: 0;
   }
 
-  /* StatusBar portrait adjustments */
+  /* StatusBar portrait adjustments — two rows:
+       Row 1: LIVE status (left) .. animated ruler .. theme selector (right)
+       Row 2: clock | location | weather
+     The row-break element forces the wrap point between the two rows. */
   .status-bar {
     flex-wrap: wrap;
     gap: 0;
-  }
-
-  .status-bar__center {
-    order: 3;
-    width: 100%;
-    flex: 1;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 2px 0;
-  }
-
-  .status-bar__ruler {
-    gap: 2px;
-    padding: 4px 8px;
-  }
-
-  .status-bar__tick {
-    flex: 1;
-    max-width: 8px;
+    padding: 5px 2px;
   }
 
   .status-bar__status {
     order: 1;
     flex: 0 0 auto;
     padding: 4px 12px;
-    border-right: 1px solid rgba(255, 255, 255, 0.06);
     font-size: 16px;
   }
 
   .status-bar__label--live {
-    font-size: 16px;
+    font-size: 18px;
   }
 
-  .status-bar__refresh {
-    font-size: 12px;
-  }
-
-  .status-bar__clock {
+  /* Animated ruler fills row 1 between LIVE and the theme selector */
+  .status-bar__pulse {
+    display: flex;
     order: 2;
     flex: 1;
-    padding: 4px 12px;
-    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    align-items: flex-end;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px 16px;
   }
 
-  .status-bar__timevalue {
-    font-size: 34px;
-  }
-
-  .status-bar__date {
-    font-size: 16px;
+  .status-bar__tick {
+    width: 1.5px;
+    border-radius: 1px;
   }
 
   .status-bar__theme-selector {
-    order: 4;
-    width: 100%;
-    padding: 4px 8px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    order: 3;
+    flex: 0 0 auto;
+    width: auto;
+    padding: 4px 12px;
+    border-top: none;
   }
 
   .theme-selector {
     display: flex;
-    width: 100%;
-    justify-content: center;
+    width: auto;
+    justify-content: flex-end;
+  }
+
+  .status-bar__row-break {
+    order: 4;
+    flex-basis: 100%;
+    width: 0;
+    height: 0;
+  }
+
+  .status-bar__clock {
+    order: 5;
+    flex: 0 0 auto;
+    padding: 4px 12px;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .status-bar__timevalue {
+    font-size: 42px;
+  }
+
+  .status-bar__date {
+    font-size: 18px;
+  }
+
+  /* Location sits in the middle, filling the space between clock and weather.
+     min-width: 0 lets it shrink below its content's nowrap width instead of
+     forcing the row to wrap. */
+  .status-bar__center {
+    order: 6;
+    flex: 1;
+    min-width: 0;
+    padding: 2px 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .status-bar__location-text {
+    font-size: 18px;
+  }
+
+  .status-bar__location-pin {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Weather: right-justified at the end of the second row, enlarged */
+  .status-bar__weather {
+    order: 7;
+    flex: 0 0 auto;
+    gap: 12px;
+    border-right: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .status-bar__weather-icon {
+    font-size: 36.5px;
+  }
+
+  .status-bar__weather-temp {
+    font-size: 38px;
+  }
+
+  .status-bar__weather-label {
+    font-size: 18px;
   }
 
   /* Cards in portrait */
@@ -152,20 +200,24 @@
   .cpu-card__header,
   .gpu-card__header,
   .ram-card__header,
-  .now-playing-card__header,
-  .network-card__header,
-  .monitor-card__header {
+  .now-playing-card__header {
     flex-wrap: nowrap;
+  }
+
+  /* Match the Now Playing header height to the MEMORY header. The MEMORY
+     header is as tall as its 34px PRESSURE value, so pin both to the same
+     min-height (content is vertically centered) rather than matching padding. */
+  .ram-card__header,
+  .now-playing-card__header {
+    min-height: 58px;
+  }
+  .now-playing-card__header {
+    padding: 2px 8px !important;
   }
 
   /* Slightly smaller FPS number in portrait */
   .monitor-card__fps-number {
     font-size: 36px !important;
-  }
-
-  /* Sparklines */
-  .sparkline {
-    height: 80px;
   }
 
   .cpu-card__gauges,
@@ -176,29 +228,17 @@
     padding: 12px;
   }
 
-  /* Network card grid */
-  .network-card {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .network-card__content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    flex: 1;
-  }
-
   .gpu-card__badge,
   .cpu-card__badge,
   .ram-card__badge {
-    font-size: 12px;
+    font-size: 12px !important;
   }
 
   .gpu-card__label,
   .cpu-card__label,
-  .ram-card__label {
-    font-size: 14px;
+  .ram-card__label,
+  .now-playing-card__label {
+    font-size: 14px !important;
   }
 
   .gpu-card__model,
@@ -208,13 +248,13 @@
 
   .gpu-card__clock-value,
   .ram-card__stat-value {
-    font-size: 46px;
+    font-size: 46px !important;
   }
 
   .cpu-card__value,
   .gpu-card__value,
   .ram-card__value {
-    font-size: 34px;
+    font-size: 40px !important;
   }
 
   .label-text {

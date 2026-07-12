@@ -170,7 +170,7 @@ const THEMES: {
   },
 ];
 
-export function ThemeSelector() {
+export function ThemeSelector(): JSX.Element {
   const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });

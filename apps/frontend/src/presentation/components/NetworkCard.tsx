@@ -14,7 +14,7 @@ interface NetworkCardProps {
   history: Array<MetricHistory>;
 }
 
-function latencyLabel(ms: number) {
+function latencyLabel(ms: number): string {
   if (ms === 0) return "—";
   if (ms < 20) return "EXCELLENT";
   if (ms < 60) return "GOOD";
@@ -38,7 +38,7 @@ function SpeedBlock({
   borderColor: string;
   showRightBorder?: boolean;
   valueSize?: number;
-}) {
+}): JSX.Element {
   const formatted = formatSpeed(speed);
   const isPortrait = useMediaQuery("(orientation: portrait)");
   const rightBorder =
@@ -96,27 +96,53 @@ function SpeedBlock({
   );
 }
 
+// Latency uses a dynamic status color, so its glow is built inline from the
+// matching -rgb var to mirror the multi-layer .glow-* classes (a plain
+// `${lc}60` would produce invalid CSS like `var(--color-green)60`).
+function latencyGlowRgb(ms: number): string {
+  if (ms === 0) return "255, 255, 255";
+  if (ms < 20) return "var(--color-green-rgb)";
+  if (ms < 60) return "var(--color-amber-rgb)";
+  return "var(--color-red-rgb)";
+}
+
+function multiGlow(rgb: string): string {
+  return [
+    `0 0 2px rgba(${rgb}, 1)`,
+    `0 0 8px rgba(${rgb}, 0.9)`,
+    `0 0 18px rgba(${rgb}, 0.65)`,
+    `0 0 36px rgba(${rgb}, 0.35)`,
+    `0 0 60px rgba(${rgb}, 0.15)`,
+  ].join(", ");
+}
+
 function LatencyReadout({
   network,
   valueSize,
 }: {
   network: Network;
   valueSize: number;
-}) {
+}): JSX.Element {
+  const hasValue = network.latency > 0;
   const lc = getLatencyColor(network.latency);
+  // With no reading, show a muted gray like the FREE memory value and drop the
+  // glow — a white glow on the placeholder "—" looks out of place.
+  const valueColor = hasValue ? lc : "rgba(255, 255, 255, 0.4)";
   return (
     <>
       <span className="label-text">LATENCY</span>
       <div className="flex items-baseline gap-1.5">
         <span
-          className="font-bold tabular-nums leading-none"
+          className="font-display font-bold tabular-nums leading-none"
           style={{
-            color: lc,
+            color: valueColor,
             fontSize: valueSize,
-            textShadow: `0 0 20px ${lc}60`,
+            textShadow: hasValue
+              ? multiGlow(latencyGlowRgb(network.latency))
+              : "none",
           }}
         >
-          {network.latency > 0 ? network.latency : "—"}
+          {hasValue ? network.latency : "—"}
         </span>
         {network.latency > 0 && (
           <span className="font-mono text-md" style={{ color: lc }}>
@@ -143,7 +169,7 @@ function ChartCell({
   color: string;
   data: Array<number>;
   height: number;
-}) {
+}): JSX.Element {
   const formatted = formatSpeed(speed);
   return (
     <>
@@ -164,19 +190,29 @@ function SessionStat({
   color,
   centered = false,
   valueSize,
+  glowClass,
+  crt = false,
 }: {
   label: string;
   value: string;
   color: string;
   centered?: boolean;
   valueSize?: number;
-}) {
+  glowClass?: string;
+  crt?: boolean;
+}): JSX.Element {
   return (
-    <div className={`flex flex-col ${centered ? "items-center text-center" : ""}`}>
+    <div
+      className={`flex flex-col ${centered ? "items-center text-center" : ""} ${
+        crt ? "crt-screen" : ""
+      }`}
+    >
       <span className="label-text block mb-1">{label}</span>
       <span
-        className={`font-display font-bold ${valueSize ? "" : "text-lg"}`}
-        style={{ color, fontSize: valueSize, textShadow: `0 0 12px ${color}60` }}
+        className={`font-display font-bold ${valueSize ? "" : "text-lg"} ${
+          glowClass ?? ""
+        }`}
+        style={{ color, fontSize: valueSize }}
       >
         {value}
       </span>
@@ -190,7 +226,7 @@ function InterfacesList({
 }: {
   network: Network;
   tc: ThemeColorPalette;
-}) {
+}): JSX.Element {
   return (
     <>
       <div
@@ -246,7 +282,7 @@ function InterfacesList({
   );
 }
 
-export function NetworkCard({ network, history }: NetworkCardProps) {
+export function NetworkCard({ network, history }: NetworkCardProps): JSX.Element {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
   const dlHistory = history.map((h) => h.networkDownload);
@@ -288,10 +324,7 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
             showRightBorder
             valueSize={68}
           />
-          <div
-            className="flex-1 flex flex-col items-center justify-center py-3 px-4"
-            style={{ background: `${lc}08` }}
-          >
+          <div className="flex-1 flex flex-col items-center justify-center py-3 px-4 crt-screen">
             <LatencyReadout network={network} valueSize={64} />
           </div>
         </div>
@@ -339,7 +372,9 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
                 value={formatBytes(network.downloadTotal)}
                 color={tc.secondary}
                 centered
-                valueSize={30}
+                valueSize={40}
+                glowClass="glow-secondary"
+                crt
               />
             </div>
             <div className="flex-1 px-5 py-3 flex items-center justify-center">
@@ -348,7 +383,9 @@ export function NetworkCard({ network, history }: NetworkCardProps) {
                 value={formatBytes(network.uploadTotal)}
                 color={tc.tertiary}
                 centered
-                valueSize={30}
+                valueSize={40}
+                glowClass="glow-tertiary"
+                crt
               />
             </div>
           </div>

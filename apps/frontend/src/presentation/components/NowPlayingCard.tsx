@@ -17,7 +17,7 @@ const SPARKLINE_WIDTH = 200;
 const SPARKLINE_HEIGHT = 24;
 const MAX_HISTORY = 60;
 
-function FpsSparkline({ history }: { history: number[] }) {
+function FpsSparkline({ history }: { history: number[] }): JSX.Element | null {
   if (history.length < 2) return null;
   const min = Math.min(...history);
   const max = Math.max(...history, min + 1);
@@ -83,7 +83,7 @@ function FpsDisplay({
   currentFps: number;
   fpsColor: string;
   avg1Percent?: number;
-}) {
+}): JSX.Element {
   return (
     <div className="now-playing-card__fps">
       <span className="now-playing-card__fps-label">FPS</span>
@@ -107,7 +107,7 @@ function FpsDisplay({
   );
 }
 
-export function NowPlayingCard({ fps, processIcon }: NowPlayingCardProps) {
+export function NowPlayingCard({ fps, processIcon }: NowPlayingCardProps): JSX.Element {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
   const [fpsHistory, setFpsHistory] = useState<number[]>([]);

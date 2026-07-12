@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useLayoutEffect,
+  type ReactNode,
+} from "react";
 
 export type Theme =
   | "default"
@@ -60,13 +67,13 @@ const VALID_THEMES: Array<Theme> = [
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children }: { children: ReactNode }): JSX.Element {
   const [theme, setThemeState] = useState<Theme>(() => {
     const stored = localStorage.getItem("app-theme") as Theme | null;
     return stored && VALID_THEMES.includes(stored) ? stored : "default";
   });
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     const initialTheme =
       (localStorage.getItem("app-theme") as Theme) || "default";
     document.body.classList.add(`theme-${initialTheme}`);
@@ -78,9 +85,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("app-theme", theme);
   }, [theme]);
 
-  const setTheme = (newTheme: Theme) => setThemeState(newTheme);
+  const setTheme = (newTheme: Theme): void => setThemeState(newTheme);
 
-  const cycleTheme = () => {
+  const cycleTheme = (): void => {
     setThemeState((prev) => {
       const idx = VALID_THEMES.indexOf(prev);
       return VALID_THEMES[(idx + 1) % VALID_THEMES.length];
@@ -96,7 +103,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useTheme() {
+export function useTheme(): ThemeContextType {
   const context = useContext(ThemeContext);
   if (!context) throw new Error("useTheme must be used within ThemeProvider");
   return context;

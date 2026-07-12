@@ -20,7 +20,7 @@ export function RadialGauge({
   unit = '%',
   decimals = 0,
   showTicks = true,
-}: RadialGaugeProps) {
+}: RadialGaugeProps): JSX.Element {
   const pct = Math.min(Math.max(value / max, 0), 1);
   const strokeWidth = size * 0.075;
   const radius = (size - strokeWidth * 2.5) / 2;

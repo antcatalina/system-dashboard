@@ -46,15 +46,6 @@
   flex-shrink: 0;
 }
 
-/* ── Backdrop ── */
-.theme-selector__backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 99;
-  cursor: default;
-  background: transparent;
-}
-
 /* ── Menu ── */
 .theme-selector__menu {
   position: absolute;

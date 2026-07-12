@@ -6,16 +6,15 @@ import { getTemperatureColor } from "../../shared/utils/colors";
 import { useTheme } from "../context/ThemeContext";
 import "../styles/components/GPUCard.css";
 import { getThemeColors } from "../../shared/utils/themeColors";
-import { GPUMetrics } from "@system-dashboard/shared";
+import type { GPUMetrics } from "@system-dashboard/shared";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-
 
 interface GPUCardProps {
   gpu: GPUMetrics;
   history: Array<MetricHistory>;
 }
 
-export function GPUCard({ gpu, history }: GPUCardProps) {
+export function GPUCard({ gpu, history }: GPUCardProps): JSX.Element {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
   const vramPct =

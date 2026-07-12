@@ -1,0 +1,52 @@
+/* ── City search dropdown (portal-rendered, positioned under the input) ── */
+
+.location-search__menu {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  gap: 2px;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  box-sizing: border-box;
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.8),
+    0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.location-search__option {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 6px 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition:
+    background 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.location-search__option:hover {
+  background: rgba(var(--color-primary-rgb), 0.12);
+  border-color: rgba(var(--color-primary-rgb), 0.2);
+}
+
+.location-search__option-name {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--stat-value-color);
+}
+
+.location-search__option-detail {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 2px;
+}

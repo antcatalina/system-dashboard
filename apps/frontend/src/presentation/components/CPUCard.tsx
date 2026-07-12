@@ -6,7 +6,7 @@ import { getLoadColor } from "../../shared/utils/colors";
 import { useTheme } from "../context/ThemeContext";
 import "../styles/components/CPUCard.css";
 import { getThemeColors } from "../../shared/utils/themeColors";
-import { CPUMetrics } from "@system-dashboard/shared";
+import type { CPUMetrics } from "@system-dashboard/shared";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 interface CPUCardProps {
@@ -19,8 +19,7 @@ function CoreHeatmap({
   cores,
 }: {
   cores: CPUMetrics["perCore"];
-  color: string;
-}) {
+}): JSX.Element {
   const items =
     cores.length > 0
       ? cores
@@ -62,7 +61,7 @@ function CoreHeatmap({
   );
 }
 
-export function CPUCard({ cpu, history }: CPUCardProps) {
+export function CPUCard({ cpu, history }: CPUCardProps): JSX.Element {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
   const lc = getLoadColor(cpu.load);
@@ -124,7 +123,7 @@ export function CPUCard({ cpu, history }: CPUCardProps) {
             {cpu.load.toFixed(1)}% AVG
           </span>
         </div>
-        <CoreHeatmap cores={cpu.perCore} color={lc} />
+        <CoreHeatmap cores={cpu.perCore} />
       </div>
 
       {/* ── Frequency bar ── */}

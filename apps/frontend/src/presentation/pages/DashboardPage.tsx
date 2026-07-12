@@ -56,7 +56,7 @@ const PLACEHOLDER = {
   timestamp: 0,
 };
 
-export function DashboardPage() {
+export function DashboardPage(): JSX.Element {
   const { metrics, history, connected, processIcon } = useMetrics();
   const data = {
     cpu: metrics?.cpu ?? PLACEHOLDER.cpu,
@@ -108,7 +108,7 @@ export function DashboardPage() {
             <CPUCard cpu={data.cpu} history={history} />
           </div>
           <div className="flex-1 min-w-0 overflow-hidden" style={{ borderRight: "1px solid rgba(255,255,255,0.06)" }}>
-            <RAMCard ram={data.ram} history={history} />
+            <RAMCard ram={data.ram} />
           </div>
           <div className="flex-1 min-w-0 overflow-hidden">
             <NowPlayingCard fps={data.fps} processIcon={processIcon} />

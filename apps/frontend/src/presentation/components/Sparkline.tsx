@@ -6,7 +6,7 @@ interface SparklineProps {
   height?: number | string;
 }
 
-export function Sparkline({ data, color = '#00e5ff', height = 48 }: SparklineProps) {
+export function Sparkline({ data, color = '#00e5ff', height = 48 }: SparklineProps): JSX.Element {
   const chartData = data.map((v, i) => ({ i, v }));
 
   return (

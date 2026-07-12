@@ -22,7 +22,7 @@ const STALE_TIMEOUT_MS = 30_000;
 
 // ─── FPS sparkline ────────────────────────────────────────────────────────────
 
-function FpsSparkline({ history }: { history: number[] }) {
+function FpsSparkline({ history }: { history: number[] }): JSX.Element | null {
   if (history.length < 2) return null;
   const min = Math.min(...history);
   const max = Math.max(...history, min + 1);
@@ -88,7 +88,7 @@ function MonitorIcon({
 }: {
   isPrimary: boolean;
   tc: ReturnType<typeof getThemeColors>;
-}) {
+}): JSX.Element {
   return (
     <svg
       width="28"
@@ -146,7 +146,7 @@ function DisplaysSection({
   monitors: Monitor[];
   tc: ReturnType<typeof getThemeColors>;
   primaryFps: number | null;
-}) {
+}): JSX.Element {
   const isPortrait = useMediaQuery("(orientation: portrait)");
   return (
     <div
@@ -321,7 +321,7 @@ function NowPlayingSection({
   tc: ReturnType<typeof getThemeColors>;
   fpsHistory: number[];
   currentFps: number | null;
-}) {
+}): JSX.Element {
   const gameTitle = fps ? resolveGameTitle(fps.processName) : null;
 
   return (
@@ -564,7 +564,11 @@ function NowPlayingSection({
 
 // ─── Root ─────────────────────────────────────────────────────────────────────
 
-export function MonitorCard({ monitors, fps, processIcon }: MonitorCardProps) {
+export function MonitorCard({
+  monitors,
+  fps,
+  processIcon,
+}: MonitorCardProps): JSX.Element {
   const { theme } = useTheme();
   const tc = getThemeColors(theme);
   const [fpsHistory, setFpsHistory] = useState<number[]>([]);

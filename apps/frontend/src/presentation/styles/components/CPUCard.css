@@ -217,15 +217,3 @@
   flex: 1;
   min-height: 44px;
 }
-
-@keyframes livePulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(0.8);
-  }
-}

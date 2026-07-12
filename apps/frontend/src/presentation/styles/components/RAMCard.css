@@ -166,18 +166,6 @@
   );
 }
 
-.ram-card__swap-label {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.35);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
 .ram-card__swap-value {
   font-family: "JetBrains Mono", monospace;
   font-size: 14px;
@@ -188,43 +176,6 @@
 .ram-card__swap-bar {
   height: 5px;
   background: rgba(255, 255, 255, 0.04);
-}
-
-.ram-card__sparkline {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 10px 12px 4px;
-}
-
-.ram-card__sparkline-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
-.ram-card__sparkline-value {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-}
-
-.ram-card__sparkline-chart {
-  flex: 1;
-  min-height: 44px;
-}
-
-@keyframes livePulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(0.8);
-  }
 }
 
 .ram-card__waveform {
